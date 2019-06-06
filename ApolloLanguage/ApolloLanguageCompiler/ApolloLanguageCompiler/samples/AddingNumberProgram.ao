@@ -1,0 +1,10 @@
+
+hidden instance class Program
+{   
+    exposed extension number Main()
+    {
+    number a = 7000 + 100 + 49;
+    System:Console:WriteLine(a);
+    return a + 41;
+    }
+}

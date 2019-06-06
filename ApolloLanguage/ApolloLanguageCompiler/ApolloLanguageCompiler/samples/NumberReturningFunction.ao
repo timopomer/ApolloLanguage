@@ -1,0 +1,7 @@
+hidden instance class UselessFunctions
+{   
+    exposed instance number func()
+    {
+    return 3;
+    }
+}

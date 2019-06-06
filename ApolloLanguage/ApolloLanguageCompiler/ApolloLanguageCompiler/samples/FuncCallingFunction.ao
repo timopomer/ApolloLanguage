@@ -1,0 +1,8 @@
+hidden instance class UselessFunctions2
+{   
+    exposed instance number GetNumber()
+    {
+    number a = 3;
+    return a + func();
+    }
+}

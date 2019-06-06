@@ -1,0 +1,26 @@
+﻿<Properties StartupConfiguration="{D9DF9633-EAAB-4CB5-ADD1-7A26E36F1882}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="SourceContext.cs">
+    <Files>
+      <File FileName="Tokenization/ContextFreeTokenFactory.cs" Line="95" Column="2" />
+      <File FileName="Parsing/ASTNode.cs" Line="1" Column="1" />
+      <File FileName="Parsing/Nodes/Action/CodeBlockNode.cs" Line="1" Column="1" />
+      <File FileName="Parsing/Nodes/Action/ActionNode.cs" Line="6" Column="27" />
+      <File FileName="Parsing/Nodes/Action/Expression/ExpressionNode.cs" Line="25" Column="10" />
+      <File FileName="Program.cs" Line="28" Column="1" />
+      <File FileName="Source.cs" Line="23" Column="1" />
+      <File FileName="SourceContext.cs" Line="1" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Users/timopomer/Google Drive/2017 Programming/ShirLanguageCompiler/ShirLanguageCompiler/Parse/Parser.cs" relfile="Parse/Parser.cs" line="434" column="1" />
+      <Breakpoint file="/Users/timopomer/Google Drive/2017 Programming/ShirLanguageCompiler/ShirLanguageCompiler/Parse/Parser.cs" relfile="Parse/Parser.cs" line="453" column="1" />
+      <Breakpoint file="/Users/timopomer/Google Drive/2017 Programming/ShirLanguageCompiler/ShirLanguageCompiler/Parse/Parser.cs" relfile="Parse/Parser.cs" line="465" column="1" />
+      <Breakpoint file="/Users/timopomer/Google Drive/2017 Programming/ShirLanguageCompiler/ShirLanguageCompiler/Source.cs" relfile="Source.cs" line="24" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.ShirLanguageCompiler PreferredExecutionTarget="MonoDevelop.Default" />
+  <MultiItemStartupConfigurations />
+</Properties>

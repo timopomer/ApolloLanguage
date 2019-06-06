@@ -1,0 +1,252 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\NUnit3TestAdapter.3.10.0\build\net35\NUnit3TestAdapter.props" Condition="Exists('..\packages\NUnit3TestAdapter.3.10.0\build\net35\NUnit3TestAdapter.props')" />
+  <Import Project="..\packages\NUnit.3.10.1\build\NUnit.props" Condition="Exists('..\packages\NUnit.3.10.1\build\NUnit.props')" />
+  <Import Project="packages\NUnit3TestAdapter.3.8.0\build\net35\NUnit3TestAdapter.props" Condition="Exists('packages\NUnit3TestAdapter.3.8.0\build\net35\NUnit3TestAdapter.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D9DF9633-EAAB-4CB5-ADD1-7A26E36F1882}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ApolloLanguageCompiler</RootNamespace>
+    <AssemblyName>ApolloLanguageCompiler</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CommandLine, Version=2.2.1.0, Culture=neutral, PublicKeyToken=de6f01bd326f8c32, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\CommandLineParser.2.2.1\lib\net45\CommandLine.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=3.10.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.3.10.1\lib\net45\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.ValueTuple">
+      <HintPath>packages\System.ValueTuple.4.4.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="GrEmit">
+      <HintPath>..\..\packages\GrEmit.2.2.3\lib\net45\GrEmit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="samples\FuncCallingFunction.ao" />
+    <None Include="samples\NumberReturningFunction.ao" />
+    <Compile Include="src\Analysis\IR\Expressions\Literals\Types\VoidType.cs" />
+    <Compile Include="src\Analysis\IR\IR.cs" />
+    <Compile Include="src\Analysis\IR\ModifierIR.cs" />
+    <Compile Include="src\Compiler\CompilationOptions.cs" />
+    <Compile Include="src\Parsing\ASTNodeExtensions.cs" />
+    <Compile Include="src\Parsing\Exceptions\AmbiguousParserException.cs" />
+    <Compile Include="src\Parsing\Exceptions\ParsingException.cs" />
+    <Compile Include="src\Parsing\Exceptions\FailedParsingException.cs" />
+    <Compile Include="src\Parsing\Exceptions\ZeroParsersException.cs" />
+    <Compile Include="src\Parsing\Exceptions\UnexpectedFailureException.cs" />
+    <Compile Include="src\Parsing\IContains.cs" />
+    <Compile Include="src\Parsing\Nodes\Action\Expression\Elements\HeadExpressionElement.cs" />
+    <Compile Include="src\Parsing\Nodes\Action\ActionNode.cs" />
+    <Compile Include="src\Parsing\Nodes\Action\Function\FunctionNode.cs" />
+    <Compile Include="src\Parsing\Nodes\Action\Function\ReturnNode.cs" />
+    <Compile Include="src\Parsing\Nodes\Action\Function\FunctionParameterNode.cs" />
+    <Compile Include="src\Parsing\Nodes\Action\VariableDeclarationNode.cs" />
+    <Compile Include="src\Parsing\Nodes\Modifier\ModifierNode.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Components\IParserComponent.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Exceptions\CouldNotFindTokenException.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Exceptions\ParserException.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Node.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\NodeParser.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Parsers.cs" />
+    <Compile Include="src\Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="src\Tokenization\SourceContext.cs" />
+    <Compile Include="Tests\TestAnalysis.cs" />
+    <Compile Include="Tests\TestParser.cs" />
+    <Compile Include="src\Tokenization\Token.cs" />
+    <Compile Include="src\Tokenization\TokenFactory.cs" />
+    <Compile Include="src\Parsing\ASTNode.cs" />
+    <Compile Include="src\Parsing\ASTFactory.cs" />
+    <Compile Include="src\Parsing\Nodes\ClassNode.cs" />
+    <Compile Include="src\Parsing\Nodes\ProgramNode.cs" />
+    <Compile Include="Tests\TestTokenization.cs" />
+    <Compile Include="src\Tokenization\TokenParser.cs" />
+    <Compile Include="src\Parsing\TokenWalker.cs" />
+    <Compile Include="src\Parsing\Nodes\Modifier\InstanceModifierNode.cs" />
+    <Compile Include="src\Parsing\Nodes\TypeNode.cs" />
+    <Compile Include="src\Parsing\Nodes\Modifier\VisibillityModifierNode.cs" />
+    <Compile Include="Tests\TestTokenWalker.cs" />
+    <Compile Include="src\Parsing\ParseContext.cs" />
+    <Compile Include="src\Parsing\Nodes\Action\CodeBlockNode.cs" />
+    <Compile Include="src\Parsing\Nodes\Action\Expression\ExpressionNode.cs" />
+    <Compile Include="src\Parsing\Nodes\Action\Expression\Elements\ExpressionElement.cs" />
+    <Compile Include="src\Analysis\IR\ProgramIR.cs" />
+    <Compile Include="src\Analysis\IR\ClassIR.cs" />
+    <Compile Include="src\Analysis\IR\FunctionIR.cs" />
+    <Compile Include="src\Analysis\IR\VisibillityModifierIR.cs" />
+    <Compile Include="src\Analysis\IR\InstanceModifierIR.cs" />
+    <Compile Include="src\Analysis\Exceptions\UnexpectedNodeException.cs" />
+    <Compile Include="src\Analysis\Exceptions\AnalysisException.cs" />
+    <Compile Include="src\Compiler\Compiler.cs" />
+    <Compile Include="src\Compiler\SourceCode.cs" />
+    <Compile Include="src\Serialization\SerializeExtension.cs" />
+    <Compile Include="src\Serialization\ContractResolvers\DontSerializeContractResolver.cs" />
+    <Compile Include="src\Serialization\ContractResolvers\CompositeContractResolver.cs" />
+    <Compile Include="src\Serialization\ContractResolvers\ModifierContractResolver.cs" />
+    <Compile Include="src\Analysis\IR\VariableDeclarationIR.cs" />
+    <Compile Include="src\Analysis\IR\TypeIR.cs" />
+    <Compile Include="src\Analysis\Scope.cs" />
+    <Compile Include="src\Analysis\IR\ReturnIR.cs" />
+    <Compile Include="src\Analysis\IR\ExpressionIR.cs" />
+    <Compile Include="src\Parsing\Nodes\Action\Expression\Elements\Types\GenericElement.cs" />
+    <Compile Include="src\Analysis\IR\Expressions\Literals\PrimitiveNumber.cs" />
+    <Compile Include="src\Parsing\Nodes\Action\Expression\Elements\Operators\Binary\AdditionElement.cs" />
+    <Compile Include="src\Parsing\Nodes\Action\Expression\Elements\Operators\Binary\ComparisonElement.cs" />
+    <Compile Include="src\Parsing\Nodes\Action\Expression\Elements\Operators\Binary\EqualityElement.cs" />
+    <Compile Include="src\Parsing\Nodes\Action\Expression\Elements\Operators\Binary\ExponationElement.cs" />
+    <Compile Include="src\Parsing\Nodes\Action\Expression\Elements\Operators\Binary\MultiplicationElement.cs" />
+    <Compile Include="src\Parsing\Nodes\Action\Expression\Elements\Operators\Binary\BinaryOperatorElement.cs" />
+    <Compile Include="src\Parsing\Nodes\Action\Expression\Elements\Operators\Unary\NegationElement.cs" />
+    <Compile Include="src\Parsing\Nodes\Action\Expression\Elements\Operators\Unary\UnaryOperatorElement.cs" />
+    <Compile Include="src\Parsing\Nodes\Action\Expression\Elements\Operators\Binary\AssignmentElement.cs" />
+    <Compile Include="src\Parsing\Nodes\Action\Expression\Elements\Operators\Binary\AccessElement.cs" />
+    <Compile Include="src\Parsing\Nodes\Action\Expression\Elements\Operators\OperatorElement.cs" />
+    <Compile Include="src\Analysis\IR\Expressions\Operators\Binary\AdditionExpression.cs" />
+    <Compile Include="src\Analysis\IR\Expressions\Operators\Binary\BinaryExpression.cs" />
+    <Compile Include="src\Analysis\IR\Expressions\Operators\Binary\SubtractionExpression.cs" />
+    <Compile Include="src\Analysis\IR\Expressions\Operators\OperatorExpression.cs" />
+    <Compile Include="src\Parsing\Nodes\Action\Expression\Elements\Primary\PrimaryElement.cs" />
+    <Compile Include="src\Parsing\Nodes\Action\Expression\Elements\Primary\PrimaryElement.LiteralElement.cs" />
+    <Compile Include="src\Parsing\Nodes\Action\Expression\Elements\Primary\PrimaryElement.ParanthesizedElement.cs" />
+    <Compile Include="src\Parsing\Nodes\Action\Expression\Elements\Primary\PrimaryElement.IdentifierElement.cs" />
+    <Compile Include="src\Parsing\Nodes\Action\Expression\Elements\Primary\PrimaryElement.TypeElement.cs" />
+    <Compile Include="src\Analysis\IR\Expressions\Operators\Binary\AssignmentExpression.cs" />
+    <Compile Include="src\Analysis\IR\Expressions\Literals\Identifier.cs" />
+    <Compile Include="src\Analysis\IR\Expressions\Literals\LiteralExpression.cs" />
+    <Compile Include="src\Analysis\IR\Expressions\Literals\Types\NumberType.cs" />
+    <Compile Include="src\Analysis\IR\Expressions\Literals\Types\TypeExpression.cs" />
+    <Compile Include="src\Analysis\Exceptions\WrongExpressionTypeException.cs" />
+    <Compile Include="src\Analysis\Exceptions\AmbiguousIdentifierException.cs" />
+    <Compile Include="src\Analysis\Exceptions\IdentifierDeclarationNotFoundException.cs" />
+    <Compile Include="src\Analysis\Exceptions\ElementNotDefinedException.cs" />
+    <Compile Include="src\Analysis\IR\Interfaces\IDeclares.cs" />
+    <Compile Include="src\Analysis\IR\Expressions\Operators\Binary\CallExpression.cs" />
+    <Compile Include="src\Parsing\Nodes\Action\Expression\Elements\Operators\Binary\CallFunctionElement.cs" />
+    <Compile Include="src\Parsing\Nodes\Action\Expression\Elements\Constructs\ConstructElement.cs" />
+    <Compile Include="src\Parsing\Nodes\Action\Expression\Elements\Constructs\ParameterElement.cs" />
+    <Compile Include="src\Analysis\IR\Expressions\Constructs\ConstructExpression.cs" />
+    <Compile Include="src\Analysis\IR\Expressions\Constructs\ParameterExpression.cs" />
+    <Compile Include="src\Analysis\IR\Expressions\Literals\Types\ParameterType.cs" />
+    <Compile Include="src\Analysis\IR\Expressions\Constructs\FunctionParameterExpression.cs" />
+    <Compile Include="src\CodeGeneration\CodeGenerator.cs" />
+    <Compile Include="src\Analysis\IR\Expressions\Literals\Types\PrimitiveType.cs" />
+    <None Include="samples\AddingNumberProgram.ao" />
+    <Compile Include="src\Analysis\IR\Expressions\Literals\PrimitiveString.cs" />
+    <Compile Include="src\Analysis\IR\Expressions\Literals\Types\StringType.cs" />
+    <Compile Include="src\CodeGeneration\EmitsFor.cs" />
+    <Compile Include="src\CodeGeneration\CompilationState.cs" />
+    <Compile Include="src\Analysis\IR\Expressions\Operators\Binary\NamespaceExpression.cs" />
+    <Compile Include="src\Parsing\Nodes\Action\Expression\Elements\Operators\Binary\NamespaceElement.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Components\ManyComponent\AllComponent.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Components\ManyComponent\AnyComponent.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Components\ManyComponent\ManyComponent.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Components\LoopComponent\ComponentForeverLooper.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Components\LoopComponent\ComponentWhileLooper.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Components\LoopComponent\LoopComponent.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Components\TokenComponent\TokenComponent.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Components\TokenComponent\TokenEater.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Components\TokenComponent\TokenKeeper.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Components\ReferenceComponent.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".editorconfig" />
+    <None Include="App.config" />
+    <None Include="packages.config" />
+    <None Include="samples\EmptyProgram.ao" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup />
+  <ItemGroup />
+  <ItemGroup />
+  <ItemGroup />
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\NUnit3TestAdapter.3.8.0\build\net35\NUnit3TestAdapter.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\NUnit3TestAdapter.3.8.0\build\net35\NUnit3TestAdapter.props'))" />
+    <Error Condition="!Exists('..\packages\NUnit.3.10.1\build\NUnit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit.3.10.1\build\NUnit.props'))" />
+    <Error Condition="!Exists('..\packages\NUnit3TestAdapter.3.10.0\build\net35\NUnit3TestAdapter.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit3TestAdapter.3.10.0\build\net35\NUnit3TestAdapter.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
