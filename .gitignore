@@ -220,3 +220,5 @@ ApolloLanguage/ApolloLanguageCompiler/ApolloLanguageCompiler/packages/*
 ApolloLanguage/packages/
 
 ApolloLanguage/ApolloLanguageCompiler/packages/
+
+ApolloLanguage/MigrationBackup/
