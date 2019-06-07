@@ -6,6 +6,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics;
 using ApolloLanguageCompiler.Parsing.Nodes;
+using ApolloLanguageCompiler.Parsing.ParserGenerator;
 
 namespace ApolloLanguageCompiler.Tests
 {
@@ -20,7 +21,7 @@ namespace ApolloLanguageCompiler.Tests
             hidden instance class Program
             {   
             }";
-            ASTNode tree = new Compiler(new SourceCode(code)).AbstractSyntaxTree;
+            Node tree = new Compiler(new SourceCode(code)).ParseTree;
         }
         [Test()]
         public void FunctionTest()
@@ -32,7 +33,7 @@ namespace ApolloLanguageCompiler.Tests
                 {
                 }
             }";
-            ASTNode tree = new Compiler(new SourceCode(code)).AbstractSyntaxTree;
+            Node tree = new Compiler(new SourceCode(code)).ParseTree;
 
         }
         [Test()]
@@ -46,8 +47,7 @@ namespace ApolloLanguageCompiler.Tests
                     func(a)(1)(2)(a) + func();
                 }
             }";
-            ASTNode tree = new Compiler(new SourceCode(code)).AbstractSyntaxTree;
-
+            Node tree = new Compiler(new SourceCode(code)).ParseTree;
         }
 
         [Test()]
@@ -60,7 +60,7 @@ namespace ApolloLanguageCompiler.Tests
                 {
                 }
             }";
-            ASTNode tree = new Compiler(new SourceCode(code)).AbstractSyntaxTree;
+            Node tree = new Compiler(new SourceCode(code)).ParseTree;
         }
 
 
@@ -75,7 +75,7 @@ namespace ApolloLanguageCompiler.Tests
                     number n = 3+2/3;
                 }
             }";
-            ASTNode tree = new Compiler(new SourceCode(code)).AbstractSyntaxTree;
+            Node tree = new Compiler(new SourceCode(code)).ParseTree;
         }
 
         [Test()]
@@ -91,7 +91,7 @@ namespace ApolloLanguageCompiler.Tests
                 }
 
             }";
-            ASTNode tree = new Compiler(new SourceCode(code)).AbstractSyntaxTree;
+            Node tree = new Compiler(new SourceCode(code)).ParseTree;
         }
 
         [Test()]
@@ -107,7 +107,7 @@ namespace ApolloLanguageCompiler.Tests
                 }
 
             }";
-            ASTNode tree = new Compiler(new SourceCode(code)).AbstractSyntaxTree;
+            Node tree = new Compiler(new SourceCode(code)).ParseTree;
         }
 
 
@@ -122,7 +122,7 @@ namespace ApolloLanguageCompiler.Tests
                     math:tan(90,2);
                 }
             }";
-            ASTNode tree = new Compiler(new SourceCode(code)).AbstractSyntaxTree;
+            Node tree = new Compiler(new SourceCode(code)).ParseTree;
         }
         [Test()]
         public void GenericPreAccessTest()
@@ -135,7 +135,7 @@ namespace ApolloLanguageCompiler.Tests
                     
                 }
             }";
-            ASTNode tree = new Compiler(new SourceCode(code)).AbstractSyntaxTree;
+            Node tree = new Compiler(new SourceCode(code)).ParseTree;
         }
         [Test()]
         public void GenericPostAccessTest()
@@ -148,7 +148,7 @@ namespace ApolloLanguageCompiler.Tests
                     List<T>:default;
                 }
             }";
-            ASTNode tree = new Compiler(new SourceCode(code)).AbstractSyntaxTree;
+            Node tree = new Compiler(new SourceCode(code)).ParseTree;
         }
 
         [Test()]
@@ -162,7 +162,7 @@ namespace ApolloLanguageCompiler.Tests
                     return i;
                 }
             }";
-            ASTNode tree = new Compiler(new SourceCode(code)).AbstractSyntaxTree;
+            Node tree = new Compiler(new SourceCode(code)).ParseTree;
         }
 
         [Test()]
@@ -177,7 +177,7 @@ namespace ApolloLanguageCompiler.Tests
                     return;
                 }
             }";
-            ASTNode tree = new Compiler(new SourceCode(code)).AbstractSyntaxTree;
+            Node tree = new Compiler(new SourceCode(code)).ParseTree;
         }
         [Test()]
         public void ReturnBeforeExpressionTest()
@@ -191,7 +191,7 @@ namespace ApolloLanguageCompiler.Tests
                     1;
                 }
             }";
-            ASTNode tree = new Compiler(new SourceCode(code)).AbstractSyntaxTree;
+            Node tree = new Compiler(new SourceCode(code)).ParseTree;
         }
         [Test()]
         public void PrimitiveTypeTest()
@@ -207,10 +207,7 @@ namespace ApolloLanguageCompiler.Tests
                boolean b = true;
                }
             }";
-            ASTNode tree = new Compiler(new SourceCode(code)).AbstractSyntaxTree;
+            Node tree = new Compiler(new SourceCode(code)).ParseTree;
         }
-
-
     }
-
 }

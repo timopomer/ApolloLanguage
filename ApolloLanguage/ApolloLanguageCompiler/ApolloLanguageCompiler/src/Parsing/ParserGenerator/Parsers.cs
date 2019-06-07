@@ -19,6 +19,7 @@ namespace ApolloLanguageCompiler.Parsing.ParserGenerator
     {
         Program,
         Class,
+        Function,
         Modifier,
         VisibillityModifier,
         InstanceModifier,
@@ -27,37 +28,53 @@ namespace ApolloLanguageCompiler.Parsing.ParserGenerator
         Element,
         PrimaryElement,
         IdentifierElement,
-        CodeBlock
+        CodeBlock,
+        FunctionParameter,
+        PrimitiveTypeElement
     }
+
     public static class Parsers
     {
-
         public static void Parse(out Node node, TokenWalker walker) => Program.Parse(out node, walker);
 
         public static readonly NodeParser IdentifierElement = new NodeParser(Nodes.IdentifierElement,
             Keep(SyntaxKeyword.Identifier)
         );
 
+        public static readonly NodeParser PrimitiveTypeElement = new NodeParser(Nodes.PrimitiveTypeElement,
+            Any(
+                Keep(SyntaxKeyword.Str),
+                Keep(SyntaxKeyword.Number),
+                Keep(SyntaxKeyword.Letter),
+                Keep(SyntaxKeyword.Boolean)
+            )
+        );
+
+
         public static readonly NodeParser Element = new NodeParser(Nodes.Element,
-            IdentifierElement
+            Any(
+                Reference(() => IdentifierElement),
+                Reference(() => PrimitiveTypeElement)
+            )
         );
 
 
         public static readonly NodeParser Expression = new NodeParser(Nodes.Expression,
-            Element,
+            Reference(() => Element),
             Eat(SyntaxKeyword.SemiColon)
         );
 
 
         public static readonly NodeParser PrimaryElement = new NodeParser(Nodes.PrimaryElement,
-            IdentifierElement
+            Reference(() => IdentifierElement)
         );
 
         public static readonly NodeParser CodeBlock = new NodeParser(Nodes.CodeBlock,
             Eat(SyntaxKeyword.OpenCurlyBracket),
             While(
                 Any(
-                    Reference(() => CodeBlock)
+                    Reference(() => CodeBlock),
+                    Reference(() => Function)
                 )
             ),
             Eat(SyntaxKeyword.CloseCurlyBracket)
@@ -65,7 +82,7 @@ namespace ApolloLanguageCompiler.Parsing.ParserGenerator
 
 
         public static readonly NodeParser Type = new NodeParser(Nodes.Type,
-            Element
+            Reference(() => Element)
         );
 
         // modifiers
@@ -86,17 +103,31 @@ namespace ApolloLanguageCompiler.Parsing.ParserGenerator
 
         public static readonly NodeParser Modifier = new NodeParser(Nodes.Modifier,
             While(VisibillityModifier),
-            Reference(()=>InstanceModifier)
+            Reference(() => InstanceModifier)
         );
 
+        public static readonly NodeParser Function = new NodeParser(Nodes.Function,
+            Reference(() => Modifier),
+            Reference(() => Type),
+            Eat(SyntaxKeyword.OpenParenthesis),
+            While(
+                Reference(() => FunctionParameter)
+            ),
+            Eat(SyntaxKeyword.CloseParenthesis),
+            Reference(() => CodeBlock)
+        );
+
+        public static readonly NodeParser FunctionParameter = new NodeParser(Nodes.FunctionParameter,
+            Reference(() => Type),
+            Reference(() => Element)
+        );
 
         public static readonly NodeParser Class = new NodeParser(Nodes.Class,
-            Modifier,
+            Reference(() => Modifier),
             Eat(SyntaxKeyword.Class),
             Reference(() => Type),
             Reference(() => CodeBlock)
         );
-
 
         public static readonly NodeParser Program = new NodeParser(Nodes.Program,
             Forever(Class)
