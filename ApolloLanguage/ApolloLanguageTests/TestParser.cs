@@ -23,19 +23,46 @@ namespace ApolloLanguageCompiler.Tests
             }";
             Node tree = new Compiler(new SourceCode(code)).ParseTree;
         }
+
         [Test()]
         public void FunctionTest()
         {
             string code = @"
             hidden instance class Program
             {
-                exposed instance func(number a,number b)
+                exposed instance func()
                 {
                 }
             }";
             Node tree = new Compiler(new SourceCode(code)).ParseTree;
-
         }
+
+        [Test()]
+        public void FunctionWithParameterTest()
+        {
+            string code = @"
+            hidden instance class Program
+            {
+                exposed instance func(number a)
+                {
+                }
+            }";
+            Node tree = new Compiler(new SourceCode(code)).ParseTree;
+        }
+
+        [Test()]
+        public void FunctionWithMultipleParameterTest()
+        {
+            string code = @"
+            hidden instance class Program
+            {
+                exposed instance func(number a, number b)
+                {
+                }
+            }";
+            Node tree = new Compiler(new SourceCode(code)).ParseTree;
+        }
+
         [Test()]
         public void CallFunctionTest()
         {

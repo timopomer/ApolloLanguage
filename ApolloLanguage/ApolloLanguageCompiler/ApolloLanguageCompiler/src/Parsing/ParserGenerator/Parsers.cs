@@ -110,16 +110,16 @@ namespace ApolloLanguageCompiler.Parsing.ParserGenerator
             Reference(() => Modifier),
             Reference(() => Type),
             Eat(SyntaxKeyword.OpenParenthesis),
-            While(
-                Reference(() => FunctionParameter)
-            ),
+            While(Reference(() => FunctionParameter)),
             Eat(SyntaxKeyword.CloseParenthesis),
             Reference(() => CodeBlock)
         );
 
         public static readonly NodeParser FunctionParameter = new NodeParser(Nodes.FunctionParameter,
             Reference(() => Type),
-            Reference(() => Element)
+            Reference(() => Element),
+            Eat(SyntaxKeyword.Comma)
+
         );
 
         public static readonly NodeParser Class = new NodeParser(Nodes.Class,
