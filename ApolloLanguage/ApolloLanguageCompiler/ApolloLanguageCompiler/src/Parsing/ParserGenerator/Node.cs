@@ -21,41 +21,34 @@ namespace ApolloLanguageCompiler.Parsing.ParserGenerator
             this.parsed[node].Add(parsed);
         }
 
-        public string PrettyPrint(int indentation)
-        {
-            string identationSpaces = new string(' ', indentation * 4);
-            string extraIdentationSpaces = new string(' ', indentation * 5);
 
-            StringBuilder builder = new StringBuilder();
+        private static readonly string Indetation = new string(' ', 4);
+        public IEnumerable<string> Representation()
+        {
+            List<string> representation = new List<string>();
             foreach (KeyValuePair<Nodes, List<object>> kvp in this.parsed)
             {
-                builder.Append($"{identationSpaces}{kvp.Key}");
-
-                bool parsedAnything = kvp.Value.Any();
-                if (parsedAnything)
-                    builder.Append($":[{Environment.NewLine}");
-                
-                bool firstIteration = true;
-                foreach (object obj in kvp.Value)
+                if (kvp.Value.Any())
                 {
-                    if (!firstIteration)
-                        builder.Append($", {Environment.NewLine}");
-
-                    if (obj is Node node)
-                    {
-                        builder.Append($"{node.PrettyPrint(indentation + 1)}");
+                    representation.Add($"{kvp.Key}[");
+                    foreach (object obj in kvp.Value)
+                    { 
+                        if (obj is Node node)
+                        {
+                            IEnumerable<string> nodeRepresentation = node.Representation().Select(n => $"{Indetation}{n}");
+                            representation.AddRange(nodeRepresentation);
+                        }
+                        else
+                        {
+                            representation.Add($"{Indetation}{obj}");
+                        }
                     }
-                    else
-                    {
-                        builder.Append($"{extraIdentationSpaces}{obj.ToString()}");
-                    }
-                    firstIteration = false;
+                    representation.Add("]");
                 }
-                if (parsedAnything)
-                    builder.Append($"{Environment.NewLine}{identationSpaces}]{Environment.NewLine}");
+                else
+                    representation.Add($"{kvp.Key}[]");
             }
-            return builder.ToString();
+            return representation;
         }
-
     }
 }
