@@ -26,7 +26,8 @@ namespace ApolloLanguageCompiler
         {
             TokenWalker walker = new TokenWalker(this.Tokens);
             Parsers.Parse(out Node node, walker);
-            Console.WriteLine(node.PrettyPrint(0));
+            Console.WriteLine(string.Join(Environment.NewLine, node.Representation()));
+            //Console.WriteLine(node.PrettyPrint(0));
             ASTNode AbstractSyntaxTree = new ASTFactory(Tokens).Generate();
             ProgramIR IR = new ProgramIR(AbstractSyntaxTree as ProgramNode);
             AssemblyBuilder Compiled = new CodeGenerator(IR, this.OutFile).Compile();
