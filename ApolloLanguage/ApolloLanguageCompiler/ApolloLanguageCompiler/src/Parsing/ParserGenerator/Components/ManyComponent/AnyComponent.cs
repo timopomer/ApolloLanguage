@@ -16,20 +16,19 @@ namespace ApolloLanguageCompiler.Parsing.ParserGenerator.Components
 
         public override void Parse(NodeParser parser, Node node, TokenWalker walker)
         {
-            uint failedParsers = 0;
             foreach (IParserComponent component in this.Components)
             {
                 try
                 {
                     component.Parse(parser, node, walker);
+                    return;
                 }
                 catch (ParserException)
                 {
-                    failedParsers += 1;
-                };
+                    continue;
+                }
             }
-            if (failedParsers == this.Components.Length)
-                throw new ParserException("None of the parsers succeded");
+            throw new ParserException("None of the parsers succeded");
         }
 
         public static AnyComponent Any(params IParserComponent[] components) => new AnyComponent(components);

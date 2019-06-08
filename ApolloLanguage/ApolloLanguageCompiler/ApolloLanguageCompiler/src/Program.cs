@@ -19,13 +19,6 @@ namespace ApolloLanguageCompiler
 
         private static void RunOptionsAndReturnExitCode(CompilationOptions options)
         {
-            SourceCode code = new SourceCode(
-@"hidden instance class Program
-{   
-
-}");
-            Compiler compiler1 = new Compiler(code, options.OutFile);
-            compiler1.Compile();
             Compiler compiler = new Compiler(SourceCode.FromFiles(options.InputFiles), options.OutFile);
             compiler.Compile();
         }
