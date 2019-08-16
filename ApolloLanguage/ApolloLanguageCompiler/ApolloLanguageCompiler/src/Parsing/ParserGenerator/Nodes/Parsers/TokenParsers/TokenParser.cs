@@ -4,7 +4,7 @@ using ApolloLanguageCompiler.Tokenization;
 
 namespace ApolloLanguageCompiler.Parsing.ParserGenerator.Nodes.Parsers
 {
-    public abstract class TokenParser : IParser
+    public abstract class TokenParser : INodeParser
     {
         protected readonly SyntaxKeyword Keyword;
 

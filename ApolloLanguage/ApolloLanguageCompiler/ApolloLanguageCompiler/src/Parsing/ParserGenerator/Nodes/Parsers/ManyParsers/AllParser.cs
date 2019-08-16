@@ -10,19 +10,19 @@ namespace ApolloLanguageCompiler.Parsing.ParserGenerator.Nodes.Parsers
 {
     public class AllParser : ManyParser
     {
-        public AllParser(params IParser[] components) : base(components)
+        public AllParser(params INodeParser[] parsers) : base(parsers)
         {
         }
 
         public override void Parse(NodeParser parser, Node node, TokenWalker walker)
         {
-            foreach (IParser component in this.Components)
+            foreach (INodeParser singleParser in this.Parsers)
             {
-                component.Parse(parser, node, walker);
+                singleParser.Parse(parser, node, walker);
             }
         }
 
-        public static AllParser All(params IParser[] components) => new AllParser(components);
+        public static AllParser All(params INodeParser[] parsers) => new AllParser(parsers);
         public override string ToString() => $"AllComponent[{base.ToString()}]";
     }
 }

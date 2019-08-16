@@ -10,7 +10,7 @@ namespace ApolloLanguageCompiler.Parsing.ParserGenerator.Nodes.Parsers
 {
     public class WhileParser : LoopParser
     {
-        public WhileParser(IParser component) : base(component)
+        public WhileParser(INodeParser parser) : base(parser)
         {
         }
 
@@ -20,7 +20,7 @@ namespace ApolloLanguageCompiler.Parsing.ParserGenerator.Nodes.Parsers
             {
                 try
                 {
-                    this.Component.Parse(parser, node, walker);
+                    this.Parser.Parse(parser, node, walker);
                 }
                 catch (ParserException)
                 {
@@ -29,7 +29,7 @@ namespace ApolloLanguageCompiler.Parsing.ParserGenerator.Nodes.Parsers
             }
         }
 
-        public static WhileParser While(IParser component) => new WhileParser(component);
-        public override string ToString() => $"ComponentWhileLooper[{base.ToString()}]";
+        public static WhileParser While(INodeParser parser) => new WhileParser(parser);
+        public override string ToString() => $"WhileParser[{base.ToString()}]";
     }
 }

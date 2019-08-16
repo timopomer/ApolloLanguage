@@ -9,7 +9,7 @@ namespace ApolloLanguageCompiler.Parsing.ParserGenerator.Nodes.Parsers
 {
     public class ForeverParser : LoopParser
     {
-        public ForeverParser(IParser component) : base(component)
+        public ForeverParser(INodeParser parser) : base(parser)
         {
         }
 
@@ -17,11 +17,11 @@ namespace ApolloLanguageCompiler.Parsing.ParserGenerator.Nodes.Parsers
         {
             while (!walker.IsLast())
             {
-                this.Component.Parse(parser, node, walker);
+                this.Parser.Parse(parser, node, walker);
             }
         }
 
-        public static ForeverParser Forever(IParser component) => new ForeverParser(component);
+        public static ForeverParser Forever(INodeParser parser) => new ForeverParser(parser);
         public override string ToString() => $"ComponentForeverLooper[{base.ToString()}]";
     }
 }

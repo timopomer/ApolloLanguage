@@ -10,17 +10,17 @@ namespace ApolloLanguageCompiler.Parsing.ParserGenerator.Nodes.Parsers
 {
     public class AnyParser : ManyParser
     {
-        public AnyParser(params IParser[] components) : base(components)
+        public AnyParser(params INodeParser[] parsers) : base(parsers)
         {
         }
 
         public override void Parse(NodeParser parser, Node node, TokenWalker walker)
         {
-            foreach (IParser component in this.Components)
+            foreach (INodeParser singleParser in this.Parsers)
             {
                 try
                 {
-                    component.Parse(parser, node, walker);
+                    singleParser.Parse(parser, node, walker);
                     return;
                 }
                 catch (ParserException)
@@ -31,7 +31,7 @@ namespace ApolloLanguageCompiler.Parsing.ParserGenerator.Nodes.Parsers
             throw new ParserException("None of the parsers succeded");
         }
 
-        public static AnyParser Any(params IParser[] components) => new AnyParser(components);
-        public override string ToString() => $"AnyComponent[{base.ToString()}]";
+        public static AnyParser Any(params INodeParser[] parsers) => new AnyParser(parsers);
+        public override string ToString() => $"AnyParser[{base.ToString()}]";
     }
 }

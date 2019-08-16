@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ApolloLanguageCompiler.Parsing.ParserGenerator.Nodes.Parsers
 {
-    public class ReferenceParser : IParser
+    public class ReferenceParser : INodeParser
     {
         private readonly Func<NodeParser> parserReference;
         public ReferenceParser(Func<NodeParser> parserReference)

@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace ApolloLanguageCompiler.Parsing.ParserGenerator.Nodes.Parsers
 {
-    public class NodeParser : IParser
+    public class NodeParser : INodeParser
     {
         public Nodes Type { get; }
-        private readonly IParser[] components;
+        private readonly INodeParser[] parsers;
 
-        public NodeParser(Nodes type, params IParser[] components)
+        public NodeParser(Nodes type, params INodeParser[] parsers)
         {
             this.Type = type;
-            this.components = components;
+            this.parsers = parsers;
         }
 
         public void Parse(out Node node, TokenWalker walker)
@@ -27,13 +27,13 @@ namespace ApolloLanguageCompiler.Parsing.ParserGenerator.Nodes.Parsers
         public void Parse(NodeParser parser, Node node, TokenWalker walker)
         {
             Node innerNode = new Node();
-            foreach (IParser component in this.components)
+            foreach (INodeParser parser in this.parsers)
             {
-                component.Parse(this, innerNode, walker);
+                parser.Parse(this, innerNode, walker);
             }
             node.Add(this.Type, innerNode);
         }
 
-        public override string ToString() => $"{this.Type}:({string.Join<IParser>(" ,", this.components)})";
+        public override string ToString() => $"{this.Type}:({string.Join<INodeParser>(" ,", this.parsers)})";
     }
 }

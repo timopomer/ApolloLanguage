@@ -3,16 +3,16 @@ using System.Linq;
 
 namespace ApolloLanguageCompiler.Parsing.ParserGenerator.Nodes.Parsers
 {
-    public abstract class LoopParser : IParser
+    public abstract class LoopParser : INodeParser
     {
-        protected readonly IParser Component;
+        protected readonly INodeParser Parser;
 
-        protected LoopParser(IParser component)
+        protected LoopParser(INodeParser parser)
         {
-            this.Component = component;
+            this.Parser = parser;
         }
 
         public abstract void Parse(NodeParser parser, Node node, TokenWalker walker);
-        public override string ToString() => $"{this.Component}{base.ToString()}";
+        public override string ToString() => $"{this.Parser}{base.ToString()}";
     }
 }
