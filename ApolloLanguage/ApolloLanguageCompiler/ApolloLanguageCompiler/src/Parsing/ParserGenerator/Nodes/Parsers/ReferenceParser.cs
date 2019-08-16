@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ApolloLanguageCompiler.Parsing.ParserGenerator.Components
+namespace ApolloLanguageCompiler.Parsing.ParserGenerator.Nodes.Parsers
 {
-    public class ReferenceComponent : IParserComponent
+    public class ReferenceParser : IParser
     {
         private readonly Func<NodeParser> parserReference;
-        public ReferenceComponent(Func<NodeParser> parserReference)
+        public ReferenceParser(Func<NodeParser> parserReference)
         {
             this.parserReference = parserReference;
         }
@@ -20,6 +20,6 @@ namespace ApolloLanguageCompiler.Parsing.ParserGenerator.Components
             this.parserReference().Parse(parser, node, walker);
         }
 
-        public static ReferenceComponent Reference(Func<NodeParser> parserReference) => new ReferenceComponent(parserReference);
+        public static ReferenceParser Reference(Func<NodeParser> parserReference) => new ReferenceParser(parserReference);
     }
 }

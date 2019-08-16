@@ -3,6 +3,7 @@ using ApolloLanguageCompiler.CodeGeneration;
 using ApolloLanguageCompiler.Parsing;
 using ApolloLanguageCompiler.Parsing.Nodes;
 using ApolloLanguageCompiler.Parsing.ParserGenerator;
+using ApolloLanguageCompiler.Parsing.ParserGenerator.Nodes;
 using ApolloLanguageCompiler.Tokenization;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace ApolloLanguageCompiler
         public void Compile()
         {
             TokenWalker walker = new TokenWalker(this.Tokens);
-            Parsers.Parse(out Node node, walker);
+            NodeParsers.Parse(out Node node, walker);
             Console.WriteLine(string.Join(Environment.NewLine, node.Representation()));
             ASTNode AbstractSyntaxTree = new ASTFactory(Tokens).Generate();
             ProgramIR IR = new ProgramIR(AbstractSyntaxTree as ProgramNode);
@@ -41,7 +42,7 @@ namespace ApolloLanguageCompiler
         {
             get
             {
-                Parsers.Parse(out Node node, this.Walker);
+                NodeParsers.Parse(out Node node, this.Walker);
                 return node;
             }
         }

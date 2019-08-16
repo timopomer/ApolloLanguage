@@ -2,9 +2,9 @@ using ApolloLanguageCompiler.Parsing.ParserGenerator.Exceptions;
 using ApolloLanguageCompiler.Tokenization;
 using System;
 
-namespace ApolloLanguageCompiler.Parsing.ParserGenerator.Components
+namespace ApolloLanguageCompiler.Parsing.ParserGenerator.Nodes.Parsers
 {
-    public class TokenKeeper : TokenComponent
+    public class TokenKeeper : TokenParser
     {
         public TokenKeeper(SyntaxKeyword keyword) : base(keyword)
         {

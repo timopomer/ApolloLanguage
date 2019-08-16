@@ -1,4 +1,3 @@
-using ApolloLanguageCompiler.Parsing.ParserGenerator.Components;
 using ApolloLanguageCompiler.Parsing.ParserGenerator.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -6,14 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ApolloLanguageCompiler.Parsing.ParserGenerator
+namespace ApolloLanguageCompiler.Parsing.ParserGenerator.Nodes.Parsers
 {
-    public class NodeParser : IParserComponent
+    public class NodeParser : IParser
     {
         public Nodes Type { get; }
-        private readonly IParserComponent[] components;
+        private readonly IParser[] components;
 
-        public NodeParser(Nodes type, params IParserComponent[] components)
+        public NodeParser(Nodes type, params IParser[] components)
         {
             this.Type = type;
             this.components = components;
@@ -28,13 +27,13 @@ namespace ApolloLanguageCompiler.Parsing.ParserGenerator
         public void Parse(NodeParser parser, Node node, TokenWalker walker)
         {
             Node innerNode = new Node();
-            foreach (IParserComponent component in this.components)
+            foreach (IParser component in this.components)
             {
                 component.Parse(this, innerNode, walker);
             }
             node.Add(this.Type, innerNode);
         }
 
-        public override string ToString() => $"{this.Type}:({string.Join<IParserComponent>(" ,", this.components)})";
+        public override string ToString() => $"{this.Type}:({string.Join<IParser>(" ,", this.components)})";
     }
 }

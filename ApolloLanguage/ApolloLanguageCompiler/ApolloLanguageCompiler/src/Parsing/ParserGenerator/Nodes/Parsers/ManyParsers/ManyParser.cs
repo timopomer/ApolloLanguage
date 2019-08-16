@@ -1,13 +1,13 @@
 using System;
 using System.Linq;
 
-namespace ApolloLanguageCompiler.Parsing.ParserGenerator.Components
+namespace ApolloLanguageCompiler.Parsing.ParserGenerator.Nodes.Parsers
 {
-    public abstract class ManyComponent : IParserComponent
+    public abstract class ManyParser : IParser
     {
-        protected readonly IParserComponent[] Components;
+        protected readonly IParser[] Components;
 
-        public ManyComponent(IParserComponent[] components)
+        public ManyParser(IParser[] components)
         {
             this.Components = components;
         }

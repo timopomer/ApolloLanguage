@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ApolloLanguageCompiler.Parsing.ParserGenerator.Components
+namespace ApolloLanguageCompiler.Parsing.ParserGenerator.Nodes.Parsers
 {
-    public class TokenEater : TokenComponent
+    public class TokenEater : TokenParser
     {
         public TokenEater(SyntaxKeyword keyword) : base(keyword)
         {

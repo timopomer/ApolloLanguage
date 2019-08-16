@@ -5,8 +5,7 @@ using ApolloLanguageCompiler.Parsing;
 using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics;
-using ApolloLanguageCompiler.Parsing.Nodes;
-using ApolloLanguageCompiler.Parsing.ParserGenerator;
+using ApolloLanguageCompiler.Parsing.ParserGenerator.Nodes;
 
 namespace ApolloLanguageCompiler.Tests
 {
@@ -99,7 +98,7 @@ namespace ApolloLanguageCompiler.Tests
             {
                 exposed instance func()
                 {
-                    number n = 3+2/3;
+                    3+2/3;
                 }
             }";
             Node tree = new Compiler(new SourceCode(code)).ParseTree;
@@ -177,9 +176,22 @@ namespace ApolloLanguageCompiler.Tests
             }";
             Node tree = new Compiler(new SourceCode(code)).ParseTree;
         }
-
         [Test()]
         public void ReturnTest()
+        {
+            string code = @"
+            hidden instance class Program
+            {
+                exposed instance AFunction()
+                {
+                    return;
+                }
+            }";
+            Node tree = new Compiler(new SourceCode(code)).ParseTree;
+        }
+
+        [Test()]
+        public void ReturnVariableTest()
         {
             string code = @"
             hidden instance class Program

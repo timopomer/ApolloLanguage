@@ -6,11 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ApolloLanguageCompiler.Parsing.ParserGenerator.Components
+namespace ApolloLanguageCompiler.Parsing.ParserGenerator.Nodes.Parsers
 {
-    public class ComponentWhileLooper : LoopComponent
+    public class WhileParser : LoopParser
     {
-        public ComponentWhileLooper(IParserComponent component) : base(component)
+        public WhileParser(IParser component) : base(component)
         {
         }
 
@@ -29,7 +29,7 @@ namespace ApolloLanguageCompiler.Parsing.ParserGenerator.Components
             }
         }
 
-        public static ComponentWhileLooper While(IParserComponent component) => new ComponentWhileLooper(component);
+        public static WhileParser While(IParser component) => new WhileParser(component);
         public override string ToString() => $"ComponentWhileLooper[{base.ToString()}]";
     }
 }

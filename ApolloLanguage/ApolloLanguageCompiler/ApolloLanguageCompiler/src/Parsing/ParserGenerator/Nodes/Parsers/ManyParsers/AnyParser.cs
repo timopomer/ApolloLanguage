@@ -6,17 +6,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ApolloLanguageCompiler.Parsing.ParserGenerator.Components
+namespace ApolloLanguageCompiler.Parsing.ParserGenerator.Nodes.Parsers
 {
-    public class AnyComponent : ManyComponent
+    public class AnyParser : ManyParser
     {
-        public AnyComponent(params IParserComponent[] components) : base(components)
+        public AnyParser(params IParser[] components) : base(components)
         {
         }
 
         public override void Parse(NodeParser parser, Node node, TokenWalker walker)
         {
-            foreach (IParserComponent component in this.Components)
+            foreach (IParser component in this.Components)
             {
                 try
                 {
@@ -31,7 +31,7 @@ namespace ApolloLanguageCompiler.Parsing.ParserGenerator.Components
             throw new ParserException("None of the parsers succeded");
         }
 
-        public static AnyComponent Any(params IParserComponent[] components) => new AnyComponent(components);
+        public static AnyParser Any(params IParser[] components) => new AnyParser(components);
         public override string ToString() => $"AnyComponent[{base.ToString()}]";
     }
 }

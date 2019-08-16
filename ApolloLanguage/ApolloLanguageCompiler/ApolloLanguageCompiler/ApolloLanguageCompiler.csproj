@@ -72,12 +72,13 @@
     <Compile Include="src\Parsing\Nodes\Action\Function\FunctionParameterNode.cs" />
     <Compile Include="src\Parsing\Nodes\Action\VariableDeclarationNode.cs" />
     <Compile Include="src\Parsing\Nodes\Modifier\ModifierNode.cs" />
-    <Compile Include="src\Parsing\ParserGenerator\Components\IParserComponent.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Nodes\Parsers\IParser.cs" />
     <Compile Include="src\Parsing\ParserGenerator\Exceptions\CouldNotFindTokenException.cs" />
     <Compile Include="src\Parsing\ParserGenerator\Exceptions\ParserException.cs" />
-    <Compile Include="src\Parsing\ParserGenerator\Node.cs" />
-    <Compile Include="src\Parsing\ParserGenerator\NodeParser.cs" />
-    <Compile Include="src\Parsing\ParserGenerator\Parsers.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Nodes\Node.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Nodes\Parsers\NodeParser.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Nodes\NodeParsers.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Expressions\Precedence.cs" />
     <Compile Include="src\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="src\Tokenization\SourceContext.cs" />
@@ -163,16 +164,16 @@
     <Compile Include="src\CodeGeneration\CompilationState.cs" />
     <Compile Include="src\Analysis\IR\Expressions\Operators\Binary\NamespaceExpression.cs" />
     <Compile Include="src\Parsing\Nodes\Action\Expression\Elements\Operators\Binary\NamespaceElement.cs" />
-    <Compile Include="src\Parsing\ParserGenerator\Components\ManyComponent\AllComponent.cs" />
-    <Compile Include="src\Parsing\ParserGenerator\Components\ManyComponent\AnyComponent.cs" />
-    <Compile Include="src\Parsing\ParserGenerator\Components\ManyComponent\ManyComponent.cs" />
-    <Compile Include="src\Parsing\ParserGenerator\Components\LoopComponent\ComponentForeverLooper.cs" />
-    <Compile Include="src\Parsing\ParserGenerator\Components\LoopComponent\ComponentWhileLooper.cs" />
-    <Compile Include="src\Parsing\ParserGenerator\Components\LoopComponent\LoopComponent.cs" />
-    <Compile Include="src\Parsing\ParserGenerator\Components\TokenComponent\TokenComponent.cs" />
-    <Compile Include="src\Parsing\ParserGenerator\Components\TokenComponent\TokenEater.cs" />
-    <Compile Include="src\Parsing\ParserGenerator\Components\TokenComponent\TokenKeeper.cs" />
-    <Compile Include="src\Parsing\ParserGenerator\Components\ReferenceComponent.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Nodes\Parsers\ManyParsers\AllParser.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Nodes\Parsers\ManyParsers\AnyParser.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Nodes\Parsers\ManyParsers\ManyParser.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Nodes\Parsers\LoopParsers\ForeverParser.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Nodes\Parsers\LoopParsers\WhileParser.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Nodes\Parsers\LoopParsers\LoopParser.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Nodes\Parsers\TokenParsers\TokenParser.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Nodes\Parsers\TokenParsers\TokenEater.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Nodes\Parsers\TokenParsers\TokenKeeper.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Nodes\Parsers\ReferenceParser.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />

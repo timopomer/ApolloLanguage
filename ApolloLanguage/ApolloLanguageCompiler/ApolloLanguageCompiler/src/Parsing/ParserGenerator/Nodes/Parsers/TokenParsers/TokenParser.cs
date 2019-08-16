@@ -2,13 +2,13 @@ using System;
 using System.Linq;
 using ApolloLanguageCompiler.Tokenization;
 
-namespace ApolloLanguageCompiler.Parsing.ParserGenerator.Components
+namespace ApolloLanguageCompiler.Parsing.ParserGenerator.Nodes.Parsers
 {
-    public abstract class TokenComponent : IParserComponent
+    public abstract class TokenParser : IParser
     {
         protected readonly SyntaxKeyword Keyword;
 
-        protected TokenComponent(SyntaxKeyword keyword)
+        protected TokenParser(SyntaxKeyword keyword)
         {
             this.Keyword = keyword;
         }

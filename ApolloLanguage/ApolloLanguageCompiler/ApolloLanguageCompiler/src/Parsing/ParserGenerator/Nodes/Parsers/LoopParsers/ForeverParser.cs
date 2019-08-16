@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ApolloLanguageCompiler.Parsing.ParserGenerator.Components
+namespace ApolloLanguageCompiler.Parsing.ParserGenerator.Nodes.Parsers
 {
-    public class ComponentForeverLooper : LoopComponent
+    public class ForeverParser : LoopParser
     {
-        public ComponentForeverLooper(IParserComponent component) : base(component)
+        public ForeverParser(IParser component) : base(component)
         {
         }
 
@@ -21,7 +21,7 @@ namespace ApolloLanguageCompiler.Parsing.ParserGenerator.Components
             }
         }
 
-        public static ComponentForeverLooper Forever(IParserComponent component) => new ComponentForeverLooper(component);
+        public static ForeverParser Forever(IParser component) => new ForeverParser(component);
         public override string ToString() => $"ComponentForeverLooper[{base.ToString()}]";
     }
 }

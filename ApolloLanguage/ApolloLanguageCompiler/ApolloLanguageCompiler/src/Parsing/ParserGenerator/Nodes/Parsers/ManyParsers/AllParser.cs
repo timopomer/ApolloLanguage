@@ -6,23 +6,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ApolloLanguageCompiler.Parsing.ParserGenerator.Components
+namespace ApolloLanguageCompiler.Parsing.ParserGenerator.Nodes.Parsers
 {
-    public class AllComponent : ManyComponent
+    public class AllParser : ManyParser
     {
-        public AllComponent(params IParserComponent[] components) : base(components)
+        public AllParser(params IParser[] components) : base(components)
         {
         }
 
         public override void Parse(NodeParser parser, Node node, TokenWalker walker)
         {
-            foreach (IParserComponent component in this.Components)
+            foreach (IParser component in this.Components)
             {
                 component.Parse(parser, node, walker);
             }
         }
 
-        public static AllComponent All(params IParserComponent[] components) => new AllComponent(components);
+        public static AllParser All(params IParser[] components) => new AllParser(components);
         public override string ToString() => $"AllComponent[{base.ToString()}]";
     }
 }
