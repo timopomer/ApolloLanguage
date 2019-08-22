@@ -2,13 +2,12 @@ using System;
 using ApolloLanguageCompiler.Analysis.IR.Expression;
 using ApolloLanguageCompiler.Analysis.IR.Expressions.Operators;
 using ApolloLanguageCompiler.Analysis.IR.Expressions.Types;
-using ApolloLanguageCompiler.Parsing.Nodes;
 using System.Linq;
-using static ApolloLanguageCompiler.Parsing.Nodes.PrimaryElement;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using GrEmit;
 using ApolloLanguageCompiler.CodeGeneration;
+using static ApolloLanguageCompiler.Parsing.PrimaryElement;
 
 namespace ApolloLanguageCompiler.Analysis.IR.Expressions.Literals
 {

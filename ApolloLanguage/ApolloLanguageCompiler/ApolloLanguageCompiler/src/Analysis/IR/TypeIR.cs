@@ -4,7 +4,7 @@ using System.Linq;
 using ApolloLanguageCompiler.Analysis.IR.Expression;
 using ApolloLanguageCompiler.Analysis.IR.Expressions.Literals.Types;
 using ApolloLanguageCompiler.Analysis.IR.Expressions.Types;
-using ApolloLanguageCompiler.Parsing.Nodes;
+using ApolloLanguageCompiler.Parsing;
 using Newtonsoft.Json;
 
 namespace ApolloLanguageCompiler.Analysis.IR

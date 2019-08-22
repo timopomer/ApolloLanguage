@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ApolloLanguageCompiler.Tokenization;
 
-namespace ApolloLanguageCompiler.Parsing.Nodes
+namespace ApolloLanguageCompiler.Parsing
 {
     public class ProgramNode : ASTNode, IContains<ClassNode>
     {

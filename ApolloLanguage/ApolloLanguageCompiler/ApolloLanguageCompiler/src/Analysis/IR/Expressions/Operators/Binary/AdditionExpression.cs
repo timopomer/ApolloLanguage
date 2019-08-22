@@ -3,7 +3,7 @@ using ApolloLanguageCompiler.Analysis.IR;
 using ApolloLanguageCompiler.Analysis.IR.Expression;
 using ApolloLanguageCompiler.Analysis.IR.Expressions.Types;
 using ApolloLanguageCompiler.CodeGeneration;
-using ApolloLanguageCompiler.Parsing.Nodes;
+using ApolloLanguageCompiler.Parsing;
 using GrEmit;
 
 namespace ApolloLanguageCompiler.Analysis.IR.Expressions.Operators

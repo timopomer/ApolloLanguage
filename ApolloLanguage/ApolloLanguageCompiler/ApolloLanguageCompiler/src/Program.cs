@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using ApolloLanguageCompiler.Parsing.ParserGenerator;
+using ApolloLanguageCompiler.Parsing;
 using CommandLine;
 
 namespace ApolloLanguageCompiler

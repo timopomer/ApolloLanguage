@@ -1,4 +1,4 @@
-namespace ApolloLanguageCompiler.Parsing.Nodes
+namespace ApolloLanguageCompiler.Parsing
 {
     public abstract class BinaryOperatorElement : OperatorElement
     {

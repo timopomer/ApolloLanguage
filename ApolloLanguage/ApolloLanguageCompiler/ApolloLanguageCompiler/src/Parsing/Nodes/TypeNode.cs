@@ -1,6 +1,6 @@
 using System;
 
-namespace ApolloLanguageCompiler.Parsing.Nodes
+namespace ApolloLanguageCompiler.Parsing
 {
 
     public class TypeNode : ASTNode, IContains<ExpressionElement>

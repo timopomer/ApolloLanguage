@@ -1,11 +1,10 @@
 using System;
 using ApolloLanguageCompiler.Tokenization;
-using ApolloLanguageCompiler.Parsing.Nodes;
+using ApolloLanguageCompiler.Parsing;
 using System.Collections.Generic;
 using System.Linq;
 using System.Diagnostics;
 using Newtonsoft.Json;
-using ApolloLanguageCompiler.Parsing.Exceptions;
 
 namespace ApolloLanguageCompiler.Parsing
 {
@@ -60,8 +59,5 @@ namespace ApolloLanguageCompiler.Parsing
         }
 
     }
-
-
-
 
 }

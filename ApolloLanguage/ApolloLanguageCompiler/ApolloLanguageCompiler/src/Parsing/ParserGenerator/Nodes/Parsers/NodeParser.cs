@@ -1,11 +1,11 @@
-using ApolloLanguageCompiler.Parsing.ParserGenerator.Exceptions;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ApolloLanguageCompiler.Parsing.ParserGenerator.Nodes.Parsers
+namespace ApolloLanguageCompiler.Parsing
 {
     public class NodeParser : INodeParser
     {
@@ -27,9 +27,9 @@ namespace ApolloLanguageCompiler.Parsing.ParserGenerator.Nodes.Parsers
         public void Parse(NodeParser parser, Node node, TokenWalker walker)
         {
             Node innerNode = new Node();
-            foreach (INodeParser parser in this.parsers)
+            foreach (INodeParser singleParser in this.parsers)
             {
-                parser.Parse(this, innerNode, walker);
+                singleParser.Parse(this, innerNode, walker);
             }
             node.Add(this.Type, innerNode);
         }

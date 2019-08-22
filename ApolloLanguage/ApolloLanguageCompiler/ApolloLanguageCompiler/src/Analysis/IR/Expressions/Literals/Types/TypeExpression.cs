@@ -2,7 +2,7 @@ using System;
 using ApolloLanguageCompiler.Analysis.IR.Expression;
 using ApolloLanguageCompiler.Analysis.IR.Expressions.Literals;
 using ApolloLanguageCompiler.Analysis.IR.Expressions.Operators;
-using ApolloLanguageCompiler.Parsing.Nodes;
+using ApolloLanguageCompiler.Parsing;
 using Newtonsoft.Json;
 
 namespace ApolloLanguageCompiler.Analysis.IR.Expressions.Types

@@ -4,8 +4,7 @@ using System.Linq;
 using ApolloLanguageCompiler.Analysis.IR.Expression;
 using ApolloLanguageCompiler.Analysis.IR.Expressions.Operators;
 using ApolloLanguageCompiler.Analysis.IR.Expressions.Types;
-using ApolloLanguageCompiler.Parsing.Nodes;
-using ApolloLanguageCompiler.Parsing.Nodes.Action.Expression.Elements.Constructs;
+using ApolloLanguageCompiler.Parsing;
 using GrEmit;
 
 namespace ApolloLanguageCompiler.Analysis.IR.Expressions.Constructs

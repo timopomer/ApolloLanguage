@@ -1,6 +1,6 @@
 using System;
 
-namespace ApolloLanguageCompiler.Parsing.ParserGenerator.Nodes.Parsers
+namespace ApolloLanguageCompiler.Parsing
 {
     public interface INodeParser
     {

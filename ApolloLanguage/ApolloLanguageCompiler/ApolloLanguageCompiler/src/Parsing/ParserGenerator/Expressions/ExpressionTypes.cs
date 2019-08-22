@@ -1,0 +1,26 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ApolloLanguageCompiler.Parsing
+{
+    public enum ExpressionTypes
+    {
+        Access,
+        Addition,
+        Assignment,
+        CallFunction,
+        Comparison,
+        Equality,
+        Exponantion,
+        Multiplication,
+        Namespace,
+        Negation,
+        Identifier,
+        Literal,
+        Paranthesized,
+        PrimitiveType
+    }
+}

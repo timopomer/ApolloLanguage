@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using ApolloLanguageCompiler.Analysis.IR.Expressions.Constructs;
 using ApolloLanguageCompiler.Analysis.IR.Expressions.Operators;
-using ApolloLanguageCompiler.Parsing.Nodes;
 using GrEmit;
 using Newtonsoft.Json;
 

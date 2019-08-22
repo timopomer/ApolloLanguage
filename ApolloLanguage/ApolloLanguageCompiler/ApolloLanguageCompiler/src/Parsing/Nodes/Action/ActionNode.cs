@@ -1,7 +1,7 @@
 ﻿﻿using System;
 using ApolloLanguageCompiler.Tokenization;
 
-namespace ApolloLanguageCompiler.Parsing.Nodes
+namespace ApolloLanguageCompiler.Parsing
 {
     public abstract class ActionNode : ASTNode
     {

@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
 using ApolloLanguageCompiler.Tokenization;
-using ApolloLanguageCompiler.Parsing.Nodes;
-
 using System.Linq;
 
-namespace ApolloLanguageCompiler.Parsing.Nodes
+namespace ApolloLanguageCompiler.Parsing
 {
 
     public class FunctionNode : ActionNode, IContains<ModifierNode>, IContains<TypeNode>, IContains<FunctionParameterNode>, IContains<CodeBlockNode>

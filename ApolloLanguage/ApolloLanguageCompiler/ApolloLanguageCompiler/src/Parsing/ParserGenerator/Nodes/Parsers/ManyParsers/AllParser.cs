@@ -1,4 +1,4 @@
-using ApolloLanguageCompiler.Parsing.ParserGenerator.Exceptions;
+
 using ApolloLanguageCompiler.Tokenization;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ApolloLanguageCompiler.Parsing.ParserGenerator.Nodes.Parsers
+namespace ApolloLanguageCompiler.Parsing
 {
     public class AllParser : ManyParser
     {
@@ -23,6 +23,6 @@ namespace ApolloLanguageCompiler.Parsing.ParserGenerator.Nodes.Parsers
         }
 
         public static AllParser All(params INodeParser[] parsers) => new AllParser(parsers);
-        public override string ToString() => $"AllComponent[{base.ToString()}]";
+        public override string ToString() => $"AllParser[{base.ToString()}]";
     }
 }

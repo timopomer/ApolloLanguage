@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 
-namespace ApolloLanguageCompiler.Parsing.ParserGenerator.Nodes.Parsers
+namespace ApolloLanguageCompiler.Parsing
 {
     public abstract class ManyParser : INodeParser
     {

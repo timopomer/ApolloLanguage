@@ -2,9 +2,10 @@ using System;
 using System.Collections.Generic;
 using ApolloLanguageCompiler.Analysis.IR.Expressions.Literals.Types;
 using ApolloLanguageCompiler.Analysis.IR.Expressions.Operators;
-using ApolloLanguageCompiler.Parsing.Nodes;
+using ApolloLanguageCompiler.Parsing;
 using GrEmit;
 using Newtonsoft.Json;
+using BinaryExpression = ApolloLanguageCompiler.Analysis.IR.Expressions.Operators.BinaryExpression;
 
 namespace ApolloLanguageCompiler.Analysis.IR.Expressions.Types
 {

@@ -2,8 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ApolloLanguageCompiler.Tokenization;
-using ApolloLanguageCompiler.Parsing.Nodes;
-using ApolloLanguageCompiler.Parsing.Exceptions;
+using ApolloLanguageCompiler.Parsing;
 
 namespace ApolloLanguageCompiler.Parsing
 {

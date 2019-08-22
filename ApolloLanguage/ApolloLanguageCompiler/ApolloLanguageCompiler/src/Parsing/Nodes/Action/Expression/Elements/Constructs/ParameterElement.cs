@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ApolloLanguageCompiler.Parsing.Nodes.Action.Expression.Elements.Constructs
+namespace ApolloLanguageCompiler.Parsing
 {
     public class ParameterElement : ConstructElement
     {

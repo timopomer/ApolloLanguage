@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ApolloLanguageCompiler.Parsing.ParserGenerator.Nodes.Parsers
+namespace ApolloLanguageCompiler.Parsing
 {
     public class ForeverParser : LoopParser
     {
@@ -22,6 +22,6 @@ namespace ApolloLanguageCompiler.Parsing.ParserGenerator.Nodes.Parsers
         }
 
         public static ForeverParser Forever(INodeParser parser) => new ForeverParser(parser);
-        public override string ToString() => $"ComponentForeverLooper[{base.ToString()}]";
+        public override string ToString() => $"ForeverParser[{base.ToString()}]";
     }
 }

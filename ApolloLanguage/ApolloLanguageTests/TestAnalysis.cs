@@ -5,7 +5,7 @@ using ApolloLanguageCompiler.Parsing;
 using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics;
-using ApolloLanguageCompiler.Parsing.Nodes;
+using ApolloLanguageCompiler.Parsing;
 
 namespace ApolloLanguageCompiler.Tests
 {

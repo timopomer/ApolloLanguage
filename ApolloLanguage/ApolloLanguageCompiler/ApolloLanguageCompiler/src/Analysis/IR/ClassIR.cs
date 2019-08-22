@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using ApolloLanguageCompiler.Parsing.Nodes;
 using System.Linq;
 using ApolloLanguageCompiler.Analysis.IR.Expressions.Literals;
 using ApolloLanguageCompiler.Analysis.IR.Expressions.Types;
@@ -9,6 +8,8 @@ using System.Reflection.Emit;
 using System.Reflection;
 using GrEmit;
 using ApolloLanguageCompiler.CodeGeneration;
+using ApolloLanguageCompiler.Parsing;
+using BinaryExpression = ApolloLanguageCompiler.Analysis.IR.Expressions.Operators.BinaryExpression;
 
 namespace ApolloLanguageCompiler.Analysis.IR
 {

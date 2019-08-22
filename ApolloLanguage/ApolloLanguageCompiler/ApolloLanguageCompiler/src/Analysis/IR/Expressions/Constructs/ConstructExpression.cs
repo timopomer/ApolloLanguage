@@ -2,8 +2,8 @@
 using ApolloLanguageCompiler.Analysis.IR.Expression;
 using ApolloLanguageCompiler.Analysis.IR.Expressions.Constructs;
 using ApolloLanguageCompiler.Analysis.IR.Expressions.Types;
-using ApolloLanguageCompiler.Parsing.Nodes;
-using ApolloLanguageCompiler.Parsing.Nodes.Action.Expression.Elements.Constructs;
+using ApolloLanguageCompiler.Parsing;
+
 
 namespace ApolloLanguageCompiler.Analysis.IR.Expressions.Operators
 {

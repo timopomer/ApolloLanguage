@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using ApolloLanguageCompiler.Analysis.IR.Expressions.Literals.Types;
 using ApolloLanguageCompiler.Analysis.IR.Expressions.Operators;
-using ApolloLanguageCompiler.Parsing.Nodes;
+using ApolloLanguageCompiler.Parsing;
 using GrEmit;
 using Newtonsoft.Json;
 

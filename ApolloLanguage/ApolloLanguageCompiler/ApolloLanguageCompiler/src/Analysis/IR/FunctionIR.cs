@@ -8,8 +8,9 @@ using ApolloLanguageCompiler.Analysis.IR.Expressions.Literals;
 using ApolloLanguageCompiler.Analysis.IR.Expressions.Operators;
 using ApolloLanguageCompiler.Analysis.IR.Expressions.Types;
 using ApolloLanguageCompiler.CodeGeneration;
-using ApolloLanguageCompiler.Parsing.Nodes;
+using ApolloLanguageCompiler.Parsing;
 using GrEmit;
+using BinaryExpression = ApolloLanguageCompiler.Analysis.IR.Expressions.Operators.BinaryExpression;
 
 namespace ApolloLanguageCompiler.Analysis.IR
 {

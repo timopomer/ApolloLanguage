@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 using static ApolloLanguageCompiler.Parsing.TokenWalker;
 
-namespace ApolloLanguageCompiler.Parsing.Nodes
+namespace ApolloLanguageCompiler.Parsing
 {
     public abstract partial class PrimaryElement : ExpressionElement
     {

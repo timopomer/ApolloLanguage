@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using ApolloLanguageCompiler.Analysis.IR;
 using ApolloLanguageCompiler.Tokenization;
 
-namespace ApolloLanguageCompiler.Parsing.Nodes
+namespace ApolloLanguageCompiler.Parsing
 {
     public class InstanceModifierNode : ASTNode
     {

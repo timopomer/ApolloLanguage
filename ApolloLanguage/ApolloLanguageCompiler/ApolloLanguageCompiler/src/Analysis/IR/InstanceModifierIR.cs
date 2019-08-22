@@ -1,7 +1,7 @@
 using System;
 using System.Diagnostics.Contracts;
 using System.Reflection;
-using ApolloLanguageCompiler.Parsing.Nodes;
+using ApolloLanguageCompiler.Parsing;
 
 namespace ApolloLanguageCompiler.Analysis.IR
 {

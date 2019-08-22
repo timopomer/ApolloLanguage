@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using ApolloLanguageCompiler.Tokenization;
 
-namespace ApolloLanguageCompiler.Parsing.ParserGenerator.Nodes.Parsers
+namespace ApolloLanguageCompiler.Parsing
 {
     public abstract class TokenParser : INodeParser
     {

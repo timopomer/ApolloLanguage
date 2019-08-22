@@ -4,16 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ApolloLanguageCompiler.Tokenization;
-using static ApolloLanguageCompiler.Parsing.ParserGenerator.Nodes.Parsers.TokenEater;
-using static ApolloLanguageCompiler.Parsing.ParserGenerator.Nodes.Parsers.TokenKeeper;
-using static ApolloLanguageCompiler.Parsing.ParserGenerator.Nodes.Parsers.ForeverParser;
-using static ApolloLanguageCompiler.Parsing.ParserGenerator.Nodes.Parsers.WhileParser;
-using static ApolloLanguageCompiler.Parsing.ParserGenerator.Nodes.Parsers.AllParser;
-using static ApolloLanguageCompiler.Parsing.ParserGenerator.Nodes.Parsers.AnyParser;
-using static ApolloLanguageCompiler.Parsing.ParserGenerator.Nodes.Parsers.ReferenceParser;
-using ApolloLanguageCompiler.Parsing.ParserGenerator.Nodes.Parsers;
+using static ApolloLanguageCompiler.Parsing.TokenEater;
+using static ApolloLanguageCompiler.Parsing.TokenKeeper;
+using static ApolloLanguageCompiler.Parsing.ForeverParser;
+using static ApolloLanguageCompiler.Parsing.WhileParser;
+using static ApolloLanguageCompiler.Parsing.AllParser;
+using static ApolloLanguageCompiler.Parsing.AnyParser;
+using static ApolloLanguageCompiler.Parsing.ReferenceParser;
 
-namespace ApolloLanguageCompiler.Parsing.ParserGenerator.Nodes
+
+namespace ApolloLanguageCompiler.Parsing
 {
     public enum Nodes
     {

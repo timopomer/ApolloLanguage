@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using ApolloLanguageCompiler.Analysis.IR.Expression;
 using ApolloLanguageCompiler.CodeGeneration;
 using ApolloLanguageCompiler.Parsing;
-using ApolloLanguageCompiler.Parsing.Nodes;
 using Newtonsoft.Json;
 
 namespace ApolloLanguageCompiler.Analysis.IR

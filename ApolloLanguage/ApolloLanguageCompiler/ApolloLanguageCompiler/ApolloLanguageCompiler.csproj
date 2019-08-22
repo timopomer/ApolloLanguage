@@ -72,7 +72,14 @@
     <Compile Include="src\Parsing\Nodes\Action\Function\FunctionParameterNode.cs" />
     <Compile Include="src\Parsing\Nodes\Action\VariableDeclarationNode.cs" />
     <Compile Include="src\Parsing\Nodes\Modifier\ModifierNode.cs" />
-    <Compile Include="src\Parsing\ParserGenerator\Nodes\Parsers\IParser.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Expressions\ExpressionTypes.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Expressions\Kinds\IExpression.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Expressions\Parsers\ExpressionParser.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Expressions\Parsers\ExpressionParsers.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Expressions\Parsers\IExpressionParser.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Expressions\Kinds\BinaryExpression.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Expressions\Kinds\UnaryExpression.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Nodes\Parsers\INodeParser.cs" />
     <Compile Include="src\Parsing\ParserGenerator\Exceptions\CouldNotFindTokenException.cs" />
     <Compile Include="src\Parsing\ParserGenerator\Exceptions\ParserException.cs" />
     <Compile Include="src\Parsing\ParserGenerator\Nodes\Node.cs" />

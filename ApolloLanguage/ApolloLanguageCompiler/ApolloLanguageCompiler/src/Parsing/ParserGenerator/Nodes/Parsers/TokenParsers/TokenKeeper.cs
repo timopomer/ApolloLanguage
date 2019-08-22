@@ -1,8 +1,8 @@
-using ApolloLanguageCompiler.Parsing.ParserGenerator.Exceptions;
+
 using ApolloLanguageCompiler.Tokenization;
 using System;
 
-namespace ApolloLanguageCompiler.Parsing.ParserGenerator.Nodes.Parsers
+namespace ApolloLanguageCompiler.Parsing
 {
     public class TokenKeeper : TokenParser
     {

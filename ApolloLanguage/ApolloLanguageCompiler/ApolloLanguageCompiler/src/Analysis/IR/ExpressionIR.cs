@@ -4,10 +4,10 @@ using ApolloLanguageCompiler.Analysis.IR.Expressions;
 using ApolloLanguageCompiler.Analysis.IR.Expressions.Operators;
 using ApolloLanguageCompiler.Analysis.IR.Expressions.Literals;
 using ApolloLanguageCompiler.Analysis.IR.Expressions.Types;
-using ApolloLanguageCompiler.Parsing.Nodes;
 using Newtonsoft.Json;
 using GrEmit;
 using System.Collections.Generic;
+using ApolloLanguageCompiler.Parsing;
 
 namespace ApolloLanguageCompiler.Analysis.IR.Expression
 {
