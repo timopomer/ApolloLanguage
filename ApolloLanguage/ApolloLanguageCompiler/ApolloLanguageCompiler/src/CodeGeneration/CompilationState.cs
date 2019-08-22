@@ -14,7 +14,7 @@ namespace ApolloLanguageCompiler.CodeGeneration
         private List<(string, MethodInfo)> methods;
         private readonly CompilationState parent;
 
-        public CompilationState(CompilationState parent=null)
+        public CompilationState(CompilationState parent = null)
         {
             this.locals = new List<(string, GroboIL.Local)>();
             this.labels = new List<(string, GroboIL.Label)>();
@@ -72,7 +72,7 @@ namespace ApolloLanguageCompiler.CodeGeneration
 
                 return parentMethod;
             }
-}
+        }
     }
     public class CouldNotFindLabelException : Exception
     { }

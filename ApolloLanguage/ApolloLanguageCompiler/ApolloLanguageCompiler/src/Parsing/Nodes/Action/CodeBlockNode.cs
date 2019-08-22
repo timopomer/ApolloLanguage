@@ -12,7 +12,7 @@ namespace ApolloLanguageCompiler.Parsing
 
         public void AddNode(ActionNode node) => this.Actions.Add(node);
 
-		private CodeBlockNode(CodeBlockNode otherNode)
+        private CodeBlockNode(CodeBlockNode otherNode)
         {
             this.Actions = otherNode.Actions.Clone();
         }
@@ -22,13 +22,13 @@ namespace ApolloLanguageCompiler.Parsing
             this.Actions = new List<ActionNode>();
         }
 
-		public static bool TryParse(IContains<CodeBlockNode> container, TokenWalker localWalker)
+        public static bool TryParse(IContains<CodeBlockNode> container, TokenWalker localWalker)
         {
             CodeBlockNode CBNode = new CodeBlockNode();
             CBNode.SetContext(localWalker);
 
             if (!localWalker.TryGetNext(out Token OpenCurlyBracketToken, SyntaxKeyword.OpenCurlyBracket))
-				return false;
+                return false;
             bool Parsed;
 
             do
@@ -36,9 +36,9 @@ namespace ApolloLanguageCompiler.Parsing
                 Parsed = Parse(
                     CBNode,
                     localWalker,
-                    CodeBlockNode.TryParse, 
-                    ExpressionNode.TryParse, 
-                    VariableDeclarationNode.TryParse, 
+                    CodeBlockNode.TryParse,
+                    ExpressionNode.TryParse,
+                    VariableDeclarationNode.TryParse,
                     FunctionNode.TryParse,
                     ReturnNode.TryParse
                 );
@@ -46,9 +46,9 @@ namespace ApolloLanguageCompiler.Parsing
             while (Parsed);
 
             if (!localWalker.TryGetNext(out Token CloseCurlyBracketToken, SyntaxKeyword.CloseCurlyBracket))
-				return false;
+                return false;
 
-			container.AddNode(CBNode);
+            container.AddNode(CBNode);
             return true;
         }
     }

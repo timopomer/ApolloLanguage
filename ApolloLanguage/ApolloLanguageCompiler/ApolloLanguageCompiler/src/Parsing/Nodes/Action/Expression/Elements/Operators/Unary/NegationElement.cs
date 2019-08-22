@@ -50,6 +50,6 @@ namespace ApolloLanguageCompiler.Parsing
                     throw new UnexpectedFailureException("Unary expression shouldve parsed according to previously found tokens");
             }
             return TryParse(CallFunctionElement.TryParse, out expression, LocalWalker);
-        }       
-	}
+        }
+    }
 }

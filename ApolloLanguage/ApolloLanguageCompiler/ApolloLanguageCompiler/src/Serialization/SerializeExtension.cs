@@ -20,7 +20,7 @@ namespace ApolloLanguageCompiler.Serialization
                     new DontSerializeContractResolver<SourceContext>(),
                     new ModifierContractResolver()
                 },
-                
+
             };
             return JsonConvert.SerializeObject(obj, settings);
         }

@@ -32,7 +32,7 @@ namespace ApolloLanguageCompiler.Parsing
                 {
                     representation.Add($"{kvp.Key}[");
                     foreach (object obj in kvp.Value)
-                    { 
+                    {
                         if (obj is Node node)
                         {
                             IEnumerable<string> nodeRepresentation = node.Representation().Select(n => $"{Indetation}{n}");

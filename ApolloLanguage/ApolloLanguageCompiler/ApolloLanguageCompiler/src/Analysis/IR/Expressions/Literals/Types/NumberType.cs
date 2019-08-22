@@ -23,9 +23,9 @@ namespace ApolloLanguageCompiler.Analysis.IR.Expressions.Types
             switch (binaryExpression)
             {
                 case AdditionExpression _:
-                    switch(other)
+                    switch (other)
                     {
-                        case NumberType _ : return new NumberType(this.Context, this.Parent);
+                        case NumberType _: return new NumberType(this.Context, this.Parent);
                     }
                     break;
                 case SubtractionExpression _:

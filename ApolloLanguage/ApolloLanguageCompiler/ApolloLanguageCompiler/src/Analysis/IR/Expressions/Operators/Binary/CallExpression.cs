@@ -25,7 +25,7 @@ namespace ApolloLanguageCompiler.Analysis.IR.Expressions.Operators
 
         public override void EmitFor(GroboIL il, CompilationState state)
         {
-            
+
         }
     }
 }

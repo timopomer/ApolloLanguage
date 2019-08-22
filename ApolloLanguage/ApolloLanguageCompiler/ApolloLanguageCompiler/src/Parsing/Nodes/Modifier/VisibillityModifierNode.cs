@@ -1,4 +1,4 @@
- using System;
+using System;
 using ApolloLanguageCompiler.Tokenization;
 using System.Collections.Generic;
 using ApolloLanguageCompiler.Analysis.IR;

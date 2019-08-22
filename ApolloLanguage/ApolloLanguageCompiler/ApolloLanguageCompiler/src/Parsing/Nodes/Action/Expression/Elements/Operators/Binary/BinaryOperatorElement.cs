@@ -15,5 +15,5 @@ namespace ApolloLanguageCompiler.Parsing
             this.Left = element.Left.Clone() as ExpressionElement;
             this.Right = element.Right.Clone() as ExpressionElement;
         }
-	}
+    }
 }

@@ -72,7 +72,7 @@ namespace ApolloLanguageCompiler.Parsing
                 }
                 while (localWalker.TryGetNext(SyntaxKeyword.Comma));
             }
-            
+
             if (!localWalker.TryGetNext(SyntaxKeyword.CloseParenthesis))
                 return false;
 

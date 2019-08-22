@@ -11,7 +11,7 @@ namespace ApolloLanguageCompiler.Analysis.IR
         private List<IR> declaredInside;
         private Scope parent;
 
-        public Scope(Scope parent=null)
+        public Scope(Scope parent = null)
         {
             this.declaredInside = new List<IR>();
             this.parent = parent;

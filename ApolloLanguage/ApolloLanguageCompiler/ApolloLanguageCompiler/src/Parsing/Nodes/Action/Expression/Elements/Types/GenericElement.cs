@@ -48,6 +48,6 @@ namespace ApolloLanguageCompiler.Parsing
                 expression = new GenericElement(expression, new ParameterElement(parameters, Context));
             }
             return true;
-        }       
-	}
+        }
+    }
 }

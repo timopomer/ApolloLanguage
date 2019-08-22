@@ -68,9 +68,9 @@ namespace ApolloLanguageCompiler.Parsing
                 )
             );
 
-// public static readonly NodeParser Assignment = new NodeParser(Nodes.Assignment,
-//    
-//);
+            // public static readonly NodeParser Assignment = new NodeParser(Nodes.Assignment,
+            //    
+            //);
 
             public static readonly NodeParser Primary = new NodeParser(Nodes.PrimaryElement,
                 Reference(() => Identifier)

@@ -33,7 +33,7 @@ namespace ApolloLanguageCompiler.CodeGeneration
             }
             var EntryPoint = module.GetType("Program").GetMethod("Main");
             assembly.SetEntryPoint(EntryPoint, PEFileKinds.ConsoleApplication);
-            
+
             return assembly;
         }
     }

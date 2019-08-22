@@ -8,7 +8,7 @@ namespace ApolloLanguageCompiler.Parsing
     {
         public TokenKeeper(SyntaxKeyword keyword) : base(keyword)
         {
-            
+
         }
 
         public override void Parse(NodeParser parser, Node node, TokenWalker walker)
@@ -17,7 +17,7 @@ namespace ApolloLanguageCompiler.Parsing
                 throw new CouldNotFindTokenException();
             node.Add(parser.Type, token);
         }
-        
+
         public static TokenKeeper Keep(SyntaxKeyword keyword) => new TokenKeeper(keyword);
         public override string ToString() => $"TokenKeeper[{base.ToString()}]";
     }

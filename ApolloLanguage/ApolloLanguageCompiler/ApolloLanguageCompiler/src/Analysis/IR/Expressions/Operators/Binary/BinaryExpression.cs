@@ -9,7 +9,7 @@ using GrEmit;
 
 namespace ApolloLanguageCompiler.Analysis.IR.Expressions.Operators
 {
-    public abstract class BinaryExpression : OperatorExpression, IEmitsFor<GroboIL,CompilationState>
+    public abstract class BinaryExpression : OperatorExpression, IEmitsFor<GroboIL, CompilationState>
     {
         public interface IOperable
         {

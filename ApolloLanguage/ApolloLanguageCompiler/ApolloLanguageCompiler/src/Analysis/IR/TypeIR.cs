@@ -32,10 +32,10 @@ namespace ApolloLanguageCompiler.Analysis.IR
 
             if (other is null)
                 return false;
-            
+
             return this.Type.Equals(other.Type);
         }
-        
+
         public Type ILType
         {
             get

@@ -22,7 +22,7 @@ namespace ApolloLanguageCompiler.Analysis.IR
 
         public MethodAttributes ToAttribute()
         {
-            switch(this.Modifier)
+            switch (this.Modifier)
             {
                 case Instanceness.Instance:
                     return MethodAttributes.ReuseSlot;

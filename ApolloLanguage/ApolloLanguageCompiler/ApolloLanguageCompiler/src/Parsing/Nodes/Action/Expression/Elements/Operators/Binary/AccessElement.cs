@@ -36,6 +36,6 @@ namespace ApolloLanguageCompiler.Parsing
                     return false;
             }
             return true;
-        }       
-	}
+        }
+    }
 }

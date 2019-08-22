@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace ApolloLanguageCompiler.Parsing
 {
-	public class ExpressionNode : ActionNode, IContains<ExpressionElement>
+    public class ExpressionNode : ActionNode, IContains<ExpressionElement>
     {
         public override object Clone() => new ExpressionNode(this);
 

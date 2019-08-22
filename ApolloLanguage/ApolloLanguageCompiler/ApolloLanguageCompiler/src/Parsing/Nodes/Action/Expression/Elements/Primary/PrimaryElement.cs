@@ -17,17 +17,17 @@ namespace ApolloLanguageCompiler.Parsing
 
             if (TryParse(PrimaryElement.LiteralElement.TryParse, out expression, LocalWalker))
                 return true;
-            
+
             if (TryParse(PrimaryElement.TypeElement.TryParse, out expression, LocalWalker))
                 return true;
-            
+
             if (TryParse(PrimaryElement.IdentifierElement.TryParse, out expression, LocalWalker))
                 return true;
-            
+
             if (TryParse(PrimaryElement.ParanthesizedElement.TryParse, out expression, LocalWalker))
                 return true;
 
             return false;
-        }       
-	}
+        }
+    }
 }

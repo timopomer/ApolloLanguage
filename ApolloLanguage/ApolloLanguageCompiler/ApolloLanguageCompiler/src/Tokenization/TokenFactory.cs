@@ -24,7 +24,7 @@ namespace ApolloLanguageCompiler.Tokenization
             new TokenParser(@"^[\r\n|\r|\n]{1}",     SyntaxKeyword.EOL               ),
             new TokenParser(@"^,",                   SyntaxKeyword.Comma             ),
             new TokenParser(@"^\.",                  SyntaxKeyword.Dot               ),
-			new TokenParser(@"^=(?!=)",              SyntaxKeyword.Assignment        ),
+            new TokenParser(@"^=(?!=)",              SyntaxKeyword.Assignment        ),
             new TokenParser(@"^\(",                  SyntaxKeyword.OpenParenthesis   ),
             new TokenParser(@"^\)",                  SyntaxKeyword.CloseParenthesis  ),
             new TokenParser(@"^\{",                  SyntaxKeyword.OpenCurlyBracket  ),
@@ -32,9 +32,9 @@ namespace ApolloLanguageCompiler.Tokenization
             new TokenParser(@"^\[",                  SyntaxKeyword.OpenSquareBracket ),
             new TokenParser(@"^\]",                  SyntaxKeyword.CloseSquareBracket),
             new TokenParser(@"^\+",                  SyntaxKeyword.Plus              ),
-			new TokenParser(@"^\-",                  SyntaxKeyword.Minus             ),
+            new TokenParser(@"^\-",                  SyntaxKeyword.Minus             ),
             new TokenParser(@"^!(?!=)",              SyntaxKeyword.Negate            ),
-			new TokenParser(@"^\*(?!\*)",            SyntaxKeyword.Multiply          ),
+            new TokenParser(@"^\*(?!\*)",            SyntaxKeyword.Multiply          ),
             new TokenParser(@"^\%",                  SyntaxKeyword.Mod               ),
             new TokenParser(@"^\*\*",                SyntaxKeyword.Power             ),
             new TokenParser(@"^\/(?!\/)",            SyntaxKeyword.Divide            ),
@@ -59,13 +59,13 @@ namespace ApolloLanguageCompiler.Tokenization
             new TokenParser(@"^instance",            SyntaxKeyword.Instance          ),
             new TokenParser(@"^exposed",             SyntaxKeyword.Exposed           ),
             new TokenParser(@"^hidden",              SyntaxKeyword.Hidden            ),
-			new TokenParser(@"^extension",           SyntaxKeyword.Extension         ),
+            new TokenParser(@"^extension",           SyntaxKeyword.Extension         ),
             new TokenParser(@"^(?!"+Keywords+@")\w*",SyntaxKeyword.Identifier        ),
             new TokenParser(@"^use",                 SyntaxKeyword.Use               )
 };
 
 
-		public TokenFactory(SourceCode source)
+        public TokenFactory(SourceCode source)
         {
             this.context = new SourceContext(0, 0, 0, source.Code.Length, source);
         }

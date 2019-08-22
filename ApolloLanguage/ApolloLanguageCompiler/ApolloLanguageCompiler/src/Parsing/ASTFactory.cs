@@ -16,9 +16,9 @@ namespace ApolloLanguageCompiler.Parsing
 
         public ASTNode Generate()
         {
-			if(!ProgramNode.TryParse(out ProgramNode PNode, this.walker))
-				throw new FailedParsingException();
-			
+            if (!ProgramNode.TryParse(out ProgramNode PNode, this.walker))
+                throw new FailedParsingException();
+
             return PNode;
         }
     }

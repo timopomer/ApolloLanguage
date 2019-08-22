@@ -16,7 +16,7 @@ namespace ApolloLanguageCompiler.Parsing
         public void AddNode(TypeNode node) => this.Type = node;
 
 
-		private VariableDeclarationNode(VariableDeclarationNode otherNode)
+        private VariableDeclarationNode(VariableDeclarationNode otherNode)
         {
             this.Expression = otherNode.Expression.Clone() as ExpressionNode;
             this.Type = otherNode.Type.Clone() as TypeNode;
@@ -26,7 +26,7 @@ namespace ApolloLanguageCompiler.Parsing
         {
         }
 
-		public static bool TryParse(IContains<VariableDeclarationNode> container, TokenWalker localWalker)
+        public static bool TryParse(IContains<VariableDeclarationNode> container, TokenWalker localWalker)
         {
             VariableDeclarationNode VDNode = new VariableDeclarationNode();
             VDNode.SetContext(localWalker);
@@ -40,7 +40,7 @@ namespace ApolloLanguageCompiler.Parsing
             if (!(VDNode.Expression.Expression is AssignmentElement) && !(VDNode.Expression.Expression is PrimaryElement.IdentifierElement))
                 return false;
 
-			container.AddNode(VDNode);
+            container.AddNode(VDNode);
             return true;
         }
     }

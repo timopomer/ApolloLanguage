@@ -11,7 +11,7 @@ using GrEmit;
 
 namespace ApolloLanguageCompiler.Analysis.IR
 {
-    public class VariableDeclarationIR : ExpressionIR, IDeclares<Identifier>, IEmitsFor<GroboIL,CompilationState>
+    public class VariableDeclarationIR : ExpressionIR, IDeclares<Identifier>, IEmitsFor<GroboIL, CompilationState>
     {
         public TypeIR DeclaredType { get; private set; }
         public Identifier Assigned { get; private set; }

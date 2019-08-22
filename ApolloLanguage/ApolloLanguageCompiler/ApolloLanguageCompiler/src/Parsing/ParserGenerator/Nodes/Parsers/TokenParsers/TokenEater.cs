@@ -12,7 +12,7 @@ namespace ApolloLanguageCompiler.Parsing
     {
         public TokenEater(SyntaxKeyword keyword) : base(keyword)
         {
-            
+
         }
 
         public override void Parse(NodeParser parser, Node node, TokenWalker walker)

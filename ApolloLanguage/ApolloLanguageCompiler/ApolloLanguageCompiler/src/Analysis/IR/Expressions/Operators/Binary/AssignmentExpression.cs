@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using ApolloLanguageCompiler.Analysis.IR;
 using ApolloLanguageCompiler.Analysis.IR.Expression;
 using ApolloLanguageCompiler.Analysis.IR.Expressions.Literals;

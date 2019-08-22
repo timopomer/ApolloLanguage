@@ -19,7 +19,7 @@ namespace ApolloLanguageCompiler.Parsing
         }
         private ProgramNode()
         {
-            this.Classes = new List<ClassNode>();  
+            this.Classes = new List<ClassNode>();
         }
 
         public static bool TryParse(out ProgramNode PNode, TokenWalker localWalker)
@@ -29,7 +29,7 @@ namespace ApolloLanguageCompiler.Parsing
 
             while (!localWalker.IsLast())
             {
-                if(!Parse(PNode, localWalker, ClassNode.TryParse))
+                if (!Parse(PNode, localWalker, ClassNode.TryParse))
                     return false;
             }
             return true;

@@ -5,14 +5,14 @@ using System.Linq;
 namespace ApolloLanguageCompiler.Parsing
 {
     public class ReturnNode : ActionNode, IContains<ExpressionNode>
-    { 
+    {
         public override object Clone() => new ReturnNode(this);
 
         public ExpressionNode Expression { get; private set; }
-        
+
         public void AddNode(ExpressionNode node) => this.Expression = node;
 
-		private ReturnNode(ReturnNode otherNode)
+        private ReturnNode(ReturnNode otherNode)
         {
             this.Expression = otherNode.Expression.Clone() as ExpressionNode;
         }
@@ -21,7 +21,7 @@ namespace ApolloLanguageCompiler.Parsing
         {
         }
 
-		public static bool TryParse(IContains<ActionNode> container, TokenWalker localWalker)
+        public static bool TryParse(IContains<ActionNode> container, TokenWalker localWalker)
         {
             ReturnNode RNode = new ReturnNode();
             RNode.SetContext(localWalker);
@@ -37,7 +37,7 @@ namespace ApolloLanguageCompiler.Parsing
             }
 
 
-			container.AddNode(RNode);
+            container.AddNode(RNode);
             return true;
 
 

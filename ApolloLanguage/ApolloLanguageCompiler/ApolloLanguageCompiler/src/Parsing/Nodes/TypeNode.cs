@@ -29,16 +29,16 @@ namespace ApolloLanguageCompiler.Parsing
             TNode.SetContext(localWalker);
 
             if (!Parse(TNode, localWalker, (node, walker) => ExpressionElement.TryParse(node, walker, GenericElement.TryParse)))
-            //if (!Parse(TNode, localWalker, ExpressionElement.TryParse))
+                //if (!Parse(TNode, localWalker, ExpressionElement.TryParse))
                 return false;
 
             container.AddNode(TNode);
             return true;
         }
 
-        
 
-        
+
+
 
     }
 

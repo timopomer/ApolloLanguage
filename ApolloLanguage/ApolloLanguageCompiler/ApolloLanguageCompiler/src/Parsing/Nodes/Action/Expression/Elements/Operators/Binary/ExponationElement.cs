@@ -43,7 +43,7 @@ namespace ApolloLanguageCompiler.Parsing
             while (LocalWalker.TryGetNext(out Token ExponationToken, SyntaxKeyword.Power, SyntaxKeyword.Root))
             {
                 if (TryParse(NegationElement.TryParse, out ExpressionElement right, LocalWalker))
-                { 
+                {
                     expression = new ExponationElement(expression, TypeConverter[ExponationToken.Kind], right);
                     expression.SetContext(Context, LocalWalker);
                 }
@@ -51,6 +51,6 @@ namespace ApolloLanguageCompiler.Parsing
                     return false;
             }
             return true;
-        }       
-	}
+        }
+    }
 }

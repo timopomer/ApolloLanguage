@@ -7,25 +7,25 @@ using System.Text;
 using ApolloLanguageCompiler.Tokenization;
 namespace ApolloLanguageCompiler.Parsing
 {
-	[DebuggerDisplay("TokenWalker[CurrentElement = {CurrentElement}]")]
+    [DebuggerDisplay("TokenWalker[CurrentElement = {CurrentElement}]")]
     public class TokenWalker : IContainsContext
     {
         public SourceContext Context => this.CurrentElement.Context;
         public List<ParseContext> Parsed = new List<ParseContext>();
-		public IEnumerable<Token> GetWhile(params SyntaxKeyword[] possibleKeywords)
-		{
-			while (this.UpcomingIsType(possibleKeywords))
-				yield return this.GetNext();
-		}
+        public IEnumerable<Token> GetWhile(params SyntaxKeyword[] possibleKeywords)
+        {
+            while (this.UpcomingIsType(possibleKeywords))
+                yield return this.GetNext();
+        }
 
 
-		public bool UpcomingIsType(params SyntaxKeyword[] possibleKeywords) => this.CurrentElement.OfType(possibleKeywords);
+        public bool UpcomingIsType(params SyntaxKeyword[] possibleKeywords) => this.CurrentElement.OfType(possibleKeywords);
 
-		public Token CurrentElement
-		{
-			get => this.tokenStream.Current;
-			set => this.tokenStream = this.GetEnumerator(value);
-		}
+        public Token CurrentElement
+        {
+            get => this.tokenStream.Current;
+            set => this.tokenStream = this.GetEnumerator(value);
+        }
         public void SkipWhitespace()
         {
             while (this.UpcomingIsType(SyntaxKeyword.Whitespace) || this.UpcomingIsType(SyntaxKeyword.EOL))
@@ -33,9 +33,9 @@ namespace ApolloLanguageCompiler.Parsing
         }
 
         public bool TryGetNext(params SyntaxKeyword[] possibleKeywords) => this.TryGetNext(out _, possibleKeywords);
-        
+
         public bool TryGetNext(out Token result, params SyntaxKeyword[] possibleKeywords)
-		{
+        {
             result = null;
             this.SkipWhitespace();
             bool successfullyParsed = this.UpcomingIsType(possibleKeywords);
@@ -47,8 +47,8 @@ namespace ApolloLanguageCompiler.Parsing
                 return false;
 
             result = this.GetNext();
-			return true;
-		}
+            return true;
+        }
 
         public delegate void StateWalker(TokenWalker walker);
 
@@ -57,11 +57,11 @@ namespace ApolloLanguageCompiler.Parsing
         public void Walk(StateWalker walker) => walker(this);
 
         public Token GetNext()
-		{
-			Token Last = this.CurrentElement;
+        {
+            Token Last = this.CurrentElement;
             this.tokenStream.MoveNext();
-			return Last;
-		}
+            return Last;
+        }
         public override string ToString()
         {
             StringBuilder Builder = new StringBuilder();
@@ -70,31 +70,31 @@ namespace ApolloLanguageCompiler.Parsing
             Builder.AppendLine($"CurrentElement: {this.CurrentElement}");
             Builder.AppendLine($"Parsed: {Environment.NewLine + Environment.NewLine + string.Join(Environment.NewLine, this.Parsed)}");
             return Builder.ToString();
-		} 
+        }
         public bool IsLast() => this.CurrentElement == this.streamReference.Last();
-		private IEnumerator<Token> Enumerator => GetEnumerator(this.CurrentElement);
+        private IEnumerator<Token> Enumerator => GetEnumerator(this.CurrentElement);
 
         private IEnumerator<Token> GetEnumerator(Token elem)
         {
             IEnumerator<Token> LocatedEnumerator = this.streamReference.SkipWhile(n => n != elem).GetEnumerator();
             LocatedEnumerator.MoveNext();
             return LocatedEnumerator;
-        } 
-		private readonly List<Token> streamReference;
-		private IEnumerator<Token> tokenStream;
+        }
+        private readonly List<Token> streamReference;
+        private IEnumerator<Token> tokenStream;
 
         public TokenWalker(IEnumerable<Token> stream)
-		{
+        {
             this.streamReference = stream.ToList();
             this.CurrentElement = this.streamReference.First();
-		}
+        }
 
-		public TokenWalker(TokenWalker walker)
-		{
+        public TokenWalker(TokenWalker walker)
+        {
             this.streamReference = walker.streamReference;
             this.CurrentElement = walker.CurrentElement;
             this.Parsed = walker.Parsed;
-		}
+        }
 
     }
 }

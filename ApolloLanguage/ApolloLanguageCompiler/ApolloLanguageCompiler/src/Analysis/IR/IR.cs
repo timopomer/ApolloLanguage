@@ -73,7 +73,7 @@ namespace ApolloLanguageCompiler.Analysis.IR
                 case IEmitsFor<T1> emittable when tryLessParams:
                     emittable.EmitFor(t1);
                     break;
-                case IEmitsFor<T1,T2> emittable:
+                case IEmitsFor<T1, T2> emittable:
                     emittable.EmitFor(t1, t2);
                     break;
                 default:

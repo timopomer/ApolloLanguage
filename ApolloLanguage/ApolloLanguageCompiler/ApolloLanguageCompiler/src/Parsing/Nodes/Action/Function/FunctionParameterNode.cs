@@ -16,7 +16,7 @@ namespace ApolloLanguageCompiler.Parsing
         public void AddNode(TypeNode node) => this.Type = node;
 
 
-		private FunctionParameterNode(FunctionParameterNode otherNode)
+        private FunctionParameterNode(FunctionParameterNode otherNode)
         {
             this.Expression = otherNode.Expression.Clone() as ExpressionElement;
             this.Type = otherNode.Type.Clone() as TypeNode;
@@ -26,7 +26,7 @@ namespace ApolloLanguageCompiler.Parsing
         {
         }
 
-		public static bool TryParse(IContains<FunctionParameterNode> container, TokenWalker localWalker)
+        public static bool TryParse(IContains<FunctionParameterNode> container, TokenWalker localWalker)
         {
             FunctionParameterNode PNode = new FunctionParameterNode();
             PNode.SetContext(localWalker);
@@ -40,7 +40,7 @@ namespace ApolloLanguageCompiler.Parsing
             if (!(PNode.Expression is AssignmentElement) && !(PNode.Expression is PrimaryElement.IdentifierElement))
                 return false;
 
-			container.AddNode(PNode);
+            container.AddNode(PNode);
             return true;
         }
     }

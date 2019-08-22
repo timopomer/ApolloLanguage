@@ -20,13 +20,13 @@ namespace ApolloLanguageCompiler.Analysis.IR.Expressions.Types
         public TypeExpression Operate(BinaryExpression binaryExpression, TypeExpression other) => TypeExpression.Illegal;
 
 
-        public override bool Equals(object obj)=>this.Equals(obj as ParameterType);
+        public override bool Equals(object obj) => this.Equals(obj as ParameterType);
 
         public bool Equals(ParameterType other)
         {
             if (other is null)
                 return false;
-            
+
             bool areSameCount = this.Parameters.Count() == other.Parameters.Count();
             bool areSameElements = this.Parameters.Zip(other.Parameters, Equals).All(n => n);
             return areSameCount && areSameElements;

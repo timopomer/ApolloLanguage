@@ -10,7 +10,7 @@ namespace ApolloLanguageCompiler.Parsing
     {
         public static bool TryParse(IContains<ExpressionElement> container, TokenWalker localWalker)
         {
-            if (HeadExpressionElement.TryParse(out ExpressionElement Expression, out StateWalker EqualityWalk, localWalker)) 
+            if (HeadExpressionElement.TryParse(out ExpressionElement Expression, out StateWalker EqualityWalk, localWalker))
                 localWalker.Walk(EqualityWalk);
             else
                 return false;

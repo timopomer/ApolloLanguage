@@ -8,5 +8,5 @@ namespace ApolloLanguageCompiler.Parsing
         protected ConstructElement(ConstructElement element)
         {
         }
-	}
+    }
 }

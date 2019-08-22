@@ -13,10 +13,12 @@ namespace ApolloLanguageCompiler.Analysis.IR
         public VisibillityModifierIR Visibillity { get; private set; }
 
         public ModifierIR(ModifierNode MNode, IR parent) :
-            this(MNode.InstanceModifier, parent, MNode.VisibilityModifiers) { }
+            this(MNode.InstanceModifier, parent, MNode.VisibilityModifiers)
+        { }
 
         public ModifierIR(InstanceModifierNode IMNode, IR parent, params VisibillityModifierNode[] VMNodes) :
-            this(IMNode, parent, VMNodes.AsEnumerable()) { }
+            this(IMNode, parent, VMNodes.AsEnumerable())
+        { }
 
         public ModifierIR(InstanceModifierNode IMNode, IR parent, IEnumerable<VisibillityModifierNode> VMNodes) : base(IMNode, parent)
         {

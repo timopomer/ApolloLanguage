@@ -14,7 +14,7 @@ namespace ApolloLanguageCompiler.Parsing
         public CodeBlockNode CodeBlock { get; private set; }
 
         public void AddNode(ModifierNode node) => this.Modifier = node;
-		public void AddNode(TypeNode node) => this.Identifier = node;
+        public void AddNode(TypeNode node) => this.Identifier = node;
         public void AddNode(CodeBlockNode node) => this.CodeBlock = node;
 
 
@@ -27,23 +27,23 @@ namespace ApolloLanguageCompiler.Parsing
 
         private ClassNode()
         {
-            
+
         }
 
         public static bool TryParse(IContains<ClassNode> container, TokenWalker localWalker)
         {
-			ClassNode CNode = new ClassNode();
+            ClassNode CNode = new ClassNode();
             CNode.SetContext(localWalker);
 
             Parse(CNode, localWalker, ModifierNode.TryParse);
 
             if (!localWalker.TryGetNext(out _, SyntaxKeyword.Class))
-				return false;
-            
+                return false;
+
             if (!Parse(CNode, localWalker, TypeNode.TryParse))
-				return false;
-            
-            if (!Parse(CNode,localWalker, CodeBlockNode.TryParse))
+                return false;
+
+            if (!Parse(CNode, localWalker, CodeBlockNode.TryParse))
                 return false;
 
             container.AddNode(CNode);
