@@ -15,26 +15,7 @@ using static ApolloLanguageCompiler.Parsing.ReferenceParser;
 
 namespace ApolloLanguageCompiler.Parsing
 {
-    public enum Nodes
-    {
-        Program,
-        Class,
-        Function,
-        Modifier,
-        VisibillityModifier,
-        InstanceModifier,
-        Type,
-        Expression,
-        Element,
-        PrimaryElement,
-        IdentifierElement,
-        CodeBlock,
-        FunctionParameter,
-        PrimitiveTypeElement,
-        ReturnElement,
-        Assignment,
-        PrimitiveElement
-    }
+
     public static class NodeParsers
     {
         public static void Parse(out Node node, TokenWalker walker) => Program.Parse(out node, walker);
