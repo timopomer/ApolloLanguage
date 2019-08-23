@@ -9,17 +9,17 @@ namespace ApolloLanguageCompiler.Parsing
 {
     public static class Precedence
     {
-        private static readonly List<ExpressionTypes> precedence = new List<ExpressionTypes>()
+        private static readonly List<Expressions> precedence = new List<Expressions>()
         {
-            ExpressionTypes.Assignment,
-            ExpressionTypes.Equality,
-            ExpressionTypes.Comparison,
-            ExpressionTypes.Addition,
-            ExpressionTypes.Multiplication,
-            ExpressionTypes.Exponantion
+            Expressions.Assignment,
+            Expressions.Equality,
+            Expressions.Comparison,
+            Expressions.Addition,
+            Expressions.Multiplication,
+            Expressions.Exponantion
         };
 
-        public static ExpressionTypes GetLowerPrecedence(this ExpressionTypes expressionType)
+        public static Expressions GetLowerPrecedence(this Expressions expressionType)
         {
             return precedence.SkipWhile(n => n != expressionType).Take(1).First();
         }

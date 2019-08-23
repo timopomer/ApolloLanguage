@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ApolloLanguageCompiler.Parsing
 {
-    public enum ExpressionTypes
+    public enum Expressions
     {
         Access,
         Addition,

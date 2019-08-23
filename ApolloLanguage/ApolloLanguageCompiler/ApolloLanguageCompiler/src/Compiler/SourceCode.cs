@@ -1,5 +1,4 @@
 using ApolloLanguageCompiler.Parsing;
-using ApolloLanguageCompiler.Parsing;
 using ApolloLanguageCompiler.Tokenization;
 using System;
 using System.Collections.Generic;

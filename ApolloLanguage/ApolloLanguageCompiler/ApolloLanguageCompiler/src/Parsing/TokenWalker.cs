@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using ApolloLanguageCompiler.Tokenization;
+
 namespace ApolloLanguageCompiler.Parsing
 {
     [DebuggerDisplay("TokenWalker[CurrentElement = {CurrentElement}]")]
