@@ -75,10 +75,14 @@
     <Compile Include="src\Parsing\ParserGenerator\Expressions\Expressions.cs" />
     <Compile Include="src\Parsing\ParserGenerator\Expressions\Kinds\IExpression.cs" />
     <Compile Include="src\Parsing\ParserGenerator\Expressions\Parsers\ExpressionParser.cs" />
-    <Compile Include="src\Parsing\ParserGenerator\Expressions\Parsers\ExpressionParsers.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Expressions\ExpressionParsers.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Expressions\Parsers\ExpressionParsingOutcome.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Exceptions\FailedParsingExpressionException.cs" />
     <Compile Include="src\Parsing\ParserGenerator\Expressions\Parsers\IExpressionParser.cs" />
     <Compile Include="src\Parsing\ParserGenerator\Expressions\Kinds\BinaryExpression.cs" />
     <Compile Include="src\Parsing\ParserGenerator\Expressions\Kinds\UnaryExpression.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Expressions\Parsers\IfExpressionParser.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Expressions\Parsers\ReferenceExpressionParser.cs" />
     <Compile Include="src\Parsing\ParserGenerator\Nodes\Parsers\INodeParser.cs" />
     <Compile Include="src\Parsing\ParserGenerator\Exceptions\CouldNotFindTokenException.cs" />
     <Compile Include="src\Parsing\ParserGenerator\Exceptions\ParserException.cs" />
@@ -86,7 +90,8 @@
     <Compile Include="src\Parsing\ParserGenerator\Nodes\Parsers\NodeParser.cs" />
     <Compile Include="src\Parsing\ParserGenerator\Nodes\NodeParsers.cs" />
     <Compile Include="src\Parsing\ParserGenerator\Expressions\Precedence.cs" />
-    <Compile Include="src\Parsing\ParserGenerator\Nodes\Parsers\Nodes.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Nodes\Nodes.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Nodes\Parsers\ExpressionNodeParser.cs" />
     <Compile Include="src\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="src\Tokenization\SourceContext.cs" />
@@ -181,7 +186,7 @@
     <Compile Include="src\Parsing\ParserGenerator\Nodes\Parsers\TokenParsers\TokenParser.cs" />
     <Compile Include="src\Parsing\ParserGenerator\Nodes\Parsers\TokenParsers\TokenEater.cs" />
     <Compile Include="src\Parsing\ParserGenerator\Nodes\Parsers\TokenParsers\TokenKeeper.cs" />
-    <Compile Include="src\Parsing\ParserGenerator\Nodes\Parsers\ReferenceParser.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Nodes\Parsers\ReferenceNodeParser.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />
@@ -220,7 +225,9 @@
   <ItemGroup>
     <Reference Include="System" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="src\Parsing\ParserGenerator\Expressions\Parsers\Tokens\" />
+  </ItemGroup>
   <ItemGroup />
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace ApolloLanguageCompiler.Parsing
 {
-    public class ReferenceParser : INodeParser
+    public class ReferenceNodeParser : INodeParser
     {
         private readonly Func<NodeParser> parserReference;
-        public ReferenceParser(Func<NodeParser> parserReference)
+        public ReferenceNodeParser(Func<NodeParser> parserReference)
         {
             this.parserReference = parserReference;
         }
@@ -20,6 +20,6 @@ namespace ApolloLanguageCompiler.Parsing
             this.parserReference().Parse(parser, node, walker);
         }
 
-        public static ReferenceParser Reference(Func<NodeParser> parserReference) => new ReferenceParser(parserReference);
+        public static ReferenceNodeParser Reference(Func<NodeParser> parserReference) => new ReferenceNodeParser(parserReference);
     }
 }

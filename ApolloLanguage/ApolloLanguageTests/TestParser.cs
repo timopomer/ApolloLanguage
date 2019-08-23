@@ -9,7 +9,6 @@ using ApolloLanguageCompiler.Parsing;
 
 namespace ApolloLanguageCompiler.Tests
 {
-
     [TestFixture()]
     public class TestParser
     {

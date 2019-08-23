@@ -18,9 +18,6 @@ namespace ApolloLanguageCompiler.Parsing
         Multiplication,
         Namespace,
         Negation,
-        Identifier,
-        Literal,
-        Paranthesized,
-        PrimitiveType
+        Primary
     }
 }

@@ -10,8 +10,8 @@ using static ApolloLanguageCompiler.Parsing.ForeverParser;
 using static ApolloLanguageCompiler.Parsing.WhileParser;
 using static ApolloLanguageCompiler.Parsing.AllParser;
 using static ApolloLanguageCompiler.Parsing.AnyParser;
-using static ApolloLanguageCompiler.Parsing.ReferenceParser;
-
+using static ApolloLanguageCompiler.Parsing.ReferenceNodeParser;
+using static ApolloLanguageCompiler.Parsing.ExpressionNodeParser;
 
 namespace ApolloLanguageCompiler.Parsing
 {
@@ -21,46 +21,8 @@ namespace ApolloLanguageCompiler.Parsing
         public static void Parse(out Node node, TokenWalker walker) => Program.Parse(out node, walker);
 
         public static readonly NodeParser Expression = new NodeParser(Nodes.Expression,
-            Reference(() => Elements.Head)
+            Expression()
         );
-
-        public static class Elements
-        {
-            public static readonly NodeParser Identifier = new NodeParser(Nodes.IdentifierElement,
-                Keep(SyntaxKeyword.Identifier)
-            );
-
-            public static readonly NodeParser PrimitiveType = new NodeParser(Nodes.PrimitiveTypeElement,
-                Any(
-                    Keep(SyntaxKeyword.Str),
-                    Keep(SyntaxKeyword.Number),
-                    Keep(SyntaxKeyword.Letter),
-                    Keep(SyntaxKeyword.Boolean)
-                )
-            );
-
-            public static readonly NodeParser Primitive = new NodeParser(Nodes.PrimitiveElement,
-                Any(
-                    Keep(SyntaxKeyword.LiteralNumber),
-                    Keep(SyntaxKeyword.LiteralLetter),
-                    Keep(SyntaxKeyword.LiteralStr),
-                    Keep(SyntaxKeyword.LiteralTrue),
-                    Keep(SyntaxKeyword.LiteralFalse)
-                )
-            );
-
-            // public static readonly NodeParser Assignment = new NodeParser(Nodes.Assignment,
-            //    
-            //);
-
-            public static readonly NodeParser Primary = new NodeParser(Nodes.PrimaryElement,
-                Reference(() => Identifier)
-            );
-
-            public static readonly NodeParser Head = new NodeParser(Nodes.PrimaryElement,
-                Reference(() => Identifier)
-            );
-        }
 
         public static readonly NodeParser CodeBlock = new NodeParser(Nodes.CodeBlock,
             Eat(SyntaxKeyword.OpenCurlyBracket),

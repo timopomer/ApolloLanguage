@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static ApolloLanguageCompiler.Parsing.TokenWalker;
+using static ApolloLanguageCompiler.Parsing.ExpressionParsingOutcome;
 
 namespace ApolloLanguageCompiler.Parsing
 {
@@ -18,15 +19,25 @@ namespace ApolloLanguageCompiler.Parsing
             this.parsers = parsers;
         }
         
-        public bool Parse(out IExpression expression, TokenWalker walker)
+        public void Parse(out IExpression expression, TokenWalker walker)
         {
-            bool parsed = this.Parse(out expression, out StateWalker walk, walker);
-            if (parsed)
+            expression = null;
+            StateWalker walk = null;
+            try
+            {
+                this.Parse(out expression, out walk, walker);
+            }
+            catch (Success)
+            {
                 walk(walker);
-            return parsed;
+            }
+            catch (Failure)
+            {
+                throw new FailedParsingExpressionException();
+            }
         }
         
-        public bool Parse(out IExpression expression, out StateWalker walk, TokenWalker walker)
+        public void Parse(out IExpression expression, out StateWalker walk, TokenWalker walker)
         {
             walk = walker.State;
             SourceContext Context = walker.Context;
@@ -34,12 +45,11 @@ namespace ApolloLanguageCompiler.Parsing
 
             foreach (IExpressionParser expressionParser in this.parsers)
             {
-                if (!expressionParser.Parse(out expression, out walk, walker))
-                    return false;
+                expressionParser.Parse(out expression, out walk, walker);
             }
+
             if (expression == null)
                 throw new Exception("This shouldnt happen, expression unassigned");
-            return true;
         }
         
         public override string ToString() => $"{this.Type}:({string.Join<IExpressionParser>(" ,", this.parsers)})";
