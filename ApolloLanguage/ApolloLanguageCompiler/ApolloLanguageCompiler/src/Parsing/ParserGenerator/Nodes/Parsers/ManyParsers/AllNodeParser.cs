@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace ApolloLanguageCompiler.Parsing
 {
-    public class AllParser : ManyParser
+    public class AllNodeParser : ManyNodeParser
     {
-        public AllParser(params INodeParser[] parsers) : base(parsers)
+        public AllNodeParser(params INodeParser[] parsers) : base(parsers)
         {
         }
 
@@ -22,7 +22,7 @@ namespace ApolloLanguageCompiler.Parsing
             }
         }
 
-        public static AllParser All(params INodeParser[] parsers) => new AllParser(parsers);
+        public static AllNodeParser All(params INodeParser[] parsers) => new AllNodeParser(parsers);
         public override string ToString() => $"AllParser[{base.ToString()}]";
     }
 }

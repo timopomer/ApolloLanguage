@@ -8,11 +8,10 @@ using System.Threading.Tasks;
 
 namespace ApolloLanguageCompiler.Parsing
 {
-    public class TokenEater : TokenParser
+    public class TokenNodeEater : TokenNodeParser
     {
-        public TokenEater(SyntaxKeyword keyword) : base(keyword)
+        public TokenNodeEater(SyntaxKeyword keyword) : base(keyword)
         {
-
         }
 
         public override void Parse(NodeParser parser, Node node, TokenWalker walker)
@@ -21,7 +20,7 @@ namespace ApolloLanguageCompiler.Parsing
                 throw new CouldNotFindTokenException();
         }
 
-        public static TokenEater Eat(SyntaxKeyword keyword) => new TokenEater(keyword);
+        public static TokenNodeEater Eat(SyntaxKeyword keyword) => new TokenNodeEater(keyword);
         public override string ToString() => $"TokenEater[{base.ToString()}]";
     }
 }

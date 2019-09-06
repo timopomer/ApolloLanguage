@@ -3,11 +3,11 @@ using System.Linq;
 
 namespace ApolloLanguageCompiler.Parsing
 {
-    public abstract class LoopParser : INodeParser
+    public abstract class LoopNodeParser : INodeParser
     {
         protected readonly INodeParser Parser;
 
-        protected LoopParser(INodeParser parser)
+        protected LoopNodeParser(INodeParser parser)
         {
             this.Parser = parser;
         }

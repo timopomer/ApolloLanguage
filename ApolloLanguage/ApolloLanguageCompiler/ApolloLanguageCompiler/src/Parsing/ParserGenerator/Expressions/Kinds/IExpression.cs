@@ -8,6 +8,5 @@ namespace ApolloLanguageCompiler.Parsing
 {
     public interface IExpression
     {
-        void AddChild(IExpression parsed);
     }
 }

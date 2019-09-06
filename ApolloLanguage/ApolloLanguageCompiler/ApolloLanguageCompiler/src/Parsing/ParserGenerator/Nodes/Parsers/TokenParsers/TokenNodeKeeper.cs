@@ -4,9 +4,9 @@ using System;
 
 namespace ApolloLanguageCompiler.Parsing
 {
-    public class TokenKeeper : TokenParser
+    public class TokenNodeKeeper : TokenNodeParser
     {
-        public TokenKeeper(SyntaxKeyword keyword) : base(keyword)
+        public TokenNodeKeeper(SyntaxKeyword keyword) : base(keyword)
         {
 
         }
@@ -18,7 +18,7 @@ namespace ApolloLanguageCompiler.Parsing
             node.Add(parser.Type, token);
         }
 
-        public static TokenKeeper Keep(SyntaxKeyword keyword) => new TokenKeeper(keyword);
+        public static TokenNodeKeeper Keep(SyntaxKeyword keyword) => new TokenNodeKeeper(keyword);
         public override string ToString() => $"TokenKeeper[{base.ToString()}]";
     }
 }

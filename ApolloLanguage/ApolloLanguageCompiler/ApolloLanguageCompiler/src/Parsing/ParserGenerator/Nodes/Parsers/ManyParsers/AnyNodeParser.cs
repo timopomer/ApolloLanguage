@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace ApolloLanguageCompiler.Parsing
 {
-    public class AnyParser : ManyParser
+    public class AnyNodeParser : ManyNodeParser
     {
-        public AnyParser(params INodeParser[] parsers) : base(parsers)
+        public AnyNodeParser(params INodeParser[] parsers) : base(parsers)
         {
         }
 
@@ -31,7 +31,7 @@ namespace ApolloLanguageCompiler.Parsing
             throw new ParserException("None of the parsers succeded");
         }
 
-        public static AnyParser Any(params INodeParser[] parsers) => new AnyParser(parsers);
+        public static AnyNodeParser Any(params INodeParser[] parsers) => new AnyNodeParser(parsers);
         public override string ToString() => $"AnyParser[{base.ToString()}]";
     }
 }

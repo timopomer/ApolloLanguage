@@ -4,11 +4,11 @@ using ApolloLanguageCompiler.Tokenization;
 
 namespace ApolloLanguageCompiler.Parsing
 {
-    public abstract class TokenParser : INodeParser
+    public abstract class TokenNodeParser : INodeParser
     {
         protected readonly SyntaxKeyword Keyword;
 
-        protected TokenParser(SyntaxKeyword keyword)
+        protected TokenNodeParser(SyntaxKeyword keyword)
         {
             this.Keyword = keyword;
         }

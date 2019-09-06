@@ -12,7 +12,7 @@ namespace ApolloLanguageCompiler.Parsing
     {
         public Expressions Type { get; }
         private readonly IExpressionParser[] parsers;
-        
+
         public ExpressionParser(Expressions type, params IExpressionParser[] parsers)
         {
             this.Type = type;
@@ -30,6 +30,9 @@ namespace ApolloLanguageCompiler.Parsing
             catch (Success)
             {
                 walk(walker);
+                if (expression is null)
+                    throw new FailedParsingExpressionException();
+
             }
             catch (Failure)
             {
@@ -41,15 +44,12 @@ namespace ApolloLanguageCompiler.Parsing
         {
             walk = walker.State;
             SourceContext Context = walker.Context;
-            expression = null;
 
             foreach (IExpressionParser expressionParser in this.parsers)
             {
                 expressionParser.Parse(out expression, out walk, walker);
             }
-
-            if (expression == null)
-                throw new Exception("This shouldnt happen, expression unassigned");
+            throw Failed;
         }
         
         public override string ToString() => $"{this.Type}:({string.Join<IExpressionParser>(" ,", this.parsers)})";

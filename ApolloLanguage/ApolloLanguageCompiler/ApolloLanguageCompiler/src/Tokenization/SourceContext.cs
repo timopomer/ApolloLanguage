@@ -59,6 +59,18 @@ namespace ApolloLanguageCompiler
         }
 
         public override string ToString() => $"SourceContext[Line {this.Line} Collumn {this.Column} Start {this.Start} Length {this.Length}]";
+
+        public string ContextLocation
+        {
+            get
+            {
+                string beforeContext = this.Source.Code.Substring(this.Start);
+                string context = this.Source.Code.Substring(this.Start, this.Length);
+                string afterContext = this.Source.Code.Substring(this.Start + this.Length, this.Source.Code.Length - (this.Start + this.Length));
+
+                return $"{beforeContext}------------>{context}<------------{afterContext}";
+            }
+        }
     }
 
 }

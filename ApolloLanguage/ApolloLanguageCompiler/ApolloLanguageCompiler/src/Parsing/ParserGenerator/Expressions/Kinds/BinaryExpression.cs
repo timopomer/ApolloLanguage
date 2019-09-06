@@ -6,21 +6,15 @@ using System.Threading.Tasks;
 
 namespace ApolloLanguageCompiler.Parsing
 {
-    class BinaryExpression : IExpression
+    public class BinaryExpression : IExpression
     {
-        public IExpression Left { get; private set; }
-        public IExpression Right { get; private set; }
+        public readonly IExpression Left;
+        public readonly IExpression Right;
 
-        public void AddChild(IExpression parsed)
+        public BinaryExpression(IExpression left, IExpression right)
         {
-            if (this.Left != null && this.Right != null)
-                throw new ParserException("More than two expressions added to a binary expression");
-
-            if (this.Left == null)
-                this.Left = parsed;
-            else
-                this.Right = parsed;
+            this.Left = left;
+            this.Right = right;
         }
-
     }
 }

@@ -6,16 +6,13 @@ using System.Threading.Tasks;
 
 namespace ApolloLanguageCompiler.Parsing
 {
-    class UnaryExpression : IExpression
+    public class UnaryExpression : IExpression
     {
-        public IExpression Expression { get; private set; }
+        public readonly IExpression Expression;
 
-        public void AddChild(IExpression parsed)
+        public UnaryExpression(IExpression expression)
         {
-            if (this.Expression != null)
-                throw new ParserException("Two expressions added to an unary expression");
-
-            this.Expression = parsed;
+            this.Expression = expression;
         }
     }
 }

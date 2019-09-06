@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace ApolloLanguageCompiler.Parsing
 {
-    public class WhileParser : LoopParser
+    public class WhileNodeParser : LoopNodeParser
     {
-        public WhileParser(INodeParser parser) : base(parser)
+        public WhileNodeParser(INodeParser parser) : base(parser)
         {
         }
 
@@ -29,7 +29,7 @@ namespace ApolloLanguageCompiler.Parsing
             }
         }
 
-        public static WhileParser While(INodeParser parser) => new WhileParser(parser);
+        public static WhileNodeParser While(INodeParser parser) => new WhileNodeParser(parser);
         public override string ToString() => $"WhileParser[{base.ToString()}]";
     }
 }

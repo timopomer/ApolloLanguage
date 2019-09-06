@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace ApolloLanguageCompiler.Parsing
 {
-    public class ForeverParser : LoopParser
+    public class ForeverNodeParser : LoopNodeParser
     {
-        public ForeverParser(INodeParser parser) : base(parser)
+        public ForeverNodeParser(INodeParser parser) : base(parser)
         {
         }
 
@@ -21,7 +21,7 @@ namespace ApolloLanguageCompiler.Parsing
             }
         }
 
-        public static ForeverParser Forever(INodeParser parser) => new ForeverParser(parser);
+        public static ForeverNodeParser Forever(INodeParser parser) => new ForeverNodeParser(parser);
         public override string ToString() => $"ForeverParser[{base.ToString()}]";
     }
 }

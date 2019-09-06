@@ -12,10 +12,15 @@ namespace ApolloLanguageCompiler
     public class SourceCode
     {
         public string Code { get; private set; }
+        public string[] Split { get; }
 
         public SourceCode(string code)
         {
             this.Code = code;
+            this.Split = code.Split(
+                new[] { "\r\n", "\r", "\n" },
+                StringSplitOptions.None
+            );
         }
         public static SourceCode FromFiles(IEnumerable<string> files)
         {

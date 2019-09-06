@@ -5,19 +5,22 @@ using ApolloLanguageCompiler.Parsing;
 using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics;
-using ApolloLanguageCompiler.Parsing;
 
 namespace ApolloLanguageCompiler.Tests
 {
     [TestFixture()]
     public class TestExpressionParser
     {
-        [Test()]
-        public void AssignmentTest()
+        public static void TestExpression(string representation)
         {
-            string code = @"3+3";
-            TokenWalker walker = new Compiler(new SourceCode(code)).Walker;
+            TokenWalker walker = new Compiler(new SourceCode(representation)).Walker;
             ExpressionParsers.Head.Invoke().Parse(out IExpression expression, walker);
+            Assert.IsNotNull(expression);
+            Assert.IsTrue(walker.IsLast());
         }
+
+        [Test()] public void AssignmentTest() => TestExpression(@"a=3");
+        [Test()] public void SimpleNumberTest() => TestExpression(@"3");
+        [Test()] public void SimpleParanthesizedNumberTest() => TestExpression(@"(3)");
     }
 }

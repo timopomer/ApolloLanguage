@@ -74,22 +74,28 @@
     <Compile Include="src\Parsing\Nodes\Modifier\ModifierNode.cs" />
     <Compile Include="src\Parsing\ParserGenerator\Expressions\Expressions.cs" />
     <Compile Include="src\Parsing\ParserGenerator\Expressions\Kinds\IExpression.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Expressions\Kinds\TokenExpression.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Expressions\Parsers\AllExpressionParser.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Expressions\Parsers\UnaryExpressionParser.cs" />
     <Compile Include="src\Parsing\ParserGenerator\Expressions\Parsers\ExpressionParser.cs" />
     <Compile Include="src\Parsing\ParserGenerator\Expressions\ExpressionParsers.cs" />
-    <Compile Include="src\Parsing\ParserGenerator\Expressions\Parsers\ExpressionParsingOutcome.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Expressions\Parsers\BinaryExpressionParser.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Expressions\Parsers\Helpers\ExpressionParsingOutcome.cs" />
     <Compile Include="src\Parsing\ParserGenerator\Exceptions\FailedParsingExpressionException.cs" />
-    <Compile Include="src\Parsing\ParserGenerator\Expressions\Parsers\IExpressionParser.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Expressions\Parsers\Helpers\IExpressionParser.cs" />
     <Compile Include="src\Parsing\ParserGenerator\Expressions\Kinds\BinaryExpression.cs" />
     <Compile Include="src\Parsing\ParserGenerator\Expressions\Kinds\UnaryExpression.cs" />
-    <Compile Include="src\Parsing\ParserGenerator\Expressions\Parsers\IfExpressionParser.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Expressions\Parsers\WhileExpressionParser.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Expressions\Parsers\AnyExpressionParser.cs" />
     <Compile Include="src\Parsing\ParserGenerator\Expressions\Parsers\ReferenceExpressionParser.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Expressions\Parsers\TokenExpressionKeeper.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Expressions\Parsers\TokenExpressionEater.cs" />
     <Compile Include="src\Parsing\ParserGenerator\Nodes\Parsers\INodeParser.cs" />
     <Compile Include="src\Parsing\ParserGenerator\Exceptions\CouldNotFindTokenException.cs" />
     <Compile Include="src\Parsing\ParserGenerator\Exceptions\ParserException.cs" />
     <Compile Include="src\Parsing\ParserGenerator\Nodes\Node.cs" />
     <Compile Include="src\Parsing\ParserGenerator\Nodes\Parsers\NodeParser.cs" />
     <Compile Include="src\Parsing\ParserGenerator\Nodes\NodeParsers.cs" />
-    <Compile Include="src\Parsing\ParserGenerator\Expressions\Precedence.cs" />
     <Compile Include="src\Parsing\ParserGenerator\Nodes\Nodes.cs" />
     <Compile Include="src\Parsing\ParserGenerator\Nodes\Parsers\ExpressionNodeParser.cs" />
     <Compile Include="src\Program.cs" />
@@ -177,15 +183,15 @@
     <Compile Include="src\CodeGeneration\CompilationState.cs" />
     <Compile Include="src\Analysis\IR\Expressions\Operators\Binary\NamespaceExpression.cs" />
     <Compile Include="src\Parsing\Nodes\Action\Expression\Elements\Operators\Binary\NamespaceElement.cs" />
-    <Compile Include="src\Parsing\ParserGenerator\Nodes\Parsers\ManyParsers\AllParser.cs" />
-    <Compile Include="src\Parsing\ParserGenerator\Nodes\Parsers\ManyParsers\AnyParser.cs" />
-    <Compile Include="src\Parsing\ParserGenerator\Nodes\Parsers\ManyParsers\ManyParser.cs" />
-    <Compile Include="src\Parsing\ParserGenerator\Nodes\Parsers\LoopParsers\ForeverParser.cs" />
-    <Compile Include="src\Parsing\ParserGenerator\Nodes\Parsers\LoopParsers\WhileParser.cs" />
-    <Compile Include="src\Parsing\ParserGenerator\Nodes\Parsers\LoopParsers\LoopParser.cs" />
-    <Compile Include="src\Parsing\ParserGenerator\Nodes\Parsers\TokenParsers\TokenParser.cs" />
-    <Compile Include="src\Parsing\ParserGenerator\Nodes\Parsers\TokenParsers\TokenEater.cs" />
-    <Compile Include="src\Parsing\ParserGenerator\Nodes\Parsers\TokenParsers\TokenKeeper.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Nodes\Parsers\ManyParsers\AllNodeParser.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Nodes\Parsers\ManyParsers\AnyNodeParser.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Nodes\Parsers\ManyParsers\ManyNodeParser.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Nodes\Parsers\LoopParsers\ForeverNodeParser.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Nodes\Parsers\LoopParsers\WhileNodeParser.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Nodes\Parsers\LoopParsers\LoopNodeParser.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Nodes\Parsers\TokenParsers\TokenNodeParser.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Nodes\Parsers\TokenParsers\TokenNodeEater.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Nodes\Parsers\TokenParsers\TokenNodeKeeper.cs" />
     <Compile Include="src\Parsing\ParserGenerator\Nodes\Parsers\ReferenceNodeParser.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -225,9 +231,7 @@
   <ItemGroup>
     <Reference Include="System" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="src\Parsing\ParserGenerator\Expressions\Parsers\Tokens\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup />
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

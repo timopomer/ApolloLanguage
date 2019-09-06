@@ -4,18 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ApolloLanguageCompiler.Tokenization;
-using static ApolloLanguageCompiler.Parsing.TokenEater;
-using static ApolloLanguageCompiler.Parsing.TokenKeeper;
-using static ApolloLanguageCompiler.Parsing.ForeverParser;
-using static ApolloLanguageCompiler.Parsing.WhileParser;
-using static ApolloLanguageCompiler.Parsing.AllParser;
-using static ApolloLanguageCompiler.Parsing.AnyParser;
+using static ApolloLanguageCompiler.Parsing.TokenNodeEater;
+using static ApolloLanguageCompiler.Parsing.TokenNodeKeeper;
+using static ApolloLanguageCompiler.Parsing.ForeverNodeParser;
+using static ApolloLanguageCompiler.Parsing.WhileNodeParser;
+using static ApolloLanguageCompiler.Parsing.AllNodeParser;
+using static ApolloLanguageCompiler.Parsing.AnyNodeParser;
 using static ApolloLanguageCompiler.Parsing.ReferenceNodeParser;
 using static ApolloLanguageCompiler.Parsing.ExpressionNodeParser;
 
 namespace ApolloLanguageCompiler.Parsing
 {
-
     public static class NodeParsers
     {
         public static void Parse(out Node node, TokenWalker walker) => Program.Parse(out node, walker);
