@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace ApolloLanguageCompiler.Parsing
 {
-    public class TokenExpression : IExpression
+    public class TokenExpression : Expression
     {
         protected readonly Token Token;
 
-        public TokenExpression(Token token)
+        public TokenExpression(Token token, SourceContext context) : base(context)
         {
             this.Token = token;
         }

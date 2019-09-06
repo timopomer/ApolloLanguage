@@ -16,15 +16,19 @@ namespace ApolloLanguageCompiler.Parsing
             this.Parsers = parsers;
         }
 
-        public void Parse(out IExpression expression, out TokenWalker.StateWalker walk, TokenWalker walker)
+        public void Parse(out Expression expression, out TokenWalker.StateWalker walk, TokenWalker walker)
         {
-            List<IExpression> parsedExpressions = new List<IExpression>();
+            TokenWalker LocalWalker = new TokenWalker(walker);
+            walk = LocalWalker.State;
+            SourceContext Context = LocalWalker.Context;
+
+            List<Expression> parsedExpressions = new List<Expression>();
             foreach (IExpressionParser parser in this.Parsers)
             {
-                IExpression parsedExpression = null;
+                Expression parsedExpression = null;
                 try
                 {
-                    parser.Parse(out parsedExpression, out walk, walker);
+                    parser.Parse(out parsedExpression, out walk, LocalWalker);
                 }
                 catch (Failure)
                 {
@@ -32,6 +36,7 @@ namespace ApolloLanguageCompiler.Parsing
                 }
                 catch (Success)
                 {
+                    walk(LocalWalker);
                     if (parsedExpression != null)
                     {
                         parsedExpressions.Add(parsedExpression);
@@ -41,7 +46,7 @@ namespace ApolloLanguageCompiler.Parsing
 
             if (parsedExpressions.Count == 2)
             {
-                expression = new BinaryExpression(parsedExpressions[0], parsedExpressions[1]);
+                expression = new BinaryExpression(parsedExpressions[0], parsedExpressions[1], Context + LocalWalker.Context);
                 throw Succeded;
             }
             throw Failed;

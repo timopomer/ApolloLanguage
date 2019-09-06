@@ -19,7 +19,7 @@ namespace ApolloLanguageCompiler.Parsing
             this.parsers = parsers;
         }
         
-        public void Parse(out IExpression expression, TokenWalker walker)
+        public void Parse(out Expression expression, TokenWalker walker)
         {
             expression = null;
             StateWalker walk = null;
@@ -40,14 +40,14 @@ namespace ApolloLanguageCompiler.Parsing
             }
         }
         
-        public void Parse(out IExpression expression, out StateWalker walk, TokenWalker walker)
+        public void Parse(out Expression expression, out StateWalker walk, TokenWalker walker)
         {
-            walk = walker.State;
-            SourceContext Context = walker.Context;
+            TokenWalker LocalWalker = new TokenWalker(walker);
+            walk = LocalWalker.State;
 
             foreach (IExpressionParser expressionParser in this.parsers)
             {
-                expressionParser.Parse(out expression, out walk, walker);
+                expressionParser.Parse(out expression, out walk, LocalWalker);
             }
             throw Failed;
         }

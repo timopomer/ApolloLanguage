@@ -17,7 +17,7 @@ namespace ApolloLanguageCompiler.Parsing
             this.Keywords = keywords;
         }
 
-        public void Parse(out IExpression expression, out TokenWalker.StateWalker walk, TokenWalker walker)
+        public void Parse(out Expression expression, out TokenWalker.StateWalker walk, TokenWalker walker)
         {
             TokenWalker LocalWalker = new TokenWalker(walker);
             walk = LocalWalker.State;
@@ -25,7 +25,8 @@ namespace ApolloLanguageCompiler.Parsing
 
             if (LocalWalker.TryGetNext(out Token token, this.Keywords))
             {
-                expression = new TokenExpression(token);
+                walk(LocalWalker);
+                expression = new TokenExpression(token, Context + LocalWalker.Context);
                 throw Succeded;
             }
             throw Failed;

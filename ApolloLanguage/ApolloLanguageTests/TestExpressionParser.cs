@@ -14,7 +14,7 @@ namespace ApolloLanguageCompiler.Tests
         public static void TestExpression(string representation)
         {
             TokenWalker walker = new Compiler(new SourceCode(representation)).Walker;
-            ExpressionParsers.Head.Invoke().Parse(out IExpression expression, walker);
+            ExpressionParsers.Head.Invoke().Parse(out Expression expression, walker);
             Assert.IsNotNull(expression);
             Assert.IsTrue(walker.IsLast());
         }

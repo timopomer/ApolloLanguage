@@ -15,9 +15,12 @@ namespace ApolloLanguageCompiler.Parsing
             this.parserReference = parserReference;
         }
 
-        public void Parse(out IExpression expression, out TokenWalker.StateWalker walk, TokenWalker walker)
+        public void Parse(out Expression expression, out TokenWalker.StateWalker walk, TokenWalker walker)
         {
-            this.parserReference().Parse(out expression, out walk, walker);
+            TokenWalker LocalWalker = new TokenWalker(walker);
+            walk = LocalWalker.State;
+
+            this.parserReference().Parse(out expression, out walk, LocalWalker);
         }
 
         public static ReferenceExpressionParser Reference(Func<ExpressionParser> parserReference) => new ReferenceExpressionParser(parserReference);

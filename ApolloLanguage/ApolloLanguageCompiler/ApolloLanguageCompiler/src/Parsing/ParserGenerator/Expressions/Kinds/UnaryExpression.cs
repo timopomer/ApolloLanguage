@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace ApolloLanguageCompiler.Parsing
 {
-    public class UnaryExpression : IExpression
+    public class UnaryExpression : Expression
     {
-        public readonly IExpression Expression;
+        public readonly Expression Expression;
 
-        public UnaryExpression(IExpression expression)
+        public UnaryExpression(Expression expression, SourceContext context) : base(context)
         {
             this.Expression = expression;
         }

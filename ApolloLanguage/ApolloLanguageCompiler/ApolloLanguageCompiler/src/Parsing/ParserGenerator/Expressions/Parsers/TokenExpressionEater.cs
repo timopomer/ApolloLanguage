@@ -17,17 +17,13 @@ namespace ApolloLanguageCompiler.Parsing
             this.Keywords = keywords;
         }
 
-        public void Parse(out IExpression expression, out TokenWalker.StateWalker walk, TokenWalker walker)
+        public void Parse(out Expression expression, out TokenWalker.StateWalker walk, TokenWalker walker)
         {
             TokenWalker LocalWalker = new TokenWalker(walker);
             walk = LocalWalker.State;
-            SourceContext Context = LocalWalker.Context;
 
-            expression = null;
-
-            if (LocalWalker.TryGetNext(out Token token, this.Keywords))
+            if (LocalWalker.TryGetNext(out _, this.Keywords))
             {
-                expression = new TokenExpression(token);
                 throw Succeded;
             }
             throw Failed;

@@ -64,7 +64,7 @@ namespace ApolloLanguageCompiler
         {
             get
             {
-                string beforeContext = this.Source.Code.Substring(this.Start);
+                string beforeContext = this.Source.Code.Substring(0, this.Start);
                 string context = this.Source.Code.Substring(this.Start, this.Length);
                 string afterContext = this.Source.Code.Substring(this.Start + this.Length, this.Source.Code.Length - (this.Start + this.Length));
 

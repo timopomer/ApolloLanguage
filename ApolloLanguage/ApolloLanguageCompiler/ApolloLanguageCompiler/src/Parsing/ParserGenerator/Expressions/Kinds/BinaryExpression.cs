@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace ApolloLanguageCompiler.Parsing
 {
-    public class BinaryExpression : IExpression
+    public class BinaryExpression : Expression
     {
-        public readonly IExpression Left;
-        public readonly IExpression Right;
+        public readonly Expression Left;
+        public readonly Expression Right;
 
-        public BinaryExpression(IExpression left, IExpression right)
+        public BinaryExpression(Expression left, Expression right, SourceContext context) : base(context)
         {
             this.Left = left;
             this.Right = right;
