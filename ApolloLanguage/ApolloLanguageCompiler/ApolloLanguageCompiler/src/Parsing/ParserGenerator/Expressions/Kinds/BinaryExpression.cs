@@ -9,11 +9,13 @@ namespace ApolloLanguageCompiler.Parsing
     public class BinaryExpression : Expression
     {
         public readonly Expression Left;
+        public readonly Expression BinaryModifier;
         public readonly Expression Right;
 
-        public BinaryExpression(Expression left, Expression right, SourceContext context) : base(context)
+        public BinaryExpression(Expression left, Expression binaryModifier, Expression right, SourceContext context) : base(context)
         {
             this.Left = left;
+            this.BinaryModifier = binaryModifier;
             this.Right = right;
         }
     }

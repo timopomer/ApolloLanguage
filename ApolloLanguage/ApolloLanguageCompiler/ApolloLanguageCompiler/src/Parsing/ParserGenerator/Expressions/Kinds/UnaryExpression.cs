@@ -9,10 +9,13 @@ namespace ApolloLanguageCompiler.Parsing
     public class UnaryExpression : Expression
     {
         public readonly Expression Expression;
+        public readonly Expression UnaryModifier;
 
-        public UnaryExpression(Expression expression, SourceContext context) : base(context)
+        public UnaryExpression(Expression expression, Expression unaryModifier, SourceContext context) : base(context)
         {
             this.Expression = expression;
+            this.UnaryModifier = unaryModifier;
         }
+
     }
 }

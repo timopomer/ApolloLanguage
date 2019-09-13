@@ -8,8 +8,10 @@ using static ApolloLanguageCompiler.Parsing.ReferenceExpressionParser;
 using static ApolloLanguageCompiler.Parsing.TokenExpressionEater;
 using static ApolloLanguageCompiler.Parsing.TokenExpressionKeeper;
 using static ApolloLanguageCompiler.Parsing.UnaryExpressionParser;
+using static ApolloLanguageCompiler.Parsing.BinaryExpressionParser;
 using static ApolloLanguageCompiler.Parsing.AnyExpressionParser;
 using static ApolloLanguageCompiler.Parsing.AllExpressionParser;
+using static ApolloLanguageCompiler.Parsing.WhileExpressionParser;
 
 namespace ApolloLanguageCompiler.Parsing
 {
@@ -18,7 +20,15 @@ namespace ApolloLanguageCompiler.Parsing
         public static readonly Func<ExpressionParser> Head = () => Assignment;
 
         public static readonly ExpressionParser Assignment = new ExpressionParser(Expressions.Assignment,
-            Reference(() => Primary.Expression)
+            All(
+                Reference(() => Primary.Expression),
+                While(                
+                    MakeBinary(
+                        Keep(SyntaxKeyword.Assignment),
+                        Reference(() => Primary.Expression)
+                    )
+                )
+            )
         );
 
         public class Primary
@@ -37,8 +47,8 @@ namespace ApolloLanguageCompiler.Parsing
                     SyntaxKeyword.LiteralNumber,
                     SyntaxKeyword.LiteralLetter,
                     SyntaxKeyword.LiteralStr,
-                    SyntaxKeyword.LiteralTrue,
-                    SyntaxKeyword.LiteralFalse
+                    SyntaxKeyword.LiteralFalse,
+                    SyntaxKeyword.LiteralTrue
                 )
             );
 
@@ -49,7 +59,7 @@ namespace ApolloLanguageCompiler.Parsing
             public static readonly ExpressionParser Paranthesized = new ExpressionParser(Expressions.Paranthesized,
                 All(
                     Eat(SyntaxKeyword.OpenParenthesis),
-                    MakeUnary(Reference(Head)),
+                    Reference(Head),
                     Eat(SyntaxKeyword.CloseParenthesis)
                 )
             );

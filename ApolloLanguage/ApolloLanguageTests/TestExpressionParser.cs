@@ -14,11 +14,13 @@ namespace ApolloLanguageCompiler.Tests
         public static void TestExpression(string representation)
         {
             TokenWalker walker = new Compiler(new SourceCode(representation)).Walker;
-            ExpressionParsers.Head.Invoke().Parse(out Expression expression, walker);
+            Expression expression = null;
+            ExpressionParsers.Head.Invoke().Parse(ref expression, walker);
             Assert.IsNotNull(expression);
             Assert.IsTrue(walker.IsLast());
         }
 
+        [Test()] public void AssignAssignmentTest() => TestExpression(@"a=3=1");
         [Test()] public void AssignmentTest() => TestExpression(@"a=3");
         [Test()] public void SimpleNumberTest() => TestExpression(@"3");
         [Test()] public void SimpleParanthesizedNumberTest() => TestExpression(@"(3)");

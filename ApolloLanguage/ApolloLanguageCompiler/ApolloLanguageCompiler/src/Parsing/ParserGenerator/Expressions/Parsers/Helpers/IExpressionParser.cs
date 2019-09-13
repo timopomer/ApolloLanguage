@@ -10,6 +10,6 @@ namespace ApolloLanguageCompiler.Parsing
 {
     public interface IExpressionParser
     {
-        void Parse(out Expression expression, out StateWalker walk, TokenWalker walker);
+        void Parse(ref Expression expression, out StateWalker walk, TokenWalker walker);
     }
 }

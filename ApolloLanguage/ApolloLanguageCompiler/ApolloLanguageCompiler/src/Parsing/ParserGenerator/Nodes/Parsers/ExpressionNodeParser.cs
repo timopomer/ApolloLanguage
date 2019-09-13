@@ -11,7 +11,10 @@ namespace ApolloLanguageCompiler.Parsing
     {
         public void Parse(NodeParser parser, Node node, TokenWalker walker)
         {
-            ExpressionParsers.Head.Invoke().Parse(out Expression expression, walker);
+            Expression expression = null;
+            ExpressionParsers.Head.Invoke().Parse(ref expression, walker);
+            if (expression is null)
+                throw new FailedParsingException("Could not parse expression");
             node.Add(parser.Type, expression);
         }
 
