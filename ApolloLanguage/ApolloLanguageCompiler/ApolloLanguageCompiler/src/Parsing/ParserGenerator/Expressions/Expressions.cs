@@ -14,7 +14,7 @@ namespace ApolloLanguageCompiler.Parsing
         CallFunction,
         Comparison,
         Equality,
-        Exponantion,
+        Exponentiation,
         Multiplication,
         Namespace,
         Negation,

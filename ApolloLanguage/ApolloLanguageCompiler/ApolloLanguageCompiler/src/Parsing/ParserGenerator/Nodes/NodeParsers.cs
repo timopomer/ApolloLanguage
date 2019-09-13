@@ -29,7 +29,8 @@ namespace ApolloLanguageCompiler.Parsing
                 Any(
                     Reference(() => CodeBlock),
                     Reference(() => Statements.Function.Decleration),
-                    Reference(() => Statements.Expression)
+                    Reference(() => Statements.Expression),
+                    Reference(() => Statements.Return)
                 )
             ),
             Eat(SyntaxKeyword.CloseCurlyBracket)
@@ -84,8 +85,8 @@ namespace ApolloLanguageCompiler.Parsing
 
             public static readonly NodeParser Return = new NodeParser(Nodes.ReturnElement,
                 Any(
-                    Eat(SyntaxKeyword.Return),
-                    All(Eat(SyntaxKeyword.Return), NodeParsers.Expression)
+                    All(Eat(SyntaxKeyword.Return), Eat(SyntaxKeyword.SemiColon)),
+                    All(Eat(SyntaxKeyword.Return), NodeParsers.Expression, Eat(SyntaxKeyword.SemiColon))
                 )
             );
 

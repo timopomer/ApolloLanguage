@@ -20,6 +20,8 @@ namespace ApolloLanguageCompiler.Tests
             Assert.IsTrue(walker.IsLast());
         }
 
+        [Test()] public void EqualityInEqualityTest() => TestExpression(@"(False==True)!=False");
+        [Test()] public void EqualityTest() => TestExpression(@"1==2");
         [Test()] public void AssignAssignmentTest() => TestExpression(@"a=3=1");
         [Test()] public void AssignmentTest() => TestExpression(@"a=3");
         [Test()] public void SimpleNumberTest() => TestExpression(@"3");

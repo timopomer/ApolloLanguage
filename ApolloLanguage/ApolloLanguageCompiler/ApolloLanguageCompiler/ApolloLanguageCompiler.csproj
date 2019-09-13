@@ -76,6 +76,7 @@
     <Compile Include="src\Parsing\ParserGenerator\Expressions\Kinds\Expression.cs" />
     <Compile Include="src\Parsing\ParserGenerator\Expressions\Kinds\TokenExpression.cs" />
     <Compile Include="src\Parsing\ParserGenerator\Expressions\Parsers\AllExpressionParser.cs" />
+    <Compile Include="src\Parsing\ParserGenerator\Expressions\Parsers\BinaryOperatorParser.cs" />
     <Compile Include="src\Parsing\ParserGenerator\Expressions\Parsers\UnaryExpressionParser.cs" />
     <Compile Include="src\Parsing\ParserGenerator\Expressions\Parsers\ExpressionParser.cs" />
     <Compile Include="src\Parsing\ParserGenerator\Expressions\ExpressionParsers.cs" />

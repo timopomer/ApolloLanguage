@@ -19,17 +19,25 @@ namespace ApolloLanguageCompiler.Parsing
     {
         public static readonly Func<ExpressionParser> Head = () => Assignment;
 
-        public static readonly ExpressionParser Assignment = new ExpressionParser(Expressions.Assignment,
-            All(
-                Reference(() => Primary.Expression),
-                While(                
-                    MakeBinary(
-                        Keep(SyntaxKeyword.Assignment),
-                        Reference(() => Primary.Expression)
-                    )
-                )
-            )
-        );
+        public static readonly ExpressionParser Assignment =
+            new BinaryOperatorParser(Expressions.Assignment, Reference(() => Equality), SyntaxKeyword.Assignment);
+
+        public static readonly ExpressionParser Equality =
+            new BinaryOperatorParser(Expressions.Equality, Reference(() => Comparison), SyntaxKeyword.Equal, SyntaxKeyword.InEqual);
+
+        public static readonly ExpressionParser Comparison =
+            new BinaryOperatorParser(Expressions.Comparison, Reference(() => Addition), SyntaxKeyword.Greater, SyntaxKeyword.GreaterEqual, SyntaxKeyword.Lesser, SyntaxKeyword.LesserEqual);
+
+        public static readonly ExpressionParser Addition =
+            new BinaryOperatorParser(Expressions.Addition, Reference(() => Multiplication), SyntaxKeyword.Plus, SyntaxKeyword.Minus);
+
+        public static readonly ExpressionParser Multiplication =
+            new BinaryOperatorParser(Expressions.Multiplication, Reference(() => Exponentiation), SyntaxKeyword.Multiply, SyntaxKeyword.Divide, SyntaxKeyword.Mod);
+
+        public static readonly ExpressionParser Exponentiation =
+            new BinaryOperatorParser(Expressions.Exponentiation, Reference(() => Primary.Expression), SyntaxKeyword.Power, SyntaxKeyword.Root);
+
+
 
         public class Primary
         {
