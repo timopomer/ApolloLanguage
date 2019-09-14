@@ -39,8 +39,11 @@ namespace ApolloLanguageCompiler.Parsing
 
         public static readonly ExpressionParser Negation = new ExpressionParser(Expressions.Exponentiation,
             Any(
-                MakeUnary(
-                    Keep(SyntaxKeyword.Minus, SyntaxKeyword.Negate)
+                All(
+                    Keep(SyntaxKeyword.Minus, SyntaxKeyword.Negate),
+                    MakeUnary(
+                        Reference(() => Negation)
+                    )
                 ),
                 Reference(() => Primary.Expression)
             )

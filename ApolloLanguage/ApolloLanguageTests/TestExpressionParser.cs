@@ -20,6 +20,7 @@ namespace ApolloLanguageCompiler.Tests
             Assert.IsTrue(walker.IsLast());
         }
 
+        [Test()] public void NegationNegationTest() => TestExpression(@"!-False");
         [Test()] public void NegationEqualityTest() => TestExpression(@"!False==True");
         [Test()] public void NegationTest() => TestExpression(@"!False");
         [Test()] public void ExponantionTest() => TestExpression(@"3^4//3");
