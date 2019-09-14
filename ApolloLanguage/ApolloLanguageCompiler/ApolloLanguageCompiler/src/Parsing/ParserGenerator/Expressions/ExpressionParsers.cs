@@ -35,9 +35,16 @@ namespace ApolloLanguageCompiler.Parsing
             new BinaryOperatorParser(Expressions.Multiplication, Reference(() => Exponentiation), SyntaxKeyword.Multiply, SyntaxKeyword.Divide, SyntaxKeyword.Mod);
 
         public static readonly ExpressionParser Exponentiation =
-            new BinaryOperatorParser(Expressions.Exponentiation, Reference(() => Primary.Expression), SyntaxKeyword.Power, SyntaxKeyword.Root);
+            new BinaryOperatorParser(Expressions.Exponentiation, Reference(() => Negation), SyntaxKeyword.Power, SyntaxKeyword.Root);
 
-
+        public static readonly ExpressionParser Negation = new ExpressionParser(Expressions.Exponentiation,
+            Any(
+                MakeUnary(
+                    Keep(SyntaxKeyword.Minus, SyntaxKeyword.Negate)
+                ),
+                Reference(() => Primary.Expression)
+            )
+        );
 
         public class Primary
         {
