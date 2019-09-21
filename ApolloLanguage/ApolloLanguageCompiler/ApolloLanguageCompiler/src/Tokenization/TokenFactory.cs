@@ -9,8 +9,6 @@ namespace ApolloLanguageCompiler.Tokenization
 
     public class TokenFactory : IEnumerable<Token>
     {
-        private SourceContext context;
-
         const string Keywords = "false|true|letter|number|boolean|string|return|class|instance|exposed|hidden|extension";
         readonly TokenParser[] parsers = {
             new TokenParser(@"^""(?:\\""|[^""])*""", SyntaxKeyword.LiteralStr        ),
@@ -63,31 +61,22 @@ namespace ApolloLanguageCompiler.Tokenization
             new TokenParser(@"^(?!"+Keywords+@")\w*",SyntaxKeyword.Identifier        ),
             new TokenParser(@"^use",                 SyntaxKeyword.Use               )
 };
-
+        private readonly SourceCode source;
 
         public TokenFactory(SourceCode source)
         {
-            this.context = new SourceContext(0, 0, 0, source.Code.Length, source);
+            this.source = source;
         }
 
         public IEnumerator<Token> GetEnumerator()
         {
-            while (this.context.Start < this.context.Length)
+            int advancedInSource = 0;
+            while (advancedInSource < this.source.Code.Length)
             {
-                Token Parsed = null;
-                TokenParser Parser = this.parsers.First(n => n.TryParse(this.context, out Parsed));
-
-                if (Parsed.Kind == SyntaxKeyword.EOL)
-                {
-                    this.context.Line++;
-                    this.context.Column = 0;
-                }
-                else
-                    this.context.Column += Parsed.Context.Length;
-
-                this.context.Start += Parsed.Context.Length;
-
-                yield return Parsed;
+                Token parsed = null;
+                this.parsers.First(n => n.TryParse(this.source, advancedInSource, out parsed));
+                advancedInSource += parsed.Value.Length;
+                yield return parsed;
             }
         }
 

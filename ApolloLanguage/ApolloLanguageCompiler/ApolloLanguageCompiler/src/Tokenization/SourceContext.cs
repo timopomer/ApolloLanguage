@@ -11,66 +11,55 @@ namespace ApolloLanguageCompiler
     {
         SourceContext Context { get; }
     }
-    [DebuggerDisplay("SourceContext[Line {Line} Collumn {Column} Start {Start} Length {Length}]")]
+
     public struct SourceContext : IEquatable<SourceContext>, IContainsContext
     {
-        public int Line { get; set; }
-        public int Column { get; set; }
-        public int Start { get; set; }
-        public int Length { get; set; }
-        public SourceCode Source { get; }
+        private readonly int start;
+        private readonly int length;
+        private readonly SourceCode sourceReference;
+
+        private int end => this.start + this.length;
 
         public SourceContext Context => this;
 
-        public SourceContext(int line, int column, int start, int length, SourceCode source)
+        public SourceContext(int start, int length, SourceCode sourceReference)
         {
-            this.Line = line;
-            this.Column = column;
-            this.Start = start;
-            this.Length = length;
-            this.Source = source;
+            this.start = start;
+            this.length = length;
+            this.sourceReference = sourceReference;
         }
+
         public override bool Equals(object obj) => obj is SourceContext context && this.Equals(context);
-        public bool Equals(SourceContext other) => this.Line == other.Line &&
-                                                   this.Column == other.Column &&
-                                                   this.Start == other.Start &&
-                                                   this.Length == other.Length &&
-                                                   this.Source == other.Source;
-
-        public static SourceContext operator +(SourceContext firstContent, SourceContext secondContext)
-        {
-            int SmallerLine = Math.Min(firstContent.Line, secondContext.Line);
-            int SmallerCollumn = Math.Min(firstContent.Column, secondContext.Column);
-            int SmallerStart = Math.Min(firstContent.Start, secondContext.Start);
-            int OutreachingEnd = (firstContent.Start + firstContent.Length > secondContext.Start + secondContext.Length ? firstContent.Length : secondContext.Length);
-            int Length = Math.Max(firstContent.Start, secondContext.Start) + 0 - SmallerStart;
-
-            return new SourceContext(SmallerLine, SmallerCollumn, SmallerStart, Length, firstContent.Source);
-        }
+        public bool Equals(SourceContext other) => this.start == other.start && this.length == other.length && this.sourceReference == other.sourceReference;
 
         public static bool operator !=(SourceContext left, SourceContext right) => left.Equals(right);
-
         public static bool operator ==(SourceContext left, SourceContext right) => !left.Equals(right);
 
-        public void Deconstruct(out int line, out int column)
+        public SourceContext To(SourceContext other)
         {
-            line = this.Line;
-            column = this.Column;
-        }
+            if (this.sourceReference != other.sourceReference)
+                throw new Exception("Contexts not pointing to same source");
 
-        public override string ToString() => $"SourceContext[Line {this.Line} Collumn {this.Column} Start {this.Start} Length {this.Length}]";
+            if (this.start > other.start)
+                throw new Exception("First context after second context");
+
+            int longerEnd = Math.Max(this.end, other.end);
+            int combinedLength = longerEnd - this.start;
+            return new SourceContext(this.start, combinedLength, this.sourceReference);
+        }
 
         public string ContextLocation
         {
             get
             {
-                string beforeContext = this.Source.Code.Substring(0, this.Start);
-                string context = this.Source.Code.Substring(this.Start, this.Length);
-                string afterContext = this.Source.Code.Substring(this.Start + this.Length, this.Source.Code.Length - (this.Start + this.Length));
+                string beforeContext = this.sourceReference.Code.Substring(0, this.start);
+                string context = this.sourceReference.Code.Substring(this.start, this.length);
+                string afterContext = this.sourceReference.Code.Substring(this.end, this.sourceReference.Code.Length - this.end);
 
                 return $"{beforeContext}------------>{context}<------------{afterContext}";
             }
         }
+        public override string ToString() => $"SourceContext[Start {this.start} Length {this.length}]";
     }
 
 }

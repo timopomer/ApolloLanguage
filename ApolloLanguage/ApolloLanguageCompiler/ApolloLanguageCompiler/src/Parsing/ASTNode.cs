@@ -11,10 +11,10 @@ namespace ApolloLanguageCompiler.Parsing
     public abstract class ASTNode : IContainsContext, ICloneable
     {
         public abstract object Clone();
-        public SourceContext Context => this._oldContext + this._contextContainer.Context;
-        private SourceContext _oldContext;
+        public SourceContext Context => this.oldContext.To(this.contextContainer.Context);
+        private SourceContext oldContext;
 
-        private IContainsContext _contextContainer;
+        private IContainsContext contextContainer;
 
         protected ASTNode()
         {
@@ -22,13 +22,13 @@ namespace ApolloLanguageCompiler.Parsing
 
         public void SetContext(IContainsContext container)
         {
-            this._oldContext = container.Context;
-            this._contextContainer = container;
+            this.oldContext = container.Context;
+            this.contextContainer = container;
         }
         public void SetContext(SourceContext context, IContainsContext container)
         {
-            this._oldContext = context;
-            this._contextContainer = container;
+            this.oldContext = context;
+            this.contextContainer = container;
         }
 
         public delegate bool Parser<T>(T parentNode, TokenWalker walker);

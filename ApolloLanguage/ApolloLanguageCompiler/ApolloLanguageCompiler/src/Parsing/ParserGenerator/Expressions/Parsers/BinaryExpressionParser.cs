@@ -48,7 +48,7 @@ namespace ApolloLanguageCompiler.Parsing
 
             if (parsedExpressions.Count == 2)
             {
-                expression = new BinaryExpression(expression, parsedExpressions[0], parsedExpressions[1], Context + LocalWalker.Context);
+                expression = new BinaryExpression(expression, parsedExpressions[0], parsedExpressions[1], Context.To(LocalWalker.Context));
                 Console.WriteLine($"Parsed {expression}");
                 throw Succeded;
             }

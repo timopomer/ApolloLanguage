@@ -26,7 +26,7 @@ namespace ApolloLanguageCompiler.Parsing
             if (LocalWalker.TryGetNext(out Token token, this.Keywords))
             {
                 localWalk(LocalWalker);
-                expression = new TokenExpression(token, Context + LocalWalker.Context);
+                expression = new TokenExpression(token, Context.To(LocalWalker.Context));
                 walk = localWalk;
                 throw Succeded;
             }

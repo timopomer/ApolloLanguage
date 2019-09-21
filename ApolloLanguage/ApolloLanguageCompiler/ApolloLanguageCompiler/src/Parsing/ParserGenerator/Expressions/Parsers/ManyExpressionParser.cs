@@ -10,10 +10,12 @@ namespace ApolloLanguageCompiler.Parsing
     class ManyExpressionParser : IExpressionParser
     {
         protected readonly IExpressionParser Parser;
+        private readonly bool allowEmpty;
 
-        public ManyExpressionParser(IExpressionParser parser)
+        public ManyExpressionParser(IExpressionParser parser, bool allowEmpty=true)
         {
             this.Parser = parser;
+            this.allowEmpty = allowEmpty;
         }
 
         public void Parse(ref Expression expression, out TokenWalker.StateWalker walk, TokenWalker walker)
@@ -50,8 +52,12 @@ namespace ApolloLanguageCompiler.Parsing
                 }
             }
 
+            if (!this.allowEmpty && parsedExpressions.Count == 0)
+            {
+                throw Failed;
+            }
 
-            expression = new ManyExpression(parsedExpressions, Context + LocalWalker.Context);
+            expression = new ManyExpression(parsedExpressions, Context.To(LocalWalker.Context));
             Console.WriteLine($"Parsed {expression}");
             walk = localWalk;
             throw Succeded;

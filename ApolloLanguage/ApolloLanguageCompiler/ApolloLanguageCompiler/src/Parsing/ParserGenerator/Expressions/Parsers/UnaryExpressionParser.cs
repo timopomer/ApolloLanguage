@@ -46,7 +46,7 @@ namespace ApolloLanguageCompiler.Parsing
 
             if (parsedExpressions.Count == 1)
             {
-                expression = new UnaryExpression(parsedExpressions[0], expression, Context + LocalWalker.Context);
+                expression = new UnaryExpression(parsedExpressions[0], expression, Context.To(LocalWalker.Context));
                 Console.WriteLine($"Parsed {expression}");
                 walk = localWalk;
                 throw Succeded;

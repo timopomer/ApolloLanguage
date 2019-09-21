@@ -61,8 +61,7 @@ namespace ApolloLanguageCompiler.Tests
             Token current = walker.CurrentElement;
 
             Assert.AreEqual(current.Kind, SyntaxKeyword.Class);
-
-            Assert.AreEqual(current.Context, new SourceContext(1, 0, 3, 5, source));
+            Assert.AreEqual(current.Context, new SourceContext(3, 5, source));
         }
         [Test()]
         public void OutDelegateTest()
@@ -77,7 +76,7 @@ namespace ApolloLanguageCompiler.Tests
 
             Token current = walker.CurrentElement;
 
-            Assert.AreEqual(current.Context, new SourceContext(0, 7, 7, 1, source));
+            Assert.AreEqual(current.Context, new SourceContext(7, 1, source));
 
             void IncrementWalker(out StateWalker Walk, TokenWalker Walker)
             {

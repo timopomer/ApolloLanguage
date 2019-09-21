@@ -27,7 +27,7 @@ namespace ApolloLanguageCompiler.Analysis.IR
         { }
 
         protected IR(IEnumerable<SourceContext> contexts, IR parent) :
-        this(contexts.Aggregate((m, n) => m + n), parent)
+        this(contexts.Aggregate((m, n) => m.To(n)), parent)
         { }
 
         protected IR(IContainsContext containsContext, IR parent) :

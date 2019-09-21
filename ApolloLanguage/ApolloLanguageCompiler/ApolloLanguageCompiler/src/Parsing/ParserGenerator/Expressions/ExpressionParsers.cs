@@ -54,7 +54,7 @@ namespace ApolloLanguageCompiler.Parsing
         {
             public static readonly ExpressionParser Call = new ExpressionParser(Expressions.FunctionCall,
                 All(
-                    Reference(() => Primary.Expression),
+                    Reference(() => Access),
                     While(
                         MakeUnary(
                             All(
@@ -79,6 +79,9 @@ namespace ApolloLanguageCompiler.Parsing
                 )
             );
         }
+
+        public static readonly ExpressionParser Access =
+            new BinaryOperatorParser(Expressions.Access, Reference(() => Primary.Expression), SyntaxKeyword.Colon);
 
         public class Primary
         {
