@@ -17,5 +17,6 @@ namespace ApolloLanguageCompiler.Parsing
             this.UnaryModifier = unaryModifier;
         }
 
+        public override string ToString() => $"Unary[{this.Expression}, {this.UnaryModifier}]";
     }
 }

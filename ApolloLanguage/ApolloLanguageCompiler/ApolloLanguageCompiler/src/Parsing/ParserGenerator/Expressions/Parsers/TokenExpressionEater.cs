@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,7 +23,7 @@ namespace ApolloLanguageCompiler.Parsing
             TokenWalker LocalWalker = new TokenWalker(walker);
             walk = LocalWalker.State;
 
-            if (LocalWalker.TryGetNext(out _, this.Keywords))
+            if (LocalWalker.TryGetNext(out Token token, this.Keywords))
             {
                 throw Succeded;
             }

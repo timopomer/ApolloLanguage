@@ -18,5 +18,7 @@ namespace ApolloLanguageCompiler.Parsing
             this.BinaryModifier = binaryModifier;
             this.Right = right;
         }
+
+        public override string ToString() => $"Binary[{this.Left}, {this.BinaryModifier}, {this.Right}]";
     }
 }

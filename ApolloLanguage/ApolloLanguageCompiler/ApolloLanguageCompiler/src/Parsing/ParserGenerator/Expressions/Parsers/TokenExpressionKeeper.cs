@@ -20,13 +20,14 @@ namespace ApolloLanguageCompiler.Parsing
         public void Parse(ref Expression expression, out TokenWalker.StateWalker walk, TokenWalker walker)
         {
             TokenWalker LocalWalker = new TokenWalker(walker);
-            walk = LocalWalker.State;
+            TokenWalker.StateWalker localWalk = LocalWalker.State;
             SourceContext Context = LocalWalker.Context;
 
             if (LocalWalker.TryGetNext(out Token token, this.Keywords))
             {
-                walk(LocalWalker);
+                localWalk(LocalWalker);
                 expression = new TokenExpression(token, Context + LocalWalker.Context);
+                walk = localWalk;
                 throw Succeded;
             }
             throw Failed;

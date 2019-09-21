@@ -11,7 +11,7 @@ namespace ApolloLanguageCompiler.Parsing
         Access,
         Addition,
         Assignment,
-        CallFunction,
+        FunctionCall,
         Comparison,
         Equality,
         Exponentiation,
@@ -22,6 +22,7 @@ namespace ApolloLanguageCompiler.Parsing
         Literal,
         Paranthesized,
         PrimitiveType,
-        Primary
+        Primary,
+        FunctionParameter
     }
 }

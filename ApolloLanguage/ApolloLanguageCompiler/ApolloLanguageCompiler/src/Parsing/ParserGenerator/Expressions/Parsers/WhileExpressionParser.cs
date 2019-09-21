@@ -20,13 +20,13 @@ namespace ApolloLanguageCompiler.Parsing
         public void Parse(ref Expression expression, out TokenWalker.StateWalker walk, TokenWalker walker)
         {
             TokenWalker LocalWalker = new TokenWalker(walker);
-            walk = LocalWalker.State;
+            TokenWalker.StateWalker localWalk = LocalWalker.State;
 
             while (true)
             {
                 try
                 {
-                    this.Parser.Parse(ref expression, out walk, LocalWalker);
+                    this.Parser.Parse(ref expression, out localWalk, LocalWalker);
                 }
                 catch (Failure)
                 {
@@ -34,7 +34,8 @@ namespace ApolloLanguageCompiler.Parsing
                 }
                 catch (Success)
                 {
-                    walk(LocalWalker);
+                    localWalk(LocalWalker);
+                    walk = localWalk;
                     continue;
                 }
                 throw new ParserException("Parser didnt specifiy if it succeded or not");

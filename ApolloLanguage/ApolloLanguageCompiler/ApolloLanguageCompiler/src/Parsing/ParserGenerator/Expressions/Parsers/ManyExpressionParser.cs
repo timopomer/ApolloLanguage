@@ -7,53 +7,56 @@ using static ApolloLanguageCompiler.Parsing.ExpressionParsingOutcome;
 
 namespace ApolloLanguageCompiler.Parsing
 {
-    class UnaryExpressionParser : IExpressionParser
+    class ManyExpressionParser : IExpressionParser
     {
-        protected readonly IExpressionParser[] Parsers;
+        protected readonly IExpressionParser Parser;
 
-        public UnaryExpressionParser(IExpressionParser[] parsers)
+        public ManyExpressionParser(IExpressionParser parser)
         {
-            this.Parsers = parsers;
+            this.Parser = parser;
         }
 
         public void Parse(ref Expression expression, out TokenWalker.StateWalker walk, TokenWalker walker)
         {
             TokenWalker LocalWalker = new TokenWalker(walker);
             TokenWalker.StateWalker localWalk = LocalWalker.State;
+
             SourceContext Context = LocalWalker.Context;
 
             List<Expression> parsedExpressions = new List<Expression>();
-            foreach (IExpressionParser parser in this.Parsers)
+            while (true)
             {
                 Expression parsedExpression = null;
                 try
                 {
-                    parser.Parse(ref parsedExpression, out localWalk, LocalWalker);
+                    this.Parser.Parse(ref parsedExpression, out localWalk, LocalWalker);
                 }
                 catch (Failure)
                 {
-                    continue;
+                    break;
                 }
                 catch (Success)
                 {
                     localWalk(LocalWalker);
+
                     if (parsedExpression != null)
                     {
                         parsedExpressions.Add(parsedExpression);
                     }
+                    else
+                    {
+                        throw Failed;
+                    }
                 }
             }
 
-            if (parsedExpressions.Count == 1)
-            {
-                expression = new UnaryExpression(parsedExpressions[0], expression, Context + LocalWalker.Context);
-                Console.WriteLine($"Parsed {expression}");
-                walk = localWalk;
-                throw Succeded;
-            }
-            throw Failed;
+
+            expression = new ManyExpression(parsedExpressions, Context + LocalWalker.Context);
+            Console.WriteLine($"Parsed {expression}");
+            walk = localWalk;
+            throw Succeded;
         }
 
-        public static UnaryExpressionParser MakeUnary(params IExpressionParser[] parsers) => new UnaryExpressionParser(parsers);
+        public static ManyExpressionParser MakeMany(IExpressionParser parser) => new ManyExpressionParser(parser);
     }
 }

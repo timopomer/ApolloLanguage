@@ -8,6 +8,7 @@ using static ApolloLanguageCompiler.Parsing.ReferenceExpressionParser;
 using static ApolloLanguageCompiler.Parsing.TokenExpressionEater;
 using static ApolloLanguageCompiler.Parsing.TokenExpressionKeeper;
 using static ApolloLanguageCompiler.Parsing.UnaryExpressionParser;
+using static ApolloLanguageCompiler.Parsing.ManyExpressionParser;
 using static ApolloLanguageCompiler.Parsing.BinaryExpressionParser;
 using static ApolloLanguageCompiler.Parsing.AnyExpressionParser;
 using static ApolloLanguageCompiler.Parsing.AllExpressionParser;
@@ -37,7 +38,7 @@ namespace ApolloLanguageCompiler.Parsing
         public static readonly ExpressionParser Exponentiation =
             new BinaryOperatorParser(Expressions.Exponentiation, Reference(() => Negation), SyntaxKeyword.Power, SyntaxKeyword.Root);
 
-        public static readonly ExpressionParser Negation = new ExpressionParser(Expressions.Exponentiation,
+        public static readonly ExpressionParser Negation = new ExpressionParser(Expressions.Negation,
             Any(
                 All(
                     Keep(SyntaxKeyword.Minus, SyntaxKeyword.Negate),
@@ -45,9 +46,39 @@ namespace ApolloLanguageCompiler.Parsing
                         Reference(() => Negation)
                     )
                 ),
-                Reference(() => Primary.Expression)
+                Reference(() => Function.Call)
             )
         );
+
+        public class Function
+        {
+            public static readonly ExpressionParser Call = new ExpressionParser(Expressions.FunctionCall,
+                All(
+                    Reference(() => Primary.Expression),
+                    While(
+                        MakeUnary(
+                            All(
+                                Eat(SyntaxKeyword.OpenParenthesis),
+                                MakeMany(
+                                    Reference(() => Function.Parameter)
+                                ),
+                                Eat(SyntaxKeyword.CloseParenthesis)
+                            )
+                        )
+                    )
+                )
+            );
+
+            public static readonly ExpressionParser Parameter = new ExpressionParser(Expressions.FunctionParameter,
+                Any(
+                    All(
+                        Reference(Head),
+                        Eat(SyntaxKeyword.Comma)
+                    ),
+                    Reference(Head)
+                )
+            );
+        }
 
         public class Primary
         {
