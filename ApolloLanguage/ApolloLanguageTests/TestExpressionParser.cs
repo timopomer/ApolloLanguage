@@ -13,20 +13,22 @@ namespace ApolloLanguageCompiler.Tests
     {
         public static void TestExpression(string representation, bool shouldFail=false)
         {
-            TokenWalker walker = new Compiler(new SourceCode(representation)).Walker;
+            SourceCode source = new SourceCode(representation);
+            TokenWalker walker = new Compiler(source).Walker;
             Expression expression = null;
             ExpressionParsers.Head.Invoke().Parse(ref expression, walker);
             if (shouldFail)
                 Assert.IsNull(expression);
 
             Assert.IsNotNull(expression);
+            //Assert.AreEqual(new SourceContext(0, representation.Length, source), expression.Context);
             Assert.IsTrue(walker.IsLast());
         }
 
-        [Test()] public void NoGenericTypeTest() => TestExpression(@"List<>");
-        [Test()] public void MultipleGenericTypeTest() => TestExpression(@"List<str,str>");
-        [Test()] public void GenericFunctionCallTest() => TestExpression(@"func<T>(T)");
-        [Test()] public void GenericFunctionTest() => TestExpression(@"func<str>");
+        //[Test()] public void NoGenericTypeTest() => TestExpression(@"List<>");
+        //[Test()] public void MultipleGenericTypeTest() => TestExpression(@"List<str,str>");
+        //[Test()] public void GenericFunctionCallTest() => TestExpression(@"func<T>(T)");
+        //[Test()] public void GenericFunctionTest() => TestExpression(@"func<str>");
         [Test()] public void CallAccessMultipleNamespacesTest() => TestExpression(@"System:Console:WriteLine()");
         [Test()] public void AccessMultipleNamespacesTest() => TestExpression(@"System:Console:WriteLine");
         [Test()] public void AccessNamespaceTest() => TestExpression(@"System:Console");

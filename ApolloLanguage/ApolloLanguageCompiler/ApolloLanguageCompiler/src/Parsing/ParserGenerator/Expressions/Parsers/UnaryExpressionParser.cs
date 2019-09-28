@@ -20,7 +20,6 @@ namespace ApolloLanguageCompiler.Parsing
         {
             TokenWalker LocalWalker = new TokenWalker(walker);
             TokenWalker.StateWalker localWalk = LocalWalker.State;
-            SourceContext Context = LocalWalker.Context;
 
             List<Expression> parsedExpressions = new List<Expression>();
             foreach (IExpressionParser parser in this.Parsers)
@@ -46,7 +45,7 @@ namespace ApolloLanguageCompiler.Parsing
 
             if (parsedExpressions.Count == 1)
             {
-                expression = new UnaryExpression(parsedExpressions[0], expression, Context.To(LocalWalker.Context));
+                expression = new UnaryExpression(parsedExpressions[0], expression, expression.Context.To(LocalWalker.Context));
                 Console.WriteLine($"Parsed {expression}");
                 walk = localWalk;
                 throw Succeded;

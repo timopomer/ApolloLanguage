@@ -21,8 +21,6 @@ namespace ApolloLanguageCompiler.Parsing
             TokenWalker LocalWalker = new TokenWalker(walker);
             TokenWalker.StateWalker localWalk = LocalWalker.State;
 
-            SourceContext Context = LocalWalker.Context;
-
             List<Expression> parsedExpressions = new List<Expression>();
             foreach (IExpressionParser parser in this.Parsers)
             {
@@ -48,7 +46,7 @@ namespace ApolloLanguageCompiler.Parsing
 
             if (parsedExpressions.Count == 2)
             {
-                expression = new BinaryExpression(expression, parsedExpressions[0], parsedExpressions[1], Context.To(LocalWalker.Context));
+                expression = new BinaryExpression(expression, parsedExpressions[0], parsedExpressions[1], expression.Context.To(LocalWalker.Context));
                 Console.WriteLine($"Parsed {expression}");
                 throw Succeded;
             }
