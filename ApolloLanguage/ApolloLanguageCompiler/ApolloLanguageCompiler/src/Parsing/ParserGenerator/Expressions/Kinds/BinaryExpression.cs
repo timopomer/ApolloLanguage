@@ -8,17 +8,19 @@ namespace ApolloLanguageCompiler.Parsing
 {
     public class BinaryExpression : Expression
     {
+        private readonly Expressions type;
         public readonly Expression Left;
         public readonly Expression BinaryModifier;
         public readonly Expression Right;
 
-        public BinaryExpression(Expression left, Expression binaryModifier, Expression right, SourceContext context) : base(context)
+        public BinaryExpression(Expressions type, Expression left, Expression binaryModifier, Expression right, SourceContext context) : base(context)
         {
+            this.type = type;
             this.Left = left;
             this.BinaryModifier = binaryModifier;
             this.Right = right;
         }
 
-        public override string ToString() => $"Binary[{this.Left}, {this.BinaryModifier}, {this.Right}]";
+        public override string ToString() => $"Binary<{this.type}>[{this.Left}, {this.BinaryModifier}, {this.Right}]";
     }
 }

@@ -7,22 +7,23 @@ using static ApolloLanguageCompiler.Parsing.ExpressionParsingOutcome;
 
 namespace ApolloLanguageCompiler.Parsing
 {
-    class BinaryExpressionParser : IExpressionParser
+    class BinaryExpressionParser : ExpressionParser
     {
-        protected readonly IExpressionParser[] Parsers;
+        protected readonly ExpressionParser[] Parsers;
+        private readonly Expressions type;
 
-        public BinaryExpressionParser(IExpressionParser[] parsers)
+        public BinaryExpressionParser(ExpressionParser[] parsers)
         {
             this.Parsers = parsers;
         }
 
-        public void Parse(ref Expression expression, out TokenWalker.StateWalker walk, TokenWalker walker)
+        public override void Parse(ref Expression expression, out TokenWalker.StateWalker walk, TokenWalker walker)
         {
             TokenWalker LocalWalker = new TokenWalker(walker);
             TokenWalker.StateWalker localWalk = LocalWalker.State;
 
             List<Expression> parsedExpressions = new List<Expression>();
-            foreach (IExpressionParser parser in this.Parsers)
+            foreach (ExpressionParser parser in this.Parsers)
             {
                 Expression parsedExpression = null;
                 try
@@ -46,13 +47,13 @@ namespace ApolloLanguageCompiler.Parsing
 
             if (parsedExpressions.Count == 2)
             {
-                expression = new BinaryExpression(expression, parsedExpressions[0], parsedExpressions[1], expression.Context.To(LocalWalker.Context));
+                expression = new BinaryExpression(this.type, expression, parsedExpressions[0], parsedExpressions[1], expression.Context.To(LocalWalker.Context));
                 Console.WriteLine($"Parsed {expression}");
                 throw Succeded;
             }
             throw Failed;
         }
 
-        public static BinaryExpressionParser MakeBinary(params IExpressionParser[] parsers) => new BinaryExpressionParser(parsers);
+        public static BinaryExpressionParser MakeBinary(Expressions type, params ExpressionParser[] parsers) => new BinaryExpressionParser(parsers);
     }
 }

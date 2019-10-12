@@ -17,22 +17,18 @@ using static ApolloLanguageCompiler.Parsing.WhileExpressionParser;
 
 namespace ApolloLanguageCompiler.Parsing
 {
-    public class BinaryOperatorParser : ExpressionParser
+    public static class BinaryOperatorParser
     {
-        public BinaryOperatorParser(Expressions type, ReferenceExpressionParser lowerPrecedence, params SyntaxKeyword[] operators) : base(type, BinaryOperator(lowerPrecedence, operators))
-        {
-        }
-
-        public static IExpressionParser BinaryOperator(ReferenceExpressionParser lowerPrecedence, params SyntaxKeyword[] operators) =>
+        public static ExpressionParser BinaryOperator(Expressions type, ReferenceExpressionParser lowerPrecedence, params SyntaxKeyword[] operators) =>
             All(
                 lowerPrecedence,
                 While(
                     MakeBinary(
+                        type,
                         Keep(operators),
                         lowerPrecedence
                     )
                 )
             );
-
     }
 }

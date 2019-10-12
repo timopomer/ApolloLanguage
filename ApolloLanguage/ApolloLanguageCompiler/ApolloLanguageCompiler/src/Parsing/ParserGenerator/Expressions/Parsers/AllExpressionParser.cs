@@ -8,21 +8,21 @@ using static ApolloLanguageCompiler.Parsing.ExpressionParsingOutcome;
 
 namespace ApolloLanguageCompiler.Parsing
 {
-    public class AllExpressionParser : IExpressionParser
+    public class AllExpressionParser : ExpressionParser
     {
-        protected readonly IExpressionParser[] Parsers;
+        protected readonly ExpressionParser[] Parsers;
 
-        public AllExpressionParser(IExpressionParser[] parsers)
+        public AllExpressionParser(ExpressionParser[] parsers)
         {
             this.Parsers = parsers;
         }
 
-        public void Parse(ref Expression expression, out TokenWalker.StateWalker walk, TokenWalker walker)
+        public override void Parse(ref Expression expression, out TokenWalker.StateWalker walk, TokenWalker walker)
         {
             TokenWalker LocalWalker = new TokenWalker(walker);
             TokenWalker.StateWalker localWalk = LocalWalker.State;
 
-            foreach (IExpressionParser parser in this.Parsers)
+            foreach (ExpressionParser parser in this.Parsers)
             {
                 try
                 {
@@ -42,8 +42,6 @@ namespace ApolloLanguageCompiler.Parsing
             throw Succeded;
         }
 
-
-        public static AllExpressionParser All(params IExpressionParser[] parsers) => new AllExpressionParser(parsers);
-        public override string ToString() => $"AnyParser[{base.ToString()}]";
+        public static AllExpressionParser All(params ExpressionParser[] parsers) => new AllExpressionParser(parsers);
     }
 }

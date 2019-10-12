@@ -7,22 +7,24 @@ using static ApolloLanguageCompiler.Parsing.ExpressionParsingOutcome;
 
 namespace ApolloLanguageCompiler.Parsing
 {
-    class UnaryExpressionParser : IExpressionParser
+    class UnaryExpressionParser : ExpressionParser
     {
-        protected readonly IExpressionParser[] Parsers;
+        private readonly Expressions type;
+        protected readonly ExpressionParser[] Parsers;
 
-        public UnaryExpressionParser(IExpressionParser[] parsers)
+        public UnaryExpressionParser(Expressions type, ExpressionParser[] parsers)
         {
+            this.type = type;
             this.Parsers = parsers;
         }
 
-        public void Parse(ref Expression expression, out TokenWalker.StateWalker walk, TokenWalker walker)
+        public override void Parse(ref Expression expression, out TokenWalker.StateWalker walk, TokenWalker walker)
         {
             TokenWalker LocalWalker = new TokenWalker(walker);
             TokenWalker.StateWalker localWalk = LocalWalker.State;
 
             List<Expression> parsedExpressions = new List<Expression>();
-            foreach (IExpressionParser parser in this.Parsers)
+            foreach (ExpressionParser parser in this.Parsers)
             {
                 Expression parsedExpression = null;
                 try
@@ -45,7 +47,7 @@ namespace ApolloLanguageCompiler.Parsing
 
             if (parsedExpressions.Count == 1)
             {
-                expression = new UnaryExpression(parsedExpressions[0], expression, expression.Context.To(LocalWalker.Context));
+                expression = new UnaryExpression(this.type, parsedExpressions[0], expression, expression.Context.To(LocalWalker.Context));
                 Console.WriteLine($"Parsed {expression}");
                 walk = localWalk;
                 throw Succeded;
@@ -53,6 +55,6 @@ namespace ApolloLanguageCompiler.Parsing
             throw Failed;
         }
 
-        public static UnaryExpressionParser MakeUnary(params IExpressionParser[] parsers) => new UnaryExpressionParser(parsers);
+        public static UnaryExpressionParser MakeUnary(Expressions type, params ExpressionParser[] parsers) => new UnaryExpressionParser(type, parsers);
     }
 }

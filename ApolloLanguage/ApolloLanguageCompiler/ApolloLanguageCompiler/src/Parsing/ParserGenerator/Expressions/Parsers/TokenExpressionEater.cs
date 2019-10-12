@@ -9,7 +9,7 @@ using static ApolloLanguageCompiler.Parsing.ExpressionParsingOutcome;
 
 namespace ApolloLanguageCompiler.Parsing
 {
-    public class TokenExpressionEater : IExpressionParser
+    public class TokenExpressionEater : ExpressionParser
     {
         protected readonly SyntaxKeyword[] Keywords;
 
@@ -18,13 +18,14 @@ namespace ApolloLanguageCompiler.Parsing
             this.Keywords = keywords;
         }
 
-        public void Parse(ref Expression expression, out TokenWalker.StateWalker walk, TokenWalker walker)
+        public override void Parse(ref Expression expression, out TokenWalker.StateWalker walk, TokenWalker walker)
         {
             TokenWalker LocalWalker = new TokenWalker(walker);
             walk = LocalWalker.State;
 
             if (LocalWalker.TryGetNext(out Token token, this.Keywords))
             {
+                Console.WriteLine($"Parsed {token}");
                 throw Succeded;
             }
             throw Failed;

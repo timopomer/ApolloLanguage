@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ApolloLanguageCompiler.Parsing
 {
-    public class ReferenceExpressionParser : IExpressionParser
+    public class ReferenceExpressionParser : ExpressionParser
     {
         private readonly Func<ExpressionParser> parserReference;
         public ReferenceExpressionParser(Func<ExpressionParser> parserReference)
@@ -15,7 +15,7 @@ namespace ApolloLanguageCompiler.Parsing
             this.parserReference = parserReference;
         }
 
-        public void Parse(ref Expression expression, out TokenWalker.StateWalker walk, TokenWalker walker)
+        public override void Parse(ref Expression expression, out TokenWalker.StateWalker walk, TokenWalker walker)
         {
             TokenWalker LocalWalker = new TokenWalker(walker);
             walk = LocalWalker.State;

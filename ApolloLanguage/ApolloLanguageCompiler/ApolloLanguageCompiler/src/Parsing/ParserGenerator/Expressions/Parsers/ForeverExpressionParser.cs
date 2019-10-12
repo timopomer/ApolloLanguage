@@ -8,13 +8,13 @@ using static ApolloLanguageCompiler.Parsing.ExpressionParsingOutcome;
 
 namespace ApolloLanguageCompiler.Parsing
 {
-    public class AnyExpressionParser : ExpressionParser
+    public class ForeverExpressionParser : ExpressionParser
     {
-        protected readonly ExpressionParser[] Parsers;
+        protected readonly ExpressionParser Parser;
 
-        public AnyExpressionParser(ExpressionParser[] parsers)
+        public ForeverExpressionParser(ExpressionParser parser)
         {
-            this.Parsers = parsers;
+            this.Parser = parser;
         }
 
         public override void Parse(ref Expression expression, out TokenWalker.StateWalker walk, TokenWalker walker)
@@ -22,27 +22,26 @@ namespace ApolloLanguageCompiler.Parsing
             TokenWalker LocalWalker = new TokenWalker(walker);
             TokenWalker.StateWalker localWalk = LocalWalker.State;
 
-            foreach (ExpressionParser parser in this.Parsers)
+            while (!LocalWalker.IsLast())
             {
                 try
                 {
-                    parser.Parse(ref expression, out localWalk, LocalWalker);
+                    this.Parser.Parse(ref expression, out localWalk, LocalWalker);
                 }
                 catch (Failure)
                 {
-                    continue;
+                    throw;
                 }
                 catch (Success)
                 {
                     localWalk(LocalWalker);
-                    walk = localWalk;
-                    throw;
+                    continue;
                 }
             }
-            throw Failed;
+            walk = localWalk;
+            throw Succeded;
         }
 
-
-        public static AnyExpressionParser Any(params ExpressionParser[] parsers) => new AnyExpressionParser(parsers);
+        public static ForeverExpressionParser Forever(ExpressionParser parser) => new ForeverExpressionParser(parser);
     }
 }

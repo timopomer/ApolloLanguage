@@ -18,6 +18,6 @@ namespace ApolloLanguageCompiler.Parsing
             this.Token = token;
         }
 
-        public override string ToString() => $"Token[{this.Token}]";
+        public override string ToString() => this.Token.ToString();
     }
 }

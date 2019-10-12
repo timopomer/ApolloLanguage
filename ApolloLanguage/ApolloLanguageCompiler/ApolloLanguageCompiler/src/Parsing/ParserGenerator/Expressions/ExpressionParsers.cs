@@ -13,63 +13,58 @@ using static ApolloLanguageCompiler.Parsing.BinaryExpressionParser;
 using static ApolloLanguageCompiler.Parsing.AnyExpressionParser;
 using static ApolloLanguageCompiler.Parsing.AllExpressionParser;
 using static ApolloLanguageCompiler.Parsing.WhileExpressionParser;
-
+using static ApolloLanguageCompiler.Parsing.BinaryOperatorParser;
 namespace ApolloLanguageCompiler.Parsing
 {
     public class ExpressionParsers
     {
         public static readonly Func<ExpressionParser> Head = () => Assignment;
 
-        public static readonly ExpressionParser Assignment =
-            new BinaryOperatorParser(Expressions.Assignment, Reference(() => Equality), SyntaxKeyword.Assignment);
-
-        public static readonly ExpressionParser Equality =
-            new BinaryOperatorParser(Expressions.Equality, Reference(() => Comparison), SyntaxKeyword.Equal, SyntaxKeyword.InEqual);
-
-        public static readonly ExpressionParser Comparison =
-            new BinaryOperatorParser(Expressions.Comparison, Reference(() => Addition), SyntaxKeyword.Greater, SyntaxKeyword.GreaterEqual, SyntaxKeyword.Lesser, SyntaxKeyword.LesserEqual);
-
-        public static readonly ExpressionParser Addition =
-            new BinaryOperatorParser(Expressions.Addition, Reference(() => Multiplication), SyntaxKeyword.Plus, SyntaxKeyword.Minus);
-
-        public static readonly ExpressionParser Multiplication =
-            new BinaryOperatorParser(Expressions.Multiplication, Reference(() => Exponentiation), SyntaxKeyword.Multiply, SyntaxKeyword.Divide, SyntaxKeyword.Mod);
-
-        public static readonly ExpressionParser Exponentiation =
-            new BinaryOperatorParser(Expressions.Exponentiation, Reference(() => Negation), SyntaxKeyword.Power, SyntaxKeyword.Root);
-
-        public static readonly ExpressionParser Negation = new ExpressionParser(Expressions.Negation,
-            Any(
-                All(
-                    Keep(SyntaxKeyword.Minus, SyntaxKeyword.Negate),
-                    MakeUnary(
-                        Reference(() => Negation)
-                    )
-                ),
-                Reference(() => Function.Call)
-            )
-        );
-
-        public class Function
-        {
-            public static readonly ExpressionParser Call = new ExpressionParser(Expressions.FunctionCall,
+        public static readonly ExpressionParser
+            Assignment =
+            BinaryOperator(Expressions.Assignment, Reference(() => Equality), SyntaxKeyword.Assignment),
+            Equality =
+            BinaryOperator(Expressions.Equality, Reference(() => Comparison), SyntaxKeyword.Equal, SyntaxKeyword.InEqual),
+            Comparison =
+            BinaryOperator(Expressions.Comparison, Reference(() => Addition), SyntaxKeyword.Greater, SyntaxKeyword.GreaterEqual, SyntaxKeyword.Lesser, SyntaxKeyword.LesserEqual),
+            Addition = 
+            BinaryOperator(Expressions.Addition, Reference(() => Multiplication), SyntaxKeyword.Plus, SyntaxKeyword.Minus),
+            Multiplication =
+            BinaryOperator(Expressions.Multiplication, Reference(() => Exponentiation), SyntaxKeyword.Multiply, SyntaxKeyword.Divide, SyntaxKeyword.Mod),
+            Exponentiation =
+            BinaryOperator(Expressions.Exponentiation, Reference(() => Negation), SyntaxKeyword.Power, SyntaxKeyword.Root),
+            Negation =
+                Any(
+                    All(
+                        Keep(SyntaxKeyword.Minus, SyntaxKeyword.Negate),
+                        MakeUnary(
+                            Expressions.Negation,
+                            Reference(() => Negation)
+                        )
+                    ),
+                    Reference(() => FunctionCall)
+                )
+            ,
+            Access =
+            BinaryOperator(Expressions.Access, Reference(() => PrimaryExpression), SyntaxKeyword.Colon),
+            FunctionCall =
                 All(
                     Reference(() => Access),
                     While(
                         MakeUnary(
+                            Expressions.FunctionCall,
                             All(
                                 Eat(SyntaxKeyword.OpenParenthesis),
                                 MakeMany(
-                                    Reference(() => Function.Parameter)
+                                    Reference(() => FunctionParameter)
                                 ),
                                 Eat(SyntaxKeyword.CloseParenthesis)
                             )
                         )
                     )
                 )
-            );
-
-            public static readonly ExpressionParser Parameter = new ExpressionParser(Expressions.FunctionParameter,
+            ,
+            FunctionParameter =
                 Any(
                     All(
                         Reference(Head),
@@ -77,24 +72,16 @@ namespace ApolloLanguageCompiler.Parsing
                     ),
                     Reference(Head)
                 )
-            );
-        }
-
-        public static readonly ExpressionParser Access =
-            new BinaryOperatorParser(Expressions.Access, Reference(() => Primary.Expression), SyntaxKeyword.Colon);
-
-        public class Primary
-        {
-            public static readonly ExpressionParser Expression = new ExpressionParser(Expressions.Primary,
+            ,
+            PrimaryExpression =
                 Any(
-                    Reference(() => Primary.Literal),
-                    Reference(() => Primary.Identifier),
-                    Reference(() => Primary.Paranthesized),
-                    Reference(() => Primary.PrimitiveType)
+                    Reference(() => Literal),
+                    Reference(() => Identifier),
+                    Reference(() => Paranthesized),
+                    Reference(() => PrimitiveType)
                 )
-            );
-
-            public static readonly ExpressionParser Literal = new ExpressionParser(Expressions.Literal,
+            ,
+            Literal =
                 Keep(
                     SyntaxKeyword.LiteralNumber,
                     SyntaxKeyword.LiteralLetter,
@@ -102,28 +89,24 @@ namespace ApolloLanguageCompiler.Parsing
                     SyntaxKeyword.LiteralFalse,
                     SyntaxKeyword.LiteralTrue
                 )
-            );
-
-            public static readonly ExpressionParser Identifier = new ExpressionParser(Expressions.Identifier,
+            ,
+            Identifier =
                 Keep(SyntaxKeyword.Identifier)
-            );
-
-            public static readonly ExpressionParser Paranthesized = new ExpressionParser(Expressions.Paranthesized,
+            ,
+            Paranthesized =
                 All(
                     Eat(SyntaxKeyword.OpenParenthesis),
                     Reference(Head),
                     Eat(SyntaxKeyword.CloseParenthesis)
                 )
-            );
-
-            public static readonly ExpressionParser PrimitiveType = new ExpressionParser(Expressions.PrimitiveType,
+            ,
+            PrimitiveType =
                 Keep(
                     SyntaxKeyword.Number,
                     SyntaxKeyword.Str,
                     SyntaxKeyword.Letter,
                     SyntaxKeyword.Boolean
                 )
-            );
-        }
+            ;
     }
 }

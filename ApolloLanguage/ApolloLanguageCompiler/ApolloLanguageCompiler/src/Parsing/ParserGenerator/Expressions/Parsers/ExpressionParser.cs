@@ -8,17 +8,8 @@ using static ApolloLanguageCompiler.Parsing.ExpressionParsingOutcome;
 
 namespace ApolloLanguageCompiler.Parsing
 {
-    public class ExpressionParser : IExpressionParser
+    public abstract class ExpressionParser
     {
-        public Expressions Type { get; }
-        private readonly IExpressionParser[] parsers;
-
-        public ExpressionParser(Expressions type, params IExpressionParser[] parsers)
-        {
-            this.Type = type;
-            this.parsers = parsers;
-        }
-        
         public void Parse(ref Expression expression, TokenWalker walker)
         {
             StateWalker walk = null;
@@ -38,20 +29,9 @@ namespace ApolloLanguageCompiler.Parsing
                 throw new FailedParsingExpressionException();
             }
         }
-        
-        public void Parse(ref Expression expression, out StateWalker walk, TokenWalker walker)
-        {
-            TokenWalker LocalWalker = new TokenWalker(walker);
-            walk = LocalWalker.State;
 
-            foreach (IExpressionParser expressionParser in this.parsers)
-            {
-                expressionParser.Parse(ref expression, out walk, LocalWalker);
-            }
-            throw Failed;
-        }
-        
-        public override string ToString() => $"{this.Type}:({string.Join<IExpressionParser>(" ,", this.parsers)})";
+        public abstract void Parse(ref Expression expression, out TokenWalker.StateWalker walk, TokenWalker walker);
+        public override string ToString() => $"{this.GetType().BaseType.Name}[{base.ToString()}]";
 
     }
 }

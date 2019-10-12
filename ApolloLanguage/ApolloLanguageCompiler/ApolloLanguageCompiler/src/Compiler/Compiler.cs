@@ -23,8 +23,9 @@ namespace ApolloLanguageCompiler
         public void Compile()
         {
             TokenWalker walker = new TokenWalker(this.Tokens);
-            NodeParsers.Parse(out Node node, walker);
-            Console.WriteLine(string.Join(Environment.NewLine, node.Representation()));
+            Expression expression = null;
+            NodeParsers.Parse(ref expression, walker);
+            Console.WriteLine(string.Join(Environment.NewLine, expression));
             ASTNode AbstractSyntaxTree = new ASTFactory(Tokens).Generate();
             ProgramIR IR = new ProgramIR(AbstractSyntaxTree as ProgramNode);
             AssemblyBuilder Compiled = new CodeGenerator(IR, this.OutFile).Compile();
@@ -35,12 +36,13 @@ namespace ApolloLanguageCompiler
         public IEnumerable<Token> Tokens => new TokenFactory(this.Source);
         public TokenWalker Walker => new TokenWalker(this.Tokens);
         public ASTNode AbstractSyntaxTree => new ASTFactory(this.Tokens).Generate();
-        public Node ParseTree
+        public Expression ParseTree
         {
             get
             {
-                NodeParsers.Parse(out Node node, this.Walker);
-                return node;
+                Expression expression = null;
+                NodeParsers.Parse(ref expression, this.Walker);
+                return expression;
             }
         }
 

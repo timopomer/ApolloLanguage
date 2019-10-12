@@ -7,18 +7,18 @@ using static ApolloLanguageCompiler.Parsing.ExpressionParsingOutcome;
 
 namespace ApolloLanguageCompiler.Parsing
 {
-    class ManyExpressionParser : IExpressionParser
+    class ManyExpressionParser : ExpressionParser
     {
-        protected readonly IExpressionParser Parser;
+        protected readonly ExpressionParser Parser;
         private readonly bool allowEmpty;
 
-        public ManyExpressionParser(IExpressionParser parser, bool allowEmpty=true)
+        public ManyExpressionParser(ExpressionParser parser, bool allowEmpty=true)
         {
             this.Parser = parser;
             this.allowEmpty = allowEmpty;
         }
 
-        public void Parse(ref Expression expression, out TokenWalker.StateWalker walk, TokenWalker walker)
+        public override void Parse(ref Expression expression, out TokenWalker.StateWalker walk, TokenWalker walker)
         {
             TokenWalker LocalWalker = new TokenWalker(walker);
             TokenWalker.StateWalker localWalk = LocalWalker.State;
@@ -63,6 +63,6 @@ namespace ApolloLanguageCompiler.Parsing
             throw Succeded;
         }
 
-        public static ManyExpressionParser MakeMany(IExpressionParser parser) => new ManyExpressionParser(parser);
+        public static ManyExpressionParser MakeMany(ExpressionParser parser) => new ManyExpressionParser(parser);
     }
 }

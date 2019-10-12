@@ -8,16 +8,16 @@ using static ApolloLanguageCompiler.Parsing.ExpressionParsingOutcome;
 
 namespace ApolloLanguageCompiler.Parsing
 {
-    public class WhileExpressionParser : IExpressionParser
+    public class WhileExpressionParser : ExpressionParser
     {
-        protected readonly IExpressionParser Parser;
+        protected readonly ExpressionParser Parser;
 
-        public WhileExpressionParser(IExpressionParser parser)
+        public WhileExpressionParser(ExpressionParser parser)
         {
             this.Parser = parser;
         }
 
-        public void Parse(ref Expression expression, out TokenWalker.StateWalker walk, TokenWalker walker)
+        public override void Parse(ref Expression expression, out TokenWalker.StateWalker walk, TokenWalker walker)
         {
             TokenWalker LocalWalker = new TokenWalker(walker);
             TokenWalker.StateWalker localWalk = LocalWalker.State;
@@ -42,8 +42,6 @@ namespace ApolloLanguageCompiler.Parsing
             }
         }
 
-        public static WhileExpressionParser While(IExpressionParser parser) => new WhileExpressionParser(parser);
-
-        public override string ToString() => $"WhileExpressionParser[{base.ToString()}]";
+        public static WhileExpressionParser While(ExpressionParser parser) => new WhileExpressionParser(parser);
     }
 }
