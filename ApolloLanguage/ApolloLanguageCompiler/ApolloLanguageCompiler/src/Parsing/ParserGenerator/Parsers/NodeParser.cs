@@ -10,6 +10,11 @@ namespace ApolloLanguageCompiler.Parsing
 {
     public abstract class NodeParser
     {
+        private const string Cross = " ├─";
+        private const string Corner = " └─";
+        private const string Vertical = " │ ";
+        private const string Space = "   ";
+
         public void Parse(ref Node node, TokenWalker walker)
         {
             StateWalker walk = null;
@@ -49,15 +54,10 @@ namespace ApolloLanguageCompiler.Parsing
             IEnumerable<NodeParser> referenced = new NodeParser[] { };
             return $"{this.GetType().Name}[{this.ToString(ref referenced)}]";
         }
-        public string JoinParsers(ref IEnumerable<NodeParser> referenced, IEnumerable<NodeParser> toJoin)
+
+        public string ToString(ref IEnumerable<NodeParser> referenced)
         {
-            List<string> stringifiedParsers = new List<string>();
-            foreach (NodeParser parser in toJoin)
-            {
-                stringifiedParsers.Add(parser.ToString(ref referenced));
-            }
-            return string.Join(",", stringifiedParsers);
+
         }
-        public abstract string ToString(ref IEnumerable<NodeParser> referenced);
     }
 }
