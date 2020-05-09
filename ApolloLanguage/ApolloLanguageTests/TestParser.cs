@@ -12,37 +12,41 @@ namespace ApolloLanguageCompiler.Tests
     [TestFixture()]
     public class TestParser
     {
-        public static void TestProgram(string representation, bool shouldFail = false)
+        public static void TestParsing(string representation, NodeParser parser=null, bool shouldFail = false)
         {
             SourceCode source = new SourceCode(representation);
             TokenWalker walker = new Compiler(source).Walker;
-            Expression expression = null;
-            NodeParsers.Parse(ref expression, walker);
+            NodeParser nodeParser = parser ?? Parsers.Node.Program;
+            Node node = null;
+            nodeParser.Parse(ref node, walker);
             if (shouldFail)
-                Assert.IsNull(expression);
+                Assert.IsNull(node);
 
-            Assert.IsNotNull(expression);
+            Assert.IsNotNull(node);
             Assert.IsTrue(walker.IsLast());
         }
 
         [Test()]
-        public void ClassTest() => TestProgram(@"
+        public void ClassTest() => TestParsing(@"
             hidden instance class Program
             {   
             }");
 
 
         [Test()]
-        public void FunctionTest() => TestProgram(@"
-            hidden instance class Program
-            {
+        public void FunctionTest() => TestParsing(@"
                 exposed instance func()
                 {
                 }
-            }");
+            ", parser: Parsers.Node.Statements.Function.Decleration);
 
         [Test()]
-        public void FunctionWithParameterTest() => TestProgram(@"
+        public void PrintParser()
+        {
+        Console.WriteLine(Parsers.Node.Statements.Function.Decleration.ToString());
+        }
+        [Test()]
+        public void FunctionWithParameterTest() => TestParsing(@"
             hidden instance class Program
             {
                 exposed instance func(number a)
@@ -51,7 +55,7 @@ namespace ApolloLanguageCompiler.Tests
             }");
 
         [Test()]
-        public void FunctionWithMultipleParameterTest() => TestProgram(@"
+        public void FunctionWithMultipleParameterTest() => TestParsing(@"
             hidden instance class Program
             {
                 exposed instance func(number a, number b)
@@ -60,7 +64,7 @@ namespace ApolloLanguageCompiler.Tests
             }");
 
         [Test()]
-        public void CallFunctionTest() => TestProgram(@"
+        public void CallFunctionTest() => TestParsing(@"
             hidden instance class Program
             {
                 exposed instance func()
@@ -70,7 +74,7 @@ namespace ApolloLanguageCompiler.Tests
             }");
 
         [Test()]
-        public void GenericsTest() => TestProgram(@"
+        public void GenericsTest() => TestParsing(@"
             hidden instance class Program
             {
                 exposed instance func<T>(T variable)
@@ -79,7 +83,7 @@ namespace ApolloLanguageCompiler.Tests
             }");
 
         [Test()]
-        public void ExpressionTest() => TestProgram(@"
+        public void ExpressionTest() => TestParsing(@"
             hidden instance class Program
             {
                 exposed instance func()
@@ -89,7 +93,7 @@ namespace ApolloLanguageCompiler.Tests
             }");
 
         [Test()]
-        public void VariableDeclarationTest() => TestProgram(@"
+        public void VariableDeclarationTest() => TestParsing(@"
             hidden instance class Program
             {   
                 exposed instance number GetNumber()
@@ -101,7 +105,7 @@ namespace ApolloLanguageCompiler.Tests
             }");
 
         [Test()]
-        public void VariableAssignmentTest() => TestProgram(@"
+        public void VariableAssignmentTest() => TestParsing(@"
             hidden instance class Program
             {   
                 exposed instance SetNumber()
@@ -113,7 +117,7 @@ namespace ApolloLanguageCompiler.Tests
             }");
 
         [Test()]
-        public void AccessTest() => TestProgram(@"
+        public void AccessTest() => TestParsing(@"
             hidden instance class Program
             {
                 exposed instance func()
@@ -123,7 +127,7 @@ namespace ApolloLanguageCompiler.Tests
             }");
 
         [Test()]
-        public void GenericPreAccessTest() => TestProgram(@"
+        public void GenericPreAccessTest() => TestParsing(@"
             hidden instance class System:Collection:Generic:List<T>
             {
                 exposed instance T System:Collection:Generic:List:Get<T>()
@@ -133,7 +137,7 @@ namespace ApolloLanguageCompiler.Tests
             }");
 
         [Test()]
-        public void GenericPostAccessTest() => TestProgram(@"
+        public void GenericPostAccessTest() => TestParsing(@"
             hidden instance class a
             {
                 exposed instance func()
@@ -143,7 +147,7 @@ namespace ApolloLanguageCompiler.Tests
             }");
 
         [Test()]
-        public void ReturnTest() => TestProgram(@"
+        public void ReturnTest() => TestParsing(@"
             hidden instance class Program
             {
                 exposed instance AFunction()
@@ -153,7 +157,7 @@ namespace ApolloLanguageCompiler.Tests
             }");
 
         [Test()]
-        public void ReturnVariableTest() => TestProgram(@"
+        public void ReturnVariableTest() => TestParsing(@"
             hidden instance class Program
             {
                 exposed instance GetNumber(number i)
@@ -163,7 +167,7 @@ namespace ApolloLanguageCompiler.Tests
             }");
 
         [Test()]
-        public void ReturnAfterExpressionTest() => TestProgram(@"
+        public void ReturnAfterExpressionTest() => TestParsing(@"
             hidden instance class Program
             {
                 exposed instance GetNumber()
@@ -174,7 +178,7 @@ namespace ApolloLanguageCompiler.Tests
             }");
 
         [Test()]
-        public void ReturnBeforeExpressionTest() => TestProgram(@"
+        public void ReturnBeforeExpressionTest() => TestParsing(@"
             hidden instance class Program
             {
                 exposed instance GetNumber()
@@ -185,7 +189,7 @@ namespace ApolloLanguageCompiler.Tests
             }");
 
         [Test()]
-        public void PrimitiveTypeTest() => TestProgram(@"
+        public void PrimitiveTypeTest() => TestParsing(@"
             exposed instance class Program
             {
                main()

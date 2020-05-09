@@ -1,5 +1,3 @@
-using ApolloLanguageCompiler.Analysis.IR;
-using ApolloLanguageCompiler.CodeGeneration;
 using ApolloLanguageCompiler.Parsing;
 using ApolloLanguageCompiler.Tokenization;
 using System;
@@ -23,31 +21,31 @@ namespace ApolloLanguageCompiler
         public void Compile()
         {
             TokenWalker walker = new TokenWalker(this.Tokens);
-            Expression expression = null;
-            NodeParsers.Parse(ref expression, walker);
+            Node expression = null;
+            Parsers.Node.Parse(ref expression, walker);
             Console.WriteLine(string.Join(Environment.NewLine, expression));
-            ASTNode AbstractSyntaxTree = new ASTFactory(Tokens).Generate();
-            ProgramIR IR = new ProgramIR(AbstractSyntaxTree as ProgramNode);
-            AssemblyBuilder Compiled = new CodeGenerator(IR, this.OutFile).Compile();
+            //ASTNode AbstractSyntaxTree = new ASTFactory(Tokens).Generate();
+            //ProgramIR IR = new ProgramIR(AbstractSyntaxTree as ProgramNode);
+            //AssemblyBuilder Compiled = new CodeGenerator(IR, this.OutFile).Compile();
 
-            Compiled.Save(this.OutFile);
+            //Compiled.Save(this.OutFile);
         }
 
         public IEnumerable<Token> Tokens => new TokenFactory(this.Source);
         public TokenWalker Walker => new TokenWalker(this.Tokens);
-        public ASTNode AbstractSyntaxTree => new ASTFactory(this.Tokens).Generate();
-        public Expression ParseTree
+        //public ASTNode AbstractSyntaxTree => new ASTFactory(this.Tokens).Generate();
+        public Node ParseTree
         {
             get
             {
-                Expression expression = null;
-                NodeParsers.Parse(ref expression, this.Walker);
+                Node expression = null;
+                Parsers.Node.Parse(ref expression, this.Walker);
                 return expression;
             }
         }
 
-        public ProgramIR IR => new ProgramIR(this.AbstractSyntaxTree as ProgramNode);
-        public AssemblyBuilder Compiled => new CodeGenerator(this.IR, this.OutFile).Compile();
+        //public ProgramIR IR => new ProgramIR(this.AbstractSyntaxTree as ProgramNode);
+        //public AssemblyBuilder Compiled => new CodeGenerator(this.IR, this.OutFile).Compile();
 
     }
 }

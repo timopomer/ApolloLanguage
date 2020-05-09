@@ -15,8 +15,8 @@ namespace ApolloLanguageCompiler.Tests
         {
             SourceCode source = new SourceCode(representation);
             TokenWalker walker = new Compiler(source).Walker;
-            Expression expression = null;
-            ExpressionParsers.Head.Invoke().Parse(ref expression, walker);
+            Node expression = null;
+            Parsers.Expression.Head.Invoke().Parse(ref expression, walker);
             if (shouldFail)
                 Assert.IsNull(expression);
 
