@@ -11,7 +11,6 @@ namespace ApolloLanguageCompiler.CLI
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(Output.Green($"green {Output.Red($"{Output.Bold("bold")} red")} green"));
 
             SourceCode s = new SourceCode(@"
             hidden instance class Program
@@ -22,6 +21,8 @@ namespace ApolloLanguageCompiler.CLI
             //Parser.Default.ParseArguments<CompilationOptions>(args)
             //    .WithParsed<CompilationOptions>(RunOptionsAndReturnExitCode)
             //    .WithNotParsed<CompilationOptions>(HandleParseError);
+            Console.WriteLine(Output.Green($"green {Output.Red($"{Output.Bold("bold")} red")} green"));
+
         }
 
         //private static void HandleParseError(IEnumerable<Error> errors)

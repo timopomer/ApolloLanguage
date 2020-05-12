@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ApolloLanguageCompiler.Tokenization;
+using Crayon;
 using static ApolloLanguageCompiler.Parsing.NodeParsingOutcome;
 
 namespace ApolloLanguageCompiler.Parsing
@@ -17,6 +18,8 @@ namespace ApolloLanguageCompiler.Parsing
         {
             this.Keywords = keywords;
         }
+
+        public override string ToString() => $"{this.GetType().Name}{Output.Yellow(":")}[{Output.Cyan(string.Join(", ",this.Keywords))}]";
 
         public override void Parse(ref Node node, out TokenWalker.StateWalker walk, TokenWalker walker)
         {

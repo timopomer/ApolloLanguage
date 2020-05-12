@@ -8,7 +8,7 @@ using ApolloLanguageCompiler.Tokenization;
 
 namespace ApolloLanguageCompiler.Parsing
 {
-    [DebuggerDisplay("TokenWalker[CurrentElement = {CurrentElement}]")]
+    //[DebuggerDisplay("TokenWalker[CurrentElement = {CurrentElement}]")]
     public class TokenWalker : IContainsContext
     {
         private readonly List<Token> streamReference;

@@ -10,6 +10,8 @@ namespace ApolloLanguageCompiler.Parsing
     public class ReferenceNodeParser : NodeParser
     {
         private readonly Func<NodeParser> parserReference;
+        public NodeParser Referenced => this.parserReference();
+
         public ReferenceNodeParser(Func<NodeParser> parserReference)
         {
             this.parserReference = parserReference;
@@ -24,6 +26,6 @@ namespace ApolloLanguageCompiler.Parsing
         }
 
         public static ReferenceNodeParser Reference(Func<NodeParser> parserReference) => new ReferenceNodeParser(parserReference);
-        
+
     }
 }

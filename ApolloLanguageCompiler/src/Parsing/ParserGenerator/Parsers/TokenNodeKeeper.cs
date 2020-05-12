@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Crayon;
 using static ApolloLanguageCompiler.Parsing.NodeParsingOutcome;
 
 namespace ApolloLanguageCompiler.Parsing
@@ -11,6 +12,7 @@ namespace ApolloLanguageCompiler.Parsing
     public class TokenNodeKeeper : NodeParser
     {
         protected readonly SyntaxKeyword[] Keywords;
+        public override string ToString() => $"{this.GetType().Name}{Output.Yellow(":")}[{Output.Cyan(string.Join(", ",this.Keywords))}]";
 
         public TokenNodeKeeper(SyntaxKeyword[] keywords)
         {

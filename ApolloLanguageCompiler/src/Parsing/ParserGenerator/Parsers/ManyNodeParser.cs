@@ -8,9 +8,11 @@ using ApolloLanguageCompiler.Tokenization;
 
 namespace ApolloLanguageCompiler.Parsing
 {
-    class ManyNodeParser : NodeParser
+    class ManyNodeParser : NodeParser, IContainsChildren
     {
         protected readonly NodeParser Parser;
+        public IEnumerable<NodeParser> Children => new [] {this.Parser};
+
         private readonly bool allowEmpty;
 
         public ManyNodeParser(NodeParser parser, bool allowEmpty=true)

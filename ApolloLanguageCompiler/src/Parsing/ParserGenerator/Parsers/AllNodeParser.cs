@@ -8,9 +8,10 @@ using static ApolloLanguageCompiler.Parsing.NodeParsingOutcome;
 
 namespace ApolloLanguageCompiler.Parsing
 {
-    public class AllNodeParser : NodeParser
+    public class AllNodeParser : NodeParser, IContainsChildren
     {
         protected readonly NodeParser[] Parsers;
+        public IEnumerable<NodeParser> Children => this.Parsers;
 
         public AllNodeParser(NodeParser[] parsers)
         {

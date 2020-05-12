@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 
 namespace ApolloLanguageCompiler.Tokenization
 {
-    [DebuggerDisplay("TokenParser[Type = {_type}]")]
+    //[DebuggerDisplay("TokenParser[Type = {_type}]")]
     public class TokenParser
     {
         private readonly Regex pattern;

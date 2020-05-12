@@ -11,7 +11,7 @@ namespace ApolloLanguageCompiler.Tokenization
         public UnexpectedTokenException(params Token[] tokens) : base($"UnexpectedTokenException: {string.Join("|", tokens.Select(n => n.Kind))}") { }
 
     }
-    [DebuggerDisplay("Token[Value = {EscapedString} Context = {Context} Kind = {Kind}]")]
+    //[DebuggerDisplay("Token[Value = {EscapedString} Context = {Context} Kind = {Kind}]")]
     public class Token : IEquatable<Token>, IContainsContext
     {
         public SourceContext Context { get; private set; }
