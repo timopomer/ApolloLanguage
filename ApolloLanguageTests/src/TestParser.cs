@@ -39,12 +39,12 @@ namespace ApolloLanguageCompiler.Tests
                 exposed instance func()
                 {
                 }
-            ", parser: Parsers.Node.Statements.Function.Decleration);
+            ", parser: Parsers.Node.Statements.Function.Deceleration);
 
         [Test()]
         public void PrintParser()
         {
-        Console.WriteLine(Parsers.Node.Statements.Function.Decleration.ToString());
+        Console.WriteLine(Parsers.Node.Statements.Function.Deceleration.ToString());
         }
         [Test()]
         public void FunctionWithParameterTest() => TestParsing(@"
