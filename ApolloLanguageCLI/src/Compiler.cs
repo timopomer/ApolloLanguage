@@ -27,7 +27,7 @@ namespace ApolloLanguageCompiler.CLI
             Node expression = null;
             Parsers.Node.Parse(ref expression, walker);
             Console.WriteLine(expression);
-            Console.WriteLine(Parsers.Node.Program.ToStringRecursively());
+            //Console.WriteLine(Parsers.Node.Program.ToStringRecursively(highlighted: Parsers.Node.Statements.Function.Deceleration));
 
             //ASTNode AbstractSyntaxTree = new ASTFactory(Tokens).Generate();
             //ProgramIR IR = new ProgramIR(AbstractSyntaxTree as ProgramNode);

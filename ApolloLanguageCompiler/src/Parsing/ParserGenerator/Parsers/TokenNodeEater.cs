@@ -19,16 +19,20 @@ namespace ApolloLanguageCompiler.Parsing
             this.Keywords = keywords;
         }
 
-        public override string ToString() => $"{this.GetType().Name}{Output.Yellow(":")}[{Output.Cyan(string.Join(", ",this.Keywords))}]";
+        public override string ToString()
+        {
+            return $"{this.GetType().Name}{Output.Yellow(":")}[{Output.Cyan(string.Join(", ", this.Keywords))}]";
+        }
 
         public override void Parse(ref Node node, out TokenWalker.StateWalker walk, TokenWalker walker)
         {
+            Console.WriteLine(Parsers.Node.Program.ToStringRecursively(highlighted: this));
+
             TokenWalker LocalWalker = new TokenWalker(walker);
             walk = LocalWalker.State;
 
             if (LocalWalker.TryGetNext(out Token token, this.Keywords))
             {
-                Console.WriteLine($"Parsed {token}");
                 throw Succeded;
             }
             throw Failed;

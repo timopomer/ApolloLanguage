@@ -42,6 +42,27 @@ namespace ApolloLanguageCompiler.Parsing
             }
         }
 
+        public List<NodeParser> PathTo(NodeParser lookingFor)
+        {
+            if (this == lookingFor)
+                return new List<NodeParser>() {this};
+
+            if (this is IContainsChildren containsChildren)
+            {
+                foreach (NodeParser child in containsChildren.Children)
+                {
+                    List<NodeParser> path = child.PathTo(lookingFor);
+                    if (path.Count() > 0)
+                    {
+                        path.Insert(0, this);
+                        return path;
+                    }
+                }
+            }
+            return new List<NodeParser>();
+        }
+
+
         public string In(ref IEnumerable<NodeParser> referenced)
         {
             Console.WriteLine(referenced.Count());
@@ -62,13 +83,18 @@ namespace ApolloLanguageCompiler.Parsing
         private const string Vertical = " │ ";
         private const string Space = "   ";
 
-        public void ToStringRecursively(StringBuilder builder, string indent, bool isLast, List<NodeParser> referenced)
+        private string formattedName => this.name == null
+            ? string.Empty
+            : $"{Output.Red("<")}{Output.Yellow(this.name)}{Output.Red(">")}";
+
+
+        private void ToStringRecursively(StringBuilder builder, string indent, bool isLast, List<NodeParser> referenced, NodeParser highlighted)
         {
 
             if (this is ReferenceNodeParser referenceNodeParser)
             {
                 NodeParser referencedParser = referenceNodeParser.Referenced;
-                referencedParser.ToStringRecursively(builder, indent, isLast, referenced);
+                referencedParser.ToStringRecursively(builder, indent, isLast, referenced, highlighted);
                 return;
             }
 
@@ -84,17 +110,29 @@ namespace ApolloLanguageCompiler.Parsing
                 indent += Vertical;
             }
 
-            string formattedName = this.name == null ? string.Empty : $"{Output.Red("<")}{Output.Yellow(this.name)}{Output.Red(">")}";
-
             if (referenced.Contains(this))
             {
-                builder.AppendLine($"{Output.BrightMagenta("referenced")}({formattedName})");
+                string referencedLine = $"{Output.BrightMagenta("referenced")}({this.formattedName})";
+                if (highlighted == this)
+                    builder.AppendLine(referencedLine.Reversed());
+                else
+                    builder.AppendLine(referencedLine);
+
                 return;
             }
             referenced.Add(this);
+
+            string prefix = this.formattedName;
             if (this.name != null)
-                formattedName += Output.BrightGreen(":");
-            builder.AppendLine($"{formattedName}{this.ToString()}");
+                prefix += Output.BrightGreen(":");
+
+            string fullLine = $"{prefix}{this.ToString()}";
+
+            if (highlighted == this)
+                builder.AppendLine($"{fullLine.Reversed()}{Output.Red(" <------ current parser")}");
+            else
+                builder.AppendLine(fullLine);
+
             if (this is IContainsChildren recursiveNode)
             {
                 IEnumerable<NodeParser> children = recursiveNode.Children.Except(referenced);
@@ -103,16 +141,16 @@ namespace ApolloLanguageCompiler.Parsing
                 IEnumerable<(NodeParser Child, bool)> joinedWithLast = children.Select((Child, Index) => ( Child, Index == childrenCount-1 ));
                 foreach ((NodeParser child, bool childIsLast) in joinedWithLast)
                 {
-                    child.ToStringRecursively(builder, indent, childIsLast, referenced);
+                    child.ToStringRecursively(builder, indent, childIsLast, referenced, highlighted);
                 }
             }
         }
 
-        public string ToStringRecursively()
+        public string ToStringRecursively(NodeParser highlighted=null)
         {
             List<NodeParser> referenced = new List<NodeParser>();
             StringBuilder builder = new StringBuilder();
-            this.ToStringRecursively(builder, indent: "", isLast: true, referenced);
+            this.ToStringRecursively(builder, indent: "", isLast: true, referenced, highlighted);
             return builder.ToString();
         }
 
