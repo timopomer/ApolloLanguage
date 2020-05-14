@@ -36,9 +36,9 @@ namespace ApolloLanguageCompiler.Parsing
                     throw new FailedParsingNodeException("Success, but result node is empty");
 
             }
-            catch (Failure)
+            catch (Failure failure)
             {
-                throw new FailedParsingNodeException("Failed parsing node");
+                throw new FailedParsingNodeException($"Failed parsing node at: \n{failure.at.ContextLocation}");
             }
         }
 

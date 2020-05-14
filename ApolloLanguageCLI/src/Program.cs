@@ -14,8 +14,11 @@ namespace ApolloLanguageCompiler.CLI
 
             SourceCode s = new SourceCode(@"
             hidden instance class Program
-        {
-        }");
+            {
+                exposed instance func(number a)
+                {
+                }
+            }");
             Compiler compiler = new Compiler(s, null);
             compiler.Compile();
             //Parser.Default.ParseArguments<CompilationOptions>(args)

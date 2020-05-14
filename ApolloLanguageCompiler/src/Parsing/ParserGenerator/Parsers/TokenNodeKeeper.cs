@@ -27,10 +27,13 @@ namespace ApolloLanguageCompiler.Parsing
 
             if (LocalWalker.TryGetNext(out Token token, this.Keywords))
             {
-                Console.WriteLine($"Parsed {token}");
                 localWalk(LocalWalker);
                 node = new TokenNode(token, Context.To(LocalWalker.Context));
                 walk = localWalk;
+
+                Console.WriteLine($"Parsed {node}");
+                Console.WriteLine($"parsed with {this}");
+                Console.WriteLine(LocalWalker.Context.ContextLocation);
                 throw Succeded;
             }
             throw Failed;

@@ -9,13 +9,13 @@ namespace ApolloLanguageCompiler.Parsing
 {
     public class ManyNode : Node
     {
-        public readonly List<Node> Expressions;
+        public readonly List<Node> Nodes;
 
-        public ManyNode(List<Node> expressions, SourceContext context) : base(context)
+        public ManyNode(List<Node> nodes, SourceContext context) : base(context)
         {
-            this.Expressions = expressions;
+            this.Nodes = nodes;
         }
 
-        public override string ToString() => $"Many[{string.Join(",", this.Expressions.Select(n => n.ToString()))}]";
+        public override string ToString() => $"Many[{string.Join(",", this.Nodes.Select(n => n.ToString()))}]";
     }
 }

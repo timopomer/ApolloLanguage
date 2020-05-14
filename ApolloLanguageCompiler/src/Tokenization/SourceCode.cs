@@ -1,6 +1,7 @@
 using ApolloLanguageCompiler.Parsing;
 using ApolloLanguageCompiler.Tokenization;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -17,6 +18,9 @@ namespace ApolloLanguageCompiler.Tokenization
         {
             this.Code = code;
         }
+
+        public IEnumerable<string> Lines => this.Code.Split(Environment.NewLine);
+
         public static SourceCode FromFiles(IEnumerable<string> files)
         {
             StringBuilder builder = new StringBuilder();

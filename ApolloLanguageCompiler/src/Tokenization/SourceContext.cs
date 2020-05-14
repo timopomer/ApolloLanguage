@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Crayon;
 
 namespace ApolloLanguageCompiler.Tokenization
 {
@@ -12,7 +13,7 @@ namespace ApolloLanguageCompiler.Tokenization
         SourceContext Context { get; }
     }
 
-    public struct SourceContext : IEquatable<SourceContext>, IContainsContext
+    public class SourceContext : IEquatable<SourceContext>, IContainsContext
     {
         private readonly int start;
         private readonly int length;
@@ -56,7 +57,16 @@ namespace ApolloLanguageCompiler.Tokenization
                 string context = this.sourceReference.Code.Substring(this.start, this.length);
                 string afterContext = this.sourceReference.Code.Substring(this.end, this.sourceReference.Code.Length - this.end);
 
-                return $"{beforeContext}------------>{context}<------------{afterContext}";
+                string location = $"{beforeContext}{context.Reversed()}{afterContext}";
+                StringBuilder builder = new StringBuilder();
+                string[] lines = location.Split(Environment.NewLine);
+
+                for (int i = 0; i < lines.Count(); i++)
+                {
+                    builder.AppendLine($"{i}: {lines[i]}");
+                }
+
+                return builder.ToString();
             }
         }
         public override string ToString() => $"SourceContext[Start {this.start} Length {this.length}]";
