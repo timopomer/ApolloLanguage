@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using ApolloLanguageCompiler.Source;
 using ApolloLanguageCompiler.Tokenization;
 
 namespace ApolloLanguageCompiler.Parsing

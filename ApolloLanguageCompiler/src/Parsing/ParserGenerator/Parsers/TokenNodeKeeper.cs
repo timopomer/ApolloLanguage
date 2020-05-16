@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Crayon;
 using static ApolloLanguageCompiler.Parsing.NodeParsingOutcome;
+using ApolloLanguageCompiler.Source;
 
 namespace ApolloLanguageCompiler.Parsing
 {

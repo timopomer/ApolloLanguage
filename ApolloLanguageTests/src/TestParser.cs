@@ -1,12 +1,12 @@
 using NUnit.Framework;
 using System;
-using ApolloLanguageCompiler.Tokenization;
 using ApolloLanguageCompiler.Parsing;
 using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics;
 using ApolloLanguageCompiler.Parsing;
 using ApolloLanguageCompiler.CLI;
+using ApolloLanguageCompiler.Source;
 
 namespace ApolloLanguageCompiler.Tests
 {
@@ -36,10 +36,13 @@ namespace ApolloLanguageCompiler.Tests
 
         [Test()]
         public void FunctionTest() => TestParsing(@"
+            hidden instance class Program
+            {
                 exposed instance func()
                 {
                 }
-            ", parser: Parsers.Node.Statements.Function.Deceleration);
+            }
+            ");
 
         [Test()]
         public void PrintParser()

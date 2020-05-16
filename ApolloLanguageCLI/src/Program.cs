@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using ApolloLanguageCompiler.Parsing;
-using ApolloLanguageCompiler.Tokenization;
 using CommandLine;
 using System;
 using Crayon;
+using ApolloLanguageCompiler.Source;
 
 namespace ApolloLanguageCompiler.CLI
 {

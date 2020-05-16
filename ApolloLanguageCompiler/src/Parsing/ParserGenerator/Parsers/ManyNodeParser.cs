@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static ApolloLanguageCompiler.Parsing.NodeParsingOutcome;
-using ApolloLanguageCompiler.Tokenization;
+using ApolloLanguageCompiler.Source;
 
 namespace ApolloLanguageCompiler.Parsing
 {

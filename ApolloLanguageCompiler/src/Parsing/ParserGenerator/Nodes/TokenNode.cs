@@ -1,3 +1,4 @@
+using ApolloLanguageCompiler.Source;
 using ApolloLanguageCompiler.Tokenization;
 using System;
 using System.Collections.Generic;

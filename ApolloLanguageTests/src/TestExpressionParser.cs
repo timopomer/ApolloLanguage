@@ -1,11 +1,11 @@
 using NUnit.Framework;
 using System;
-using ApolloLanguageCompiler.Tokenization;
 using ApolloLanguageCompiler.Parsing;
 using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics;
 using ApolloLanguageCompiler.CLI;
+using ApolloLanguageCompiler.Source;
 
 namespace ApolloLanguageCompiler.Tests
 {

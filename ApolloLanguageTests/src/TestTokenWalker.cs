@@ -6,6 +6,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics;
 using static ApolloLanguageCompiler.Parsing.TokenWalker;
+using ApolloLanguageCompiler.Source;
 
 namespace ApolloLanguageCompiler.Tests
 {
