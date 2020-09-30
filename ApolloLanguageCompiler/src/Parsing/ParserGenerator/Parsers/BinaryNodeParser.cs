@@ -7,7 +7,7 @@ using static ApolloLanguageCompiler.Parsing.NodeParsingOutcome;
 
 namespace ApolloLanguageCompiler.Parsing
 {
-    class BinaryNodeParser : NodeParser, IContainsChildren
+    public class BinaryNodeParser : NodeParser, IContainsChildren
     {
         private readonly NodeTypes type;
         protected readonly NodeParser[] Parsers;

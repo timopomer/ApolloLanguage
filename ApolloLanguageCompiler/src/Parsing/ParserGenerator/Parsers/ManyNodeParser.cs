@@ -8,7 +8,7 @@ using ApolloLanguageCompiler.Source;
 
 namespace ApolloLanguageCompiler.Parsing
 {
-    class ManyNodeParser : NodeParser, IContainsChildren
+    public class ManyNodeParser : NodeParser, IContainsChildren
     {
         protected readonly NodeParser Parser;
         public IEnumerable<NodeParser> Children => new [] {this.Parser};

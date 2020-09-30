@@ -26,9 +26,6 @@ namespace ApolloLanguageCompiler.Parsing
 
         public override void Parse(ref Node node, out TokenWalker.StateWalker walk, TokenWalker walker)
         {
-            //Console.WriteLine(Parsers.Node.Program.ToStringRecursively(highlighted: this));
-            //Console.WriteLine(walker.Context.ContextLocation);
-
             TokenWalker LocalWalker = new TokenWalker(walker);
             walk = LocalWalker.State;
 

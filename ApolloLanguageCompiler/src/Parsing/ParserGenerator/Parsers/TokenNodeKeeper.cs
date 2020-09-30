@@ -37,7 +37,7 @@ namespace ApolloLanguageCompiler.Parsing
                 Console.WriteLine(LocalWalker.Context.ContextLocation);
                 throw Succeded;
             }
-            throw Failed;
+            throw new Failure(at: LocalWalker.Context);
         }
 
         public static TokenNodeKeeper Keep(params SyntaxKeyword[] keywords) => new TokenNodeKeeper(keywords);
