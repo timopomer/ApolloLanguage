@@ -30,5 +30,6 @@ namespace ApolloLanguageCompiler.Source
             }
             return new SourceCode(builder.ToString());
         }
+
     }
 }

@@ -22,7 +22,7 @@ namespace ApolloLanguageCompiler.Tests
                 Assert.IsNull(expression);
 
             Assert.IsNotNull(expression);
-            //Assert.AreEqual(new SourceContext(0, representation.Length, source), expression.Context);
+            Assert.AreEqual(new SourceContext(0, representation.Length), expression.Context);
             Assert.IsTrue(walker.IsLast());
         }
 

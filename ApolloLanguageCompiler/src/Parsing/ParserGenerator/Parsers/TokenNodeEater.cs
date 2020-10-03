@@ -19,14 +19,19 @@ namespace ApolloLanguageCompiler.Parsing
             this.Keywords = keywords;
         }
 
+        public override string ToString(bool enableHighlighting=false)
+        {
+            return enableHighlighting ? $"{this.GetType().Name}{Output.Yellow(":")}[{Output.Cyan(string.Join(", ", this.Keywords))}]" : this.ToString();
+        }
+
         public override string ToString()
         {
-            return $"{this.GetType().Name}{Output.Yellow(":")}[{Output.Cyan(string.Join(", ", this.Keywords))}]";
+            return $"{this.GetType().Name}:[{(string.Join(", ", this.Keywords))}]";
         }
 
         public override void Parse(ref Node node, out TokenWalker.StateWalker walk, TokenWalker walker)
         {
-            //Console.WriteLine(Parsers.Node.Program.ToStringRecursively(highlighted: this));
+            Console.WriteLine(Parsers.Node.Program.ToStringRecursively(highlighted: this));
             //Console.WriteLine(walker.Context.ContextLocation);
 
             TokenWalker LocalWalker = new TokenWalker(walker);
@@ -36,7 +41,7 @@ namespace ApolloLanguageCompiler.Parsing
             {
                 Console.WriteLine($"Parsed {token}");
                 Console.WriteLine($"parsed with {this}");
-                Console.WriteLine(LocalWalker.Context.ContextLocation);
+                //Console.WriteLine(LocalWalker.Context.ContextLocation);
                 throw Succeded;
             }
             throw new Failure(at: LocalWalker.Context);

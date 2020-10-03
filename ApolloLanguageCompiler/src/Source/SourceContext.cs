@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Crayon;
+using Microsoft.VisualBasic.CompilerServices;
 
 namespace ApolloLanguageCompiler.Source
 {
@@ -13,63 +16,63 @@ namespace ApolloLanguageCompiler.Source
         SourceContext Context { get; }
     }
 
-    public class SourceContext : IEquatable<SourceContext>, IContainsContext
+    public class SourceContext : IEquatable<SourceContext>, IComparable<SourceContext>, IContainsContext
     {
-        private readonly int start;
-        private readonly int length;
-        private readonly SourceCode sourceReference;
+        public readonly int Start;
+        public readonly int Length;
 
-        private int end => this.start + this.length;
+        public int End => this.Start + this.Length;
 
         public SourceContext Context => this;
 
-        public SourceContext(int start, int length, SourceCode sourceReference)
+        public SourceContext(int start, int length)
         {
-            this.start = start;
-            this.length = length;
-            this.sourceReference = sourceReference;
+            this.Start = start;
+            this.Length = length;
         }
 
         public override bool Equals(object obj) => obj is SourceContext context && this.Equals(context);
-        public bool Equals(SourceContext other) => this.start == other.start && this.length == other.length && this.sourceReference == other.sourceReference;
+        public bool Equals(SourceContext other) => this.Start == other.Start && this.Length == other.Length;
 
         public static bool operator !=(SourceContext left, SourceContext right) => left.Equals(right);
         public static bool operator ==(SourceContext left, SourceContext right) => !left.Equals(right);
 
         public SourceContext To(SourceContext other)
         {
-            if (this.sourceReference != other.sourceReference)
-                throw new Exception("Contexts not pointing to same source");
-
-            if (this.start > other.start)
+            if (this.Start > other.Start)
                 throw new Exception("First context after second context");
 
-            int longerEnd = Math.Max(this.end, other.end);
-            int combinedLength = longerEnd - this.start;
-            return new SourceContext(this.start, combinedLength, this.sourceReference);
+            int longerEnd = Math.Max(this.End, other.End);
+            int combinedLength = longerEnd - this.Start;
+            return new SourceContext(this.Start, combinedLength);
         }
-
-        public string ContextLocation
+        public static bool operator <(SourceContext left, SourceContext right)
         {
-            get
+            switch (left.CompareTo(right))
             {
-                string beforeContext = this.sourceReference.Code.Substring(0, this.start);
-                string context = this.sourceReference.Code.Substring(this.start, this.length);
-                string afterContext = this.sourceReference.Code.Substring(this.end, this.sourceReference.Code.Length - this.end);
-
-                string location = $"{beforeContext}{context.Reversed()}{afterContext}";
-                StringBuilder builder = new StringBuilder();
-                string[] lines = location.Split(Environment.NewLine);
-
-                for (int i = 0; i < lines.Count(); i++)
-                {
-                    builder.AppendLine($"{i}: {lines[i]}");
-                }
-
-                return builder.ToString();
+                case -1:
+                    return true;
+                case 0:
+                    return true;
+                case 1:
+                    return false;
             }
+            throw new Exception("Illegal return value from CompareTo");
         }
-        public override string ToString() => $"SourceContext[Start {this.start} Length {this.length}]";
+
+        public static bool operator >(SourceContext left, SourceContext right) => !(left < right);
+        
+        public override string ToString() => $"SourceContext[Start {this.Start} Length {this.Length}]";
+
+        public int CompareTo(SourceContext other)
+        {
+            if (this.Start < other.Start)
+                return -1;
+            else if (this.Start > other.Start)
+                return 1;
+            else
+                return 0;
+        }
     }
 
 }

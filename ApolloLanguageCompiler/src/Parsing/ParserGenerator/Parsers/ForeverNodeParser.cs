@@ -1,6 +1,7 @@
 using ApolloLanguageCompiler.Tokenization;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +23,7 @@ namespace ApolloLanguageCompiler.Parsing
         {
             TokenWalker LocalWalker = new TokenWalker(walker);
             TokenWalker.StateWalker localWalk = LocalWalker.State;
+            Debug.WriteLine(Parsers.Node.Program.ToStringRecursively(highlighted: this, enableHighlighting: false));
 
             while (!LocalWalker.IsLast())
             {

@@ -38,14 +38,14 @@ namespace ApolloLanguageCompiler.Parsing
             }
             catch (Failure failure)
             {
-                throw new FailedParsingNodeException($"Failed parsing node at: \n{failure.at.ContextLocation}");
+                throw new FailedParsingNodeException($"Failed parsing node at:");
             }
         }
 
         public List<NodeParser> PathTo(NodeParser lookingFor)
         {
             if (this == lookingFor)
-                return new List<NodeParser>() {this};
+                return new List<NodeParser>() { this };
 
             if (this is IContainsChildren containsChildren)
             {
@@ -83,18 +83,24 @@ namespace ApolloLanguageCompiler.Parsing
         private const string Vertical = " │ ";
         private const string Space = "   ";
 
-        private string formattedName => this.name == null
-            ? string.Empty
-            : $"{Output.Red("<")}{Output.Yellow(this.name)}{Output.Red(">")}";
-
-
-        private void ToStringRecursively(StringBuilder builder, string indent, bool isLast, List<NodeParser> referenced, NodeParser highlighted)
+        private string formattedName(bool enableHighlighting = false)
         {
+            if (this.name == null)
+                return string.Empty;
 
+            if (enableHighlighting)
+                return $"{Output.Red("<")}{Output.Yellow(this.name)}{Output.Red(">")}";
+            else
+                return $"<{this.name}>";
+
+        }
+
+        private void ToStringRecursively(StringBuilder builder, string indent, bool isLast, List<NodeParser> referenced, NodeParser highlighted, bool enableHighlighting)
+        {
             if (this is ReferenceNodeParser referenceNodeParser)
             {
                 NodeParser referencedParser = referenceNodeParser.Referenced;
-                referencedParser.ToStringRecursively(builder, indent, isLast, referenced, highlighted);
+                referencedParser.ToStringRecursively(builder, indent, isLast, referenced, highlighted, enableHighlighting);
                 return;
             }
 
@@ -112,9 +118,9 @@ namespace ApolloLanguageCompiler.Parsing
 
             if (referenced.Contains(this))
             {
-                string referencedLine = $"{Output.BrightMagenta("referenced")}({this.formattedName})";
+                string referencedLine = enableHighlighting ? $"{Output.BrightMagenta("referenced")}({this.formattedName(enableHighlighting)})" : $"referenced({this.formattedName(enableHighlighting)})";
                 if (highlighted == this)
-                    builder.AppendLine(referencedLine.Reversed());
+                    builder.AppendLine(enableHighlighting ? referencedLine.Reversed() : referencedLine);
                 else
                     builder.AppendLine(referencedLine);
 
@@ -122,14 +128,14 @@ namespace ApolloLanguageCompiler.Parsing
             }
             referenced.Add(this);
 
-            string prefix = this.formattedName;
+            string prefix = this.formattedName(enableHighlighting);
             if (this.name != null)
-                prefix += Output.BrightGreen(":");
+                prefix += enableHighlighting ? Output.BrightGreen(":") : ":";
 
             string fullLine = $"{prefix}{this.ToString()}";
 
             if (highlighted == this)
-                builder.AppendLine($"{fullLine.Reversed()}{Output.Red(" <------ current parser")}");
+                builder.AppendLine(enableHighlighting ? $"{fullLine.Reversed()}{Output.Red(" <------ current parser")}" : $"{fullLine} <------ current parser");
             else
                 builder.AppendLine(fullLine);
 
@@ -141,19 +147,24 @@ namespace ApolloLanguageCompiler.Parsing
                 IEnumerable<(NodeParser Child, bool)> joinedWithLast = children.Select((Child, Index) => ( Child, Index == childrenCount-1 ));
                 foreach ((NodeParser child, bool childIsLast) in joinedWithLast)
                 {
-                    child.ToStringRecursively(builder, indent, childIsLast, referenced, highlighted);
+                    child.ToStringRecursively(builder, indent, childIsLast, referenced, highlighted, enableHighlighting);
                 }
             }
         }
 
-        public string ToStringRecursively(NodeParser highlighted=null)
+        public string ToStringRecursively(NodeParser highlighted=null, bool enableHighlighting=true)
         {
             List<NodeParser> referenced = new List<NodeParser>();
             StringBuilder builder = new StringBuilder();
-            this.ToStringRecursively(builder, indent: "", isLast: true, referenced, highlighted);
+            this.ToStringRecursively(builder, indent: "", isLast: true, referenced, highlighted, enableHighlighting);
             return builder.ToString();
         }
 
+        public virtual string ToString(bool enableHighlighting)
+        {
+            Console.WriteLine("enableHighlighting not implemented in ToString and therfor ignored");
+            return this.ToString();
+        }
         public override string ToString() => $"{this.GetType().Name}";
     }
 }

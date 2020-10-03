@@ -13,7 +13,17 @@ namespace ApolloLanguageCompiler.Parsing
     public class TokenNodeKeeper : NodeParser
     {
         protected readonly SyntaxKeyword[] Keywords;
-        public override string ToString() => $"{this.GetType().Name}{Output.Yellow(":")}[{Output.Cyan(string.Join(", ",this.Keywords))}]";
+
+        public override string ToString(bool enableHighlighting = false)
+        {
+            return enableHighlighting ? $"{this.GetType().Name}{Output.Yellow(":")}[{Output.Cyan(string.Join(", ", this.Keywords))}]" : this.ToString();
+        }
+
+        public override string ToString()
+        {
+            return $"{this.GetType().Name}:[{(string.Join(", ", this.Keywords))}]";
+        }
+
 
         public TokenNodeKeeper(SyntaxKeyword[] keywords)
         {
@@ -34,7 +44,8 @@ namespace ApolloLanguageCompiler.Parsing
 
                 Console.WriteLine($"Parsed {node}");
                 Console.WriteLine($"parsed with {this}");
-                Console.WriteLine(LocalWalker.Context.ContextLocation);
+                //SourceFormatter(Context);
+                //Console.WriteLine(LocalWalker.Context.ContextLocation);
                 throw Succeded;
             }
             throw Failed;
