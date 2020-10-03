@@ -19,6 +19,9 @@ namespace ApolloLanguageCompiler.Tests
             TokenWalker walker = new Compiler(source).Walker;
             NodeParser nodeParser = parser ?? Parsers.Node.Program;
             Node node = null;
+            Console.WriteLine(new SourcePrinter(source).WithLines());
+            Console.WriteLine(nodeParser.ToStringRecursively(enableHighlighting: false));
+
             nodeParser.Parse(ref node, walker);
             if (shouldFail)
                 Assert.IsNull(node);

@@ -23,7 +23,7 @@ namespace ApolloLanguageCompiler.Tokenization
 
             Group foundMatch = match.Groups[match.Groups.Count - 1];
 
-            token = new Token(foundMatch.Value, this.type, new SourceContext(start, foundMatch.Length, source));
+            token = new Token(foundMatch.Value, this.type, new SourceContext(start, foundMatch.Length));
             return true;
         }
 
