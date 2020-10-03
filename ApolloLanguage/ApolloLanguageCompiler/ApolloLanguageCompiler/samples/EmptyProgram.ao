@@ -1,6 +1,0 @@
-hidden instance class Program
-{   
-    exposed extension Main()
-    {
-    }
-}
