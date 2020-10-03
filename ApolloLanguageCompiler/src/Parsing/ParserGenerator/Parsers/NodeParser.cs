@@ -38,7 +38,7 @@ namespace ApolloLanguageCompiler.Parsing
             }
             catch (Failure failure)
             {
-                throw new FailedParsingNodeException($"Failed parsing node at: \n{failure.at?.ContextLocation ?? "unknown"}");
+                throw new FailedParsingNodeException($"Failed parsing node at: \n{failure.at?.Context.ToString() ?? "unknown"}");
             }
         }
 
