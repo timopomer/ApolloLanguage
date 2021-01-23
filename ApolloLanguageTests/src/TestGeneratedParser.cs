@@ -33,7 +33,7 @@ namespace ApolloLanguageCompiler.Tests
             NodeParser Parser = Keep(SyntaxKeyword.Identifier).Name("Identifier");
 
             Node expression = null;
-            Parser.Parse(ref expression, Walker);
+            Parser.Parse(ref expression, Walker, out _);
             Assert.IsNotNull(expression);
         }
 
@@ -47,7 +47,7 @@ namespace ApolloLanguageCompiler.Tests
 
             Node expression = null;
             
-            Assert.Throws<FailedParsingNodeException>(() => Parser.Parse(ref expression, Walker));
+            Assert.Throws<FailedParsingNodeException>(() => Parser.Parse(ref expression, Walker, out _));
             Assert.IsNull(expression);
         }
     }

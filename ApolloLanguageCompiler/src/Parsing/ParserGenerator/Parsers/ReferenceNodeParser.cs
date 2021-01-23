@@ -17,12 +17,12 @@ namespace ApolloLanguageCompiler.Parsing
             this.parserReference = parserReference;
         }
 
-        public override void Parse(ref Node node, out TokenWalker.StateWalker walk, TokenWalker walker)
+        public override void ParseNode(ref Node node, out TokenWalker.StateWalker walk, TokenWalker walker, ParseResultHistory resultHistory)
         {
             TokenWalker LocalWalker = new TokenWalker(walker);
             walk = LocalWalker.State;
 
-            this.parserReference().Parse(ref node, out walk, LocalWalker);
+            this.parserReference().ParseNode(ref node, out walk, LocalWalker, resultHistory);
         }
 
         public static ReferenceNodeParser Reference(Func<NodeParser> parserReference) => new ReferenceNodeParser(parserReference);

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ApolloLanguageCompiler.Parsing
@@ -17,6 +18,9 @@ namespace ApolloLanguageCompiler.Parsing
         {
             this.parsingResults.Add(result);
         }
-
+        public string SuccessfulParsers()
+        {
+            return string.Join(Environment.NewLine, this.parsingResults.Where(n => n.Success).Select(n => n.ToString()));
+        }
     }
 }

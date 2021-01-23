@@ -22,7 +22,7 @@ namespace ApolloLanguageCompiler.Parsing
     {
         public static class Node
         {
-            public static void Parse(ref Parsing.Node node, TokenWalker walker) => Program.Parse(ref node, walker);
+            public static void Parse(ref Parsing.Node node, TokenWalker walker, out ParseResultHistory resultHistory) => Program.Parse(ref node, walker, out resultHistory);
 
             public static readonly NodeParser Expression = Parsers.Expression.Head();
 

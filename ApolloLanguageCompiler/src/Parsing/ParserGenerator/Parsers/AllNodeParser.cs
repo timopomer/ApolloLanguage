@@ -1,3 +1,4 @@
+using ApolloLanguageCompiler.Source;
 using ApolloLanguageCompiler.Tokenization;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace ApolloLanguageCompiler.Parsing
             this.Parsers = parsers;
         }
 
-        public override void Parse(ref Node node, out TokenWalker.StateWalker walk, TokenWalker walker)
+        public override void ParseNode(ref Node node, out TokenWalker.StateWalker walk, TokenWalker walker, ParseResultHistory resultHistory)
         {
             TokenWalker LocalWalker = new TokenWalker(walker);
             TokenWalker.StateWalker localWalk = LocalWalker.State;
@@ -27,10 +28,11 @@ namespace ApolloLanguageCompiler.Parsing
             {
                 try
                 {
-                    parser.Parse(ref node, out localWalk, LocalWalker);
+                    parser.ParseNode(ref node, out localWalk, LocalWalker, resultHistory);
                 }
                 catch (Failure)
                 {
+                    resultHistory.AddResult(new ParsingResult(walker.To(localWalk), this, false));
                     throw;
                 }
                 catch (Success)
@@ -40,6 +42,7 @@ namespace ApolloLanguageCompiler.Parsing
                 }
             }
             walk = localWalk;
+            resultHistory.AddResult(new ParsingResult(walker.To(walk), this, true));
             throw Succeded;
         }
 

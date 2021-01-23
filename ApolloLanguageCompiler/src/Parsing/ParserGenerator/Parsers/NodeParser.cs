@@ -16,30 +16,31 @@ namespace ApolloLanguageCompiler.Parsing
     {
         private string name;
 
-        public NodeParser Name(string name)
-        {
-            this.name = name;
-            return this;
-        }
-
-        public void Parse(ref Node node, TokenWalker walker)
+        public void Parse(ref Node node, TokenWalker walker, out ParseResultHistory resultHistory)
         {
             StateWalker walk = null;
+            resultHistory = new ParseResultHistory();
             try
             {
-                this.Parse(ref node, out walk, walker);
+                this.ParseNode(ref node, out walk, walker, resultHistory);
             }
             catch (Success)
             {
                 walk(walker);
                 if (node is null)
                     throw new FailedParsingNodeException("Success, but result node is empty");
-
             }
             catch (Failure failure)
             {
                 throw new FailedParsingNodeException($"Failed parsing node at: \n{failure.at?.Context.ToString() ?? "unknown"}");
             }
+        }
+        public abstract void ParseNode(ref Node node, out TokenWalker.StateWalker walk, TokenWalker walker, ParseResultHistory resultHistory);
+
+        public NodeParser Name(string name)
+        {
+            this.name = name;
+            return this;
         }
 
         public List<NodeParser> PathTo(NodeParser lookingFor)
@@ -76,7 +77,6 @@ namespace ApolloLanguageCompiler.Parsing
                 return null;
             }
         }
-        public abstract void Parse(ref Node node, out TokenWalker.StateWalker walk, TokenWalker walker);
 
         private const string Cross = " ├─";
         private const string Corner = " └─";

@@ -22,7 +22,7 @@ namespace ApolloLanguageCompiler.Tests
             Console.WriteLine(new SourcePrinter(source).WithLines());
             Console.WriteLine(nodeParser.ToStringRecursively(enableHighlighting: false));
 
-            nodeParser.Parse(ref node, walker);
+            nodeParser.Parse(ref node, walker, out ParseResultHistory resultHistory);
             if (shouldFail)
                 Assert.IsNull(node);
 

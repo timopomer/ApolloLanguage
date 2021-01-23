@@ -17,10 +17,10 @@ namespace ApolloLanguageCompiler.Tests
             SourceCode source = new SourceCode(representation);
             TokenWalker walker = new Compiler(source).Walker;
             Node expression = null;
-            Parsers.Expression.Head.Invoke().Parse(ref expression, walker);
+            Parsers.Expression.Head.Invoke().Parse(ref expression, walker, out ParseResultHistory resultHistory);
             if (shouldFail)
                 Assert.IsNull(expression);
-
+            Console.WriteLine(resultHistory.SuccessfulParsers());
             Assert.IsNotNull(expression);
             Assert.AreEqual(new SourceContext(0, representation.Length), expression.Context);
             Assert.IsTrue(walker.IsLast());

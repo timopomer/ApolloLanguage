@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using ApolloLanguageCompiler.Source;
 using ApolloLanguageCompiler.Tokenization;
@@ -25,6 +26,13 @@ namespace ApolloLanguageCompiler.Parsing
         {
             this.streamReference = walker.streamReference;
             this.CurrentElement = walker.CurrentElement;
+        }
+
+        public SourceContext To(StateWalker stateWalker)
+        {
+            TokenWalker target = new TokenWalker(this);
+            stateWalker(target);
+            return this.Context.To(target.Context);
         }
 
         public SourceContext Context => this.CurrentElement.Context;

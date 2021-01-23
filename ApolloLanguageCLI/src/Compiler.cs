@@ -26,7 +26,7 @@ namespace ApolloLanguageCompiler.CLI
         {
             TokenWalker walker = new TokenWalker(this.Tokens);
             Node expression = null;
-            Parsers.Node.Parse(ref expression, walker);
+            Parsers.Node.Parse(ref expression, walker, out ParseResultHistory resultHistory);
             Console.WriteLine(expression);
             //Console.WriteLine(Parsers.Node.Program.ToStringRecursively(highlighted: Parsers.Node.Statements.Function.Deceleration));
 
@@ -45,7 +45,7 @@ namespace ApolloLanguageCompiler.CLI
             get
             {
                 Node expression = null;
-                Parsers.Node.Parse(ref expression, this.Walker);
+                Parsers.Node.Parse(ref expression, this.Walker, out ParseResultHistory resultHistory);
                 return expression;
             }
         }

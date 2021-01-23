@@ -19,7 +19,7 @@ namespace ApolloLanguageCompiler.Parsing
             this.Parsers = parsers;
         }
 
-        public override void Parse(ref Node node, out TokenWalker.StateWalker walk, TokenWalker walker)
+        public override void ParseNode(ref Node node, out TokenWalker.StateWalker walk, TokenWalker walker, ParseResultHistory resultHistory)
         {
             TokenWalker LocalWalker = new TokenWalker(walker);
             TokenWalker.StateWalker localWalk = LocalWalker.State;
@@ -30,7 +30,7 @@ namespace ApolloLanguageCompiler.Parsing
                 Node parsedNode = null;
                 try
                 {
-                    parser.Parse(ref parsedNode, out localWalk, LocalWalker);
+                    parser.ParseNode(ref parsedNode, out localWalk, LocalWalker, resultHistory);
                 }
                 catch (Failure)
                 {
