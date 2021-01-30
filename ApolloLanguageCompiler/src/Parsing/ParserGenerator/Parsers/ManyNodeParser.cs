@@ -26,7 +26,6 @@ namespace ApolloLanguageCompiler.Parsing
             TokenWalker LocalWalker = new TokenWalker(walker);
             TokenWalker.StateWalker localWalk = LocalWalker.State;
 
-            SourceContext Context = LocalWalker.Context;
 
             List<Node> parsedNodes = new List<Node>();
             while (true)
@@ -50,6 +49,7 @@ namespace ApolloLanguageCompiler.Parsing
                     }
                     else
                     {
+                        resultHistory.AddResult(new ParsingResult(walker.To(localWalk), this, false));
                         throw Failed;
                     }
                 }
@@ -57,12 +57,13 @@ namespace ApolloLanguageCompiler.Parsing
 
             if (!this.allowEmpty && parsedNodes.Count == 0)
             {
+                resultHistory.AddResult(new ParsingResult(walker.To(localWalk), this, false));
                 throw Failed;
             }
 
-            node = new ManyNode(parsedNodes, Context.To(LocalWalker.Context));
-            Console.WriteLine($"Parsed {node}");
+            node = new ManyNode(parsedNodes, walker.To(LocalWalker));
             walk = localWalk;
+            resultHistory.AddResult(new ParsingResult(walker.To(localWalk), this, true));
             throw Succeded;
         }
 

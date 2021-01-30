@@ -16,7 +16,7 @@ namespace ApolloLanguageCompiler.Source
         SourceContext Context { get; }
     }
 
-    public class SourceContext : IEquatable<SourceContext>, IComparable<SourceContext>, IContainsContext
+    public class SourceContext : IEquatable<SourceContext>, IComparable<SourceContext>, IContainsContext, IContainsLocation
     {
         public readonly int Start;
         public readonly int Length;
@@ -24,6 +24,9 @@ namespace ApolloLanguageCompiler.Source
         public int End => this.Start + this.Length;
 
         public SourceContext Context => this;
+
+        public SourceLocation Location => new SourceLocation(this.Start);
+        public SourceLocation EndLocation => new SourceLocation(this.Start + this.Length);
 
         public SourceContext(int start, int length)
         {
@@ -34,8 +37,8 @@ namespace ApolloLanguageCompiler.Source
         public override bool Equals(object obj) => obj is SourceContext context && this.Equals(context);
         public bool Equals(SourceContext other) => this.Start == other.Start && this.Length == other.Length;
 
-        public static bool operator !=(SourceContext left, SourceContext right) => left.Equals(right);
-        public static bool operator ==(SourceContext left, SourceContext right) => !left.Equals(right);
+        public static bool operator !=(SourceContext left, SourceContext right) => !left.Equals(right);
+        public static bool operator ==(SourceContext left, SourceContext right) => left.Equals(right);
 
         public SourceContext To(SourceContext other)
         {

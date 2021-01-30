@@ -1,3 +1,4 @@
+using ApolloLanguageCompiler.Source;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,9 +19,50 @@ namespace ApolloLanguageCompiler.Parsing
         {
             this.parsingResults.Add(result);
         }
-        public string SuccessfulParsers()
+
+        public IEnumerable<ParsingResult> SuccessfulParsers => this.parsingResults.Where(n => n.Success);
+        public IEnumerable<ParsingResult> Parsers => this.parsingResults;
+
+        public string ParseHistory(SourceCode sourceCode)
         {
-            return string.Join(Environment.NewLine, this.parsingResults.Where(n => n.Success).Select(n => n.ToString()));
+            SourcePrinter printer = sourceCode.Printer;
+            StringBuilder builder = new StringBuilder();
+
+            foreach (IEnumerable<ParsingResult> groupedResults in this.parsersGroupedBySimilarContext())
+            {
+                builder.AppendLine("==========");
+                SourceContext context = null;
+                foreach (ParsingResult result in groupedResults)
+                {
+                    context = result.Context;
+                    builder.AppendLine(result.ToString());
+                }
+                builder.AppendLine(printer.HighlightContext(context));
+
+            }
+
+            return builder.ToString();
+        }
+
+        private IEnumerable<IEnumerable<ParsingResult>> parsersGroupedBySimilarContext()
+        {
+            IEnumerator<ParsingResult> enumerator = this.Parsers.GetEnumerator();
+            while(enumerator.MoveNext())
+            {
+                if (enumerator.Current.Context.Length > 0)
+                    yield return this.yieldParsersWithSameContext(enumerator);
+            }
+        }
+
+        private IEnumerable<ParsingResult> yieldParsersWithSameContext(IEnumerator<ParsingResult> enumerator)
+        {
+            SourceContext groupContext = enumerator.Current.Context;
+            while (enumerator.Current.Context == groupContext)
+            {
+                yield return enumerator.Current;
+                if (!enumerator.MoveNext())
+                    break;
+            }
         }
     }
 }

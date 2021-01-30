@@ -11,7 +11,7 @@ using ApolloLanguageCompiler.Tokenization;
 namespace ApolloLanguageCompiler.Parsing
 {
     //[DebuggerDisplay("TokenWalker[CurrentElement = {CurrentElement}]")]
-    public class TokenWalker : IContainsContext
+    public class TokenWalker : IContainsLocation
     {
         private readonly List<Token> streamReference;
         private IEnumerator<Token> tokenStream;
@@ -28,14 +28,14 @@ namespace ApolloLanguageCompiler.Parsing
             this.CurrentElement = walker.CurrentElement;
         }
 
-        public SourceContext To(StateWalker stateWalker)
-        {
-            TokenWalker target = new TokenWalker(this);
-            stateWalker(target);
-            return this.Context.To(target.Context);
-        }
+        public SourceContext To(TokenWalker other) => this.Location.To(other.Location);
 
-        public SourceContext Context => this.CurrentElement.Context;
+        public SourceContext To(StateWalker otherWalker)
+        {
+            TokenWalker other = new TokenWalker(this);
+            otherWalker(other);
+            return this.To(other);
+        }
 
         public Token CurrentElement
         {
@@ -58,6 +58,9 @@ namespace ApolloLanguageCompiler.Parsing
         public Token GetNext()
         {
             Token Last = this.CurrentElement;
+            if (Last.Kind == SyntaxKeyword.EOF)
+                throw new InvalidOperationException("Arrived at EOF");
+            
             this.tokenStream.MoveNext();
             return Last;
         }
@@ -87,6 +90,8 @@ namespace ApolloLanguageCompiler.Parsing
 
         public StateWalker State => (oldWalker) => oldWalker.CurrentElement = this.CurrentElement;
 
+        public SourceLocation Location => this.CurrentElement.Location;
+
         private IEnumerator<Token> GetEnumerator(Token token)
         {
             IEnumerator<Token> LocatedEnumerator = this.streamReference.SkipWhile(n => n != token).GetEnumerator();
@@ -98,7 +103,7 @@ namespace ApolloLanguageCompiler.Parsing
         {
             StringBuilder Builder = new StringBuilder();
             Builder.AppendLine("[TokenWalker]");
-            Builder.AppendLine($"Context: {this.Context}");
+            Builder.AppendLine($"Location: {this.Location}");
             Builder.AppendLine($"CurrentElement: {this.CurrentElement}");
             return Builder.ToString();
         }

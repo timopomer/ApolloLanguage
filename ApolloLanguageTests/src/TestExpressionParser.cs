@@ -20,7 +20,7 @@ namespace ApolloLanguageCompiler.Tests
             Parsers.Expression.Head.Invoke().Parse(ref expression, walker, out ParseResultHistory resultHistory);
             if (shouldFail)
                 Assert.IsNull(expression);
-            Console.WriteLine(resultHistory.SuccessfulParsers());
+            //Console.WriteLine(resultHistory.SuccessfulParsers);
             Assert.IsNotNull(expression);
             Assert.AreEqual(new SourceContext(0, representation.Length), expression.Context);
             Assert.IsTrue(walker.IsLast());

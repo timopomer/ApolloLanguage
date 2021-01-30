@@ -30,9 +30,9 @@ namespace ApolloLanguageCompiler.Parsing
                 if (node is null)
                     throw new FailedParsingNodeException("Success, but result node is empty");
             }
-            catch (Failure failure)
+            catch (Failure)
             {
-                throw new FailedParsingNodeException($"Failed parsing node at: \n{failure.at?.Context.ToString() ?? "unknown"}");
+                throw new FailedParsingNodeException($"Failed parsing node");
             }
         }
         public abstract void ParseNode(ref Node node, out TokenWalker.StateWalker walk, TokenWalker walker, ParseResultHistory resultHistory);
@@ -159,12 +159,14 @@ namespace ApolloLanguageCompiler.Parsing
             this.ToStringRecursively(builder, indent: "", isLast: true, referenced, highlighted, enableHighlighting);
             return builder.ToString();
         }
+        public string ToStringRecursively(bool enableHighlighting = true) => this.ToStringRecursively(null, enableHighlighting);
 
         public virtual string ToString(bool enableHighlighting)
         {
             Console.WriteLine("enableHighlighting not implemented in ToString and therfor ignored");
             return this.ToString();
         }
-        public override string ToString() => $"{this.GetType().Name}";
+
+        public override string ToString() => $"{this.GetType().Name} '{this.name}' ";
     }
 }

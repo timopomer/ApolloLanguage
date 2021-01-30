@@ -78,6 +78,7 @@ namespace ApolloLanguageCompiler.Tokenization
                 advancedInSource += parsed.Value.Length;
                 yield return parsed;
             }
+            yield return new Token("EOF", SyntaxKeyword.EOF, new SourceContext(advancedInSource, 0));
         }
 
         IEnumerator IEnumerable.GetEnumerator()

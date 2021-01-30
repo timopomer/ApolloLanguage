@@ -32,16 +32,16 @@ namespace ApolloLanguageCompiler.Parsing
         public override void ParseNode(ref Node node, out TokenWalker.StateWalker walk, TokenWalker walker, ParseResultHistory resultHistory)
         {
             TokenWalker LocalWalker = new TokenWalker(walker);
+            TokenWalker.StateWalker localWalk = LocalWalker.State;
             walk = LocalWalker.State;
 
             if (LocalWalker.TryGetNext(out Token token, this.Keywords))
             {
-                Console.WriteLine($"Parsed {token}");
-                Console.WriteLine($"parsed with {this}");
-                //Console.WriteLine(LocalWalker.Context.ContextLocation);
+                resultHistory.AddResult(new ParsingResult(walker.To(localWalk), this, true));
                 throw Succeded;
             }
-            throw new Failure(at: LocalWalker.Context);
+            resultHistory.AddResult(new ParsingResult(walker.To(localWalk), this, false));
+            throw Failed;
         }
         public static TokenNodeEater Eat(params SyntaxKeyword[] keywords) => new TokenNodeEater(keywords);
     }

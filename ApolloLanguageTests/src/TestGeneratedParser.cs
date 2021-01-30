@@ -50,5 +50,39 @@ namespace ApolloLanguageCompiler.Tests
             Assert.Throws<FailedParsingNodeException>(() => Parser.Parse(ref expression, Walker, out _));
             Assert.IsNull(expression);
         }
+
+        [Test()]
+        public void TestAllParser()
+        {
+            string source = "[]";
+            TokenWalker Walker = TestTools.GetWalker(source);
+
+            NodeParser OpenParser = Keep(SyntaxKeyword.OpenSquareBracket).Name("OpenSquareBracket");
+            NodeParser CloseParser = Keep(SyntaxKeyword.CloseSquareBracket).Name("CloseSquareBracket");
+            NodeParser AllParser = All(OpenParser, CloseParser).Name("OpenCloseParser");
+            Node expression = null;
+
+            AllParser.Parse(ref expression, Walker, out ParseResultHistory resultHistory);
+            Assert.IsNotNull(expression);
+        }
+
+        [Test()]
+        public void TestAnyParser()
+        {
+            string source = "[<]";
+            TokenWalker Walker = TestTools.GetWalker(source);
+
+            NodeParser OpenParser = Keep(SyntaxKeyword.OpenSquareBracket).Name("OpenSquareBracket");
+            NodeParser LesserParser = Keep(SyntaxKeyword.Lesser).Name("Lesser");
+            NodeParser GreaterParser = Keep(SyntaxKeyword.Greater).Name("Greater");
+            NodeParser AnyParser = Any(GreaterParser, LesserParser).Name("Lesser or Greater");
+
+            NodeParser CloseParser = Keep(SyntaxKeyword.CloseSquareBracket).Name("CloseSquareBracket");
+            NodeParser AllParser = All(OpenParser, AnyParser, CloseParser).Name("OpenCloseParser");
+            Node expression = null;
+
+            AllParser.Parse(ref expression, Walker, out ParseResultHistory resultHistory);
+            Assert.IsNotNull(expression);
+        }
     }
 }

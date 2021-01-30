@@ -33,6 +33,7 @@ namespace ApolloLanguageCompiler.Parsing
                 }
                 catch (Failure)
                 {
+                    resultHistory.AddResult(new ParsingResult(walker.To(localWalk), this, false));
                     throw;
                 }
                 catch (Success)
@@ -42,6 +43,7 @@ namespace ApolloLanguageCompiler.Parsing
                 }
             }
             walk = localWalk;
+            resultHistory.AddResult(new ParsingResult(walker.To(localWalk), this, true));
             throw Succeded;
         }
 

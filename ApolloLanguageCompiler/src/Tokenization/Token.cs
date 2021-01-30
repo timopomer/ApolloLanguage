@@ -13,7 +13,7 @@ namespace ApolloLanguageCompiler.Tokenization
 
     }
     //[DebuggerDisplay("Token[Value = {EscapedString} Context = {Context} Kind = {Kind}]")]
-    public class Token : IEquatable<Token>, IContainsContext
+    public class Token : IEquatable<Token>, IContainsContext, IContainsLocation
     {
         public SourceContext Context { get; private set; }
         public string Value { get; }
@@ -21,6 +21,8 @@ namespace ApolloLanguageCompiler.Tokenization
         public string EscapedString => Regex.Escape(this.Value);
 
         public SyntaxKeyword Kind { get; }
+        public SourceLocation Location => this.Context.Location;
+
         public bool OfType(params SyntaxKeyword[] possibleKeywords) => possibleKeywords.Contains(this.Kind);
 
         public bool Equals(Token other)
@@ -53,6 +55,7 @@ namespace ApolloLanguageCompiler.Tokenization
         SemiColon,
         Whitespace,
         EOL,
+        EOF,
 
         Comma,
         Dot,

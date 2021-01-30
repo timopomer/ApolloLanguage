@@ -13,15 +13,7 @@ namespace ApolloLanguageCompiler.Parsing
         public class Success : NodeParsingOutcome { }
 
         public static Failure Failed = new Failure();
-
-        public class Failure : NodeParsingOutcome
-        {
-            public SourceContext at;
-            public Failure(SourceContext at=null)
-            {
-                this.at = at;
-            }
-        }
+        public class Failure : NodeParsingOutcome { }
     }
 
 }

@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System;
+using System.Linq;
 using ApolloLanguageCompiler.Parsing;
 using System.Linq;
 using System.Collections.Generic;
@@ -20,21 +21,33 @@ namespace ApolloLanguageCompiler.Tests
             NodeParser nodeParser = parser ?? Parsers.Node.Program;
             Node node = null;
             Console.WriteLine(new SourcePrinter(source).WithLines());
-            Console.WriteLine(nodeParser.ToStringRecursively(enableHighlighting: false));
+            //Console.WriteLine(nodeParser.ToStringRecursively(enableHighlighting: false));
+            ParseResultHistory resultHistory = null;
+            bool failed;
+            try
+            {
+                nodeParser.Parse(ref node, walker, out resultHistory);
+                failed = false;
+                if (shouldFail)
+                    Assert.IsNull(node);
 
-            nodeParser.Parse(ref node, walker, out ParseResultHistory resultHistory);
-            if (shouldFail)
-                Assert.IsNull(node);
+            }
+            catch (FailedParsingNodeException e)
+            {
+                failed = true;
+            }
 
+
+            Console.WriteLine(resultHistory.ParseHistory(source));
             Assert.IsNotNull(node);
             Assert.IsTrue(walker.IsLast());
+            Assert.IsFalse(failed);
         }
 
         [Test()]
-        public void ClassTest() => TestParsing(@"
-            hidden instance class Program
-            {   
-            }");
+        public void ClassTest() => TestParsing(@"hidden instance class Program
+{
+}");
 
 
         [Test()]

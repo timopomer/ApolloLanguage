@@ -23,7 +23,8 @@ namespace ApolloLanguageCompiler.Tests
                 SyntaxKeyword.Whitespace,
                 SyntaxKeyword.Identifier,
                 SyntaxKeyword.Assignment,
-                SyntaxKeyword.LiteralLetter
+                SyntaxKeyword.LiteralLetter,
+                SyntaxKeyword.EOF
             );
 
         [Test()]
@@ -35,7 +36,8 @@ namespace ApolloLanguageCompiler.Tests
                 SyntaxKeyword.Whitespace,
                 SyntaxKeyword.Identifier,
                 SyntaxKeyword.OpenCurlyBracket,
-                SyntaxKeyword.CloseCurlyBracket
+                SyntaxKeyword.CloseCurlyBracket,
+                SyntaxKeyword.EOF
             );
 
         [Test()]
@@ -59,8 +61,10 @@ namespace ApolloLanguageCompiler.Tests
                 SyntaxKeyword.Plus,
                 SyntaxKeyword.Identifier,
                 SyntaxKeyword.Equal,
-                SyntaxKeyword.Identifier
+                SyntaxKeyword.Identifier,
+                SyntaxKeyword.EOF
             );
+
         public static void TestTokenFactory(string code, params SyntaxKeyword[] types)
 		{
 

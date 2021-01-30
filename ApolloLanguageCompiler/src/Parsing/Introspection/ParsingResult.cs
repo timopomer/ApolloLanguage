@@ -17,9 +17,10 @@ namespace ApolloLanguageCompiler.Parsing
             this.Parser = parser;
             this.Success = success;
         }
+
         public override string ToString()
         {
-            return $"ParsingResult [{this.Context} {this.Parser.GetType().Name} {this.Success}]";
+            return $"ParsingResult [{this.Context} {this.Parser} ({(this.Success ? "Success" : "Failure")})]";
         }
     }
 }

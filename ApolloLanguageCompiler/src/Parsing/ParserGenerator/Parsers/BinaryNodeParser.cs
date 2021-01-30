@@ -49,10 +49,11 @@ namespace ApolloLanguageCompiler.Parsing
 
             if (parsedNodes.Count == 2)
             {
-                node = new BinaryNode(this.type, node, parsedNodes[0], parsedNodes[1], node.Context.To(LocalWalker.Context));
-                Console.WriteLine($"Parsed {node}");
+                node = new BinaryNode(this.type, node, parsedNodes[0], parsedNodes[1], walker.To(LocalWalker));
+                resultHistory.AddResult(new ParsingResult(walker.To(localWalk), this, true));
                 throw Succeded;
             }
+            resultHistory.AddResult(new ParsingResult(walker.To(localWalk), this, false));
             throw Failed;
         }
 

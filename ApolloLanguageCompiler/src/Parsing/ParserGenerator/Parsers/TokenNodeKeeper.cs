@@ -34,21 +34,18 @@ namespace ApolloLanguageCompiler.Parsing
         {
             TokenWalker LocalWalker = new TokenWalker(walker);
             TokenWalker.StateWalker localWalk = LocalWalker.State;
-            SourceContext Context = LocalWalker.Context;
 
             if (LocalWalker.TryGetNext(out Token token, this.Keywords))
             {
+                var Walked = walker.To(LocalWalker);
                 localWalk(LocalWalker);
-                node = new TokenNode(token, Context.To(LocalWalker.Context));
+                node = new TokenNode(token, Walked);
                 walk = localWalk;
-
-                Console.WriteLine($"Parsed {node}");
-                Console.WriteLine($"parsed with {this}");
-                //SourceFormatter(Context);
-                //Console.WriteLine(LocalWalker.Context.ContextLocation);
+                resultHistory.AddResult(new ParsingResult(walker.To(localWalk), this, true));
                 throw Succeded;
             }
-            throw new Failure(at: LocalWalker.Context);
+            resultHistory.AddResult(new ParsingResult(walker.To(localWalk), this, false));
+            throw Failed;
         }
 
         public static TokenNodeKeeper Keep(params SyntaxKeyword[] keywords) => new TokenNodeKeeper(keywords);
