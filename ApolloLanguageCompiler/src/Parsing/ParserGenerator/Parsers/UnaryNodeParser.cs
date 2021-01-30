@@ -50,11 +50,11 @@ namespace ApolloLanguageCompiler.Parsing
             {
                 node = new UnaryNode(this.type, parsedNodes[0], node, walker.To(LocalWalker));
                 walk = localWalk;
-                resultHistory.AddResult(new ParsingResult(walker.To(localWalk), this, true));
+                resultHistory.AddResult(new SuccessfulParsingResult(walker.To(localWalk), this));
                 throw Succeded;
             }
 
-            resultHistory.AddResult(new ParsingResult(walker.To(localWalk), this, false));
+            resultHistory.AddResult(new FailedParsingResult(walker.Location, this));
             throw Failed;
         }
 

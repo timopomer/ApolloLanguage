@@ -37,10 +37,10 @@ namespace ApolloLanguageCompiler.Parsing
 
             if (LocalWalker.TryGetNext(out Token token, this.Keywords))
             {
-                resultHistory.AddResult(new ParsingResult(walker.To(localWalk), this, true));
+                resultHistory.AddResult(new SuccessfulParsingResult(walker.To(localWalk), this));
                 throw Succeded;
             }
-            resultHistory.AddResult(new ParsingResult(walker.To(localWalk), this, false));
+            resultHistory.AddResult(new FailedParsingResult(walker.Location, this));
             throw Failed;
         }
         public static TokenNodeEater Eat(params SyntaxKeyword[] keywords) => new TokenNodeEater(keywords);

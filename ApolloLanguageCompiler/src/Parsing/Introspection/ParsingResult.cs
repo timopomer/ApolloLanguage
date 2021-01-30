@@ -5,22 +5,51 @@ using System.Text;
 
 namespace ApolloLanguageCompiler.Parsing
 {
-    public class ParsingResult
+    public abstract class ParsingResult
     {
-        public readonly SourceContext Context;
         public readonly NodeParser Parser;
         public readonly bool Success;
 
-        public ParsingResult(SourceContext context, NodeParser parser, bool success)
+        public ParsingResult(NodeParser parser, bool success)
         {
-            this.Context = context;
             this.Parser = parser;
             this.Success = success;
         }
 
+        public abstract SourceLocation Location { get; }
+    }
+
+    public class SuccessfulParsingResult : ParsingResult
+    {
+        public readonly SourceContext Context;
+
+        public SuccessfulParsingResult(SourceContext context, NodeParser parser) : base(parser, success: true)
+        {
+            this.Context = context;
+        }
+
+        public override SourceLocation Location => this.Context.Location;
+
         public override string ToString()
         {
-            return $"ParsingResult [{this.Context} {this.Parser} ({(this.Success ? "Success" : "Failure")})]";
+            return $"SuccessfulParsingResult [{this.Context} {this.Parser} (Success)]";
+        }
+    }
+
+    public class FailedParsingResult : ParsingResult
+    {
+        private readonly SourceLocation location;
+
+        public FailedParsingResult(SourceLocation location, NodeParser parser) : base(parser, success: true)
+        {
+            this.location = location;
+        }
+
+        public override SourceLocation Location => this.location;
+
+        public override string ToString()
+        {
+            return $"FailedParsingResult [{this.Location} {this.Parser} (Failed)]";
         }
     }
 }

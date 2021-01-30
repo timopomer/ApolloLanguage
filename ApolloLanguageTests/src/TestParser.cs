@@ -20,7 +20,7 @@ namespace ApolloLanguageCompiler.Tests
             TokenWalker walker = new Compiler(source).Walker;
             NodeParser nodeParser = parser ?? Parsers.Node.Program;
             Node node = null;
-            Console.WriteLine(new SourcePrinter(source).WithLines());
+            Console.WriteLine(source.WithLineNumbers());
             //Console.WriteLine(nodeParser.ToStringRecursively(enableHighlighting: false));
             ParseResultHistory resultHistory = null;
             bool failed;

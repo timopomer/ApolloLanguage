@@ -20,49 +20,36 @@ namespace ApolloLanguageCompiler.Parsing
             this.parsingResults.Add(result);
         }
 
-        public IEnumerable<ParsingResult> SuccessfulParsers => this.parsingResults.Where(n => n.Success);
+        public IEnumerable<SuccessfulParsingResult> SuccessfulParsers => this.parsingResults.OfType<SuccessfulParsingResult>();
         public IEnumerable<ParsingResult> Parsers => this.parsingResults;
 
         public string ParseHistory(SourceCode sourceCode)
         {
-            SourcePrinter printer = sourceCode.Printer;
             StringBuilder builder = new StringBuilder();
-
-            foreach (IEnumerable<ParsingResult> groupedResults in this.parsersGroupedBySimilarContext())
+            IEnumerable<ParsingResult> parsers = this.Parsers;
+            while (parsers.Any())
             {
+                ParsingResult parser = parsers.Take(1).First();
+                IEnumerable<ParsingResult> parsersInSameLocation = parsers.TakeWhile(n => n.Location == parser.Location);
+                parsers = parsers.Skip(parsersInSameLocation.Count());
+
                 builder.AppendLine("==========");
-                SourceContext context = null;
-                foreach (ParsingResult result in groupedResults)
+                foreach (ParsingResult result in parsersInSameLocation)
                 {
-                    context = result.Context;
                     builder.AppendLine(result.ToString());
                 }
-                builder.AppendLine(printer.HighlightContext(context));
-
+                if (parser is SuccessfulParsingResult successfulResult)
+                {
+                    builder.AppendLine(sourceCode.HighlightContext(successfulResult.Context));
+                }
+                else if (parser is FailedParsingResult failedResult)
+                {
+                    builder.AppendLine(sourceCode.HighlightLocation(failedResult.Location));
+                }
+                else
+                    throw new Exception("Unknown ParsingResult type");
             }
-
             return builder.ToString();
-        }
-
-        private IEnumerable<IEnumerable<ParsingResult>> parsersGroupedBySimilarContext()
-        {
-            IEnumerator<ParsingResult> enumerator = this.Parsers.GetEnumerator();
-            while(enumerator.MoveNext())
-            {
-                if (enumerator.Current.Context.Length > 0)
-                    yield return this.yieldParsersWithSameContext(enumerator);
-            }
-        }
-
-        private IEnumerable<ParsingResult> yieldParsersWithSameContext(IEnumerator<ParsingResult> enumerator)
-        {
-            SourceContext groupContext = enumerator.Current.Context;
-            while (enumerator.Current.Context == groupContext)
-            {
-                yield return enumerator.Current;
-                if (!enumerator.MoveNext())
-                    break;
-            }
         }
     }
 }

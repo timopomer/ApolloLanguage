@@ -7,19 +7,17 @@ using Crayon;
 
 namespace ApolloLanguageCompiler.Source
 {
-    public class SourcePrinter
+    public static class SourcePrinter
     {
-        private readonly SourceCode source;
-
-        public SourcePrinter(SourceCode source)
+        public static string WithLineNumbers(this SourceCode source)
         {
-            this.source = source;
+            string[] lines = source.Lines.ToArray();
+            return SourcePrinter.WithLineNumbers(lines);
         }
 
-        public string WithLines()
+        private static string WithLineNumbers(string[] lines)
         {
             StringBuilder builder = new StringBuilder();
-            string[] lines = this.source.Lines.ToArray();
 
             for (int i = 0; i < lines.Count(); i++)
             {
@@ -27,21 +25,21 @@ namespace ApolloLanguageCompiler.Source
             }
             return builder.ToString();
         }
-        public string HighlightContext(SourceContext context)
-        {
-            string highlighted = SourceFormatter.Format(this.source, new SourceTransformation(context, n => string.IsNullOrWhiteSpace(n) ? n : "_"));
 
-            StringBuilder builder = new StringBuilder();
+        public static string HighlightContext(this SourceCode source, SourceContext context)
+        {
+            string highlighted = SourceFormatter.Format(source, new SourceTransformation(context, n => string.IsNullOrWhiteSpace(n) ? n : "_"));
+
             string[] lines = highlighted.Split(Environment.NewLine);
-
-            for (int i = 0; i < lines.Count(); i++)
-            {
-                builder.AppendLine($"{i}: {lines[i]}");
-            }
-            return builder.ToString();
+            return SourcePrinter.WithLineNumbers(lines);
         }
-        private bool isAlphaNum(string input) => !string.IsNullOrEmpty(input) && input.All(c => char.IsLetterOrDigit(c) && (c < 128));
-            
-        
+
+        public static string HighlightLocation(this SourceCode source, SourceLocation location)
+        {
+            string highlighted = SourceFormatter.Format(source, new SourceTransformation(new SourceContext(location.Location, 1), n => $"|{n}"));
+
+            string[] lines = highlighted.Split(Environment.NewLine);
+            return SourcePrinter.WithLineNumbers(lines);
+        }
     }
 }

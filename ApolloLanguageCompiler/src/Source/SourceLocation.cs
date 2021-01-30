@@ -26,6 +26,13 @@ namespace ApolloLanguageCompiler.Source
             return new SourceContext(this.Location, other.Location - this.Location);
         }
 
+        public override bool Equals(object obj) => obj is SourceLocation location && this.Equals(location);
+        public bool Equals(SourceLocation other) => this.Location == other.Location;
+
+        public static bool operator !=(SourceLocation left, SourceLocation right) => !left.Equals(right);
+        public static bool operator ==(SourceLocation left, SourceLocation right) => left.Equals(right);
+
+
         public override string ToString() => $"SourceLocation[Location {this.Location}]";
 
     }

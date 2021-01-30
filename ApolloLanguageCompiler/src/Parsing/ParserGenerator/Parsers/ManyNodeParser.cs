@@ -49,7 +49,7 @@ namespace ApolloLanguageCompiler.Parsing
                     }
                     else
                     {
-                        resultHistory.AddResult(new ParsingResult(walker.To(localWalk), this, false));
+                        resultHistory.AddResult(new FailedParsingResult(walker.Location, this));
                         throw Failed;
                     }
                 }
@@ -57,13 +57,13 @@ namespace ApolloLanguageCompiler.Parsing
 
             if (!this.allowEmpty && parsedNodes.Count == 0)
             {
-                resultHistory.AddResult(new ParsingResult(walker.To(localWalk), this, false));
+                resultHistory.AddResult(new FailedParsingResult(walker.Location, this));
                 throw Failed;
             }
 
             node = new ManyNode(parsedNodes, walker.To(LocalWalker));
             walk = localWalk;
-            resultHistory.AddResult(new ParsingResult(walker.To(localWalk), this, true));
+            resultHistory.AddResult(new SuccessfulParsingResult(walker.To(localWalk), this));
             throw Succeded;
         }
 

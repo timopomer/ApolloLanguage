@@ -18,8 +18,6 @@ namespace ApolloLanguageCompiler.Source
             this.Code = code;
         }
 
-        public SourcePrinter Printer => new SourcePrinter(this);
-
         public IEnumerable<string> Lines => this.Code.Split(Environment.NewLine);
 
         public static SourceCode FromFiles(IEnumerable<string> files)
