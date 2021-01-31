@@ -43,12 +43,17 @@ namespace ApolloLanguageCompiler.Parsing
                     {
                         parsedNodes.Add(parsedNode);
                     }
+                    else
+                    {
+                        throw new Exception("Parser succeeded but no node was parsed");
+                    }
                 }
             }
 
             if (parsedNodes.Count == 1)
             {
-                node = new UnaryNode(this.type, parsedNodes[0], node, walker.To(LocalWalker));
+                var parsedNode = parsedNodes[0];
+                node = new UnaryNode(this.type, parsedNode, node, node.Context.To(parsedNode.Context));
                 walk = localWalk;
                 resultHistory.AddResult(new SuccessfulParsingResult(walker.To(localWalk), this));
                 throw Succeded;
