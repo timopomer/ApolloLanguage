@@ -33,13 +33,17 @@ namespace ApolloLanguageCompiler.Parsing
         {
             TokenWalker LocalWalker = new TokenWalker(walker);
             TokenWalker.StateWalker localWalk = LocalWalker.State;
-            walk = LocalWalker.State;
 
             if (LocalWalker.TryGetNext(out Token token, this.Keywords))
             {
+                var walked = walker.To(LocalWalker);
+                localWalk(LocalWalker);
+                node = new DiscardedTokenNode(token, walked);
+                walk = localWalk;
                 resultHistory.AddResult(new SuccessfulParsingResult(walker.To(localWalk), this));
                 throw Succeded;
             }
+
             resultHistory.AddResult(new FailedParsingResult(walker.Location, this));
             throw Failed;
         }

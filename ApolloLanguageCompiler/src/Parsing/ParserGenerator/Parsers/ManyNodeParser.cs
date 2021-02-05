@@ -26,7 +26,6 @@ namespace ApolloLanguageCompiler.Parsing
             TokenWalker LocalWalker = new TokenWalker(walker);
             TokenWalker.StateWalker localWalk = LocalWalker.State;
 
-
             List<Node> parsedNodes = new List<Node>();
             while (true)
             {
