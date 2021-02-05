@@ -7,7 +7,7 @@ using ApolloLanguageCompiler.Source;
 
 namespace ApolloLanguageCompiler.Parsing
 {
-    public class Node
+    public class Node : IContainsContext
     {
         public readonly SourceContext Context;
 
@@ -15,5 +15,7 @@ namespace ApolloLanguageCompiler.Parsing
         {
             this.Context = context;
         }
+
+        SourceContext IContainsContext.Context => this.Context;
     }
 }

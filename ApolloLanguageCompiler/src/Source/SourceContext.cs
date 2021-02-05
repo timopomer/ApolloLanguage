@@ -40,6 +40,8 @@ namespace ApolloLanguageCompiler.Source
         public static bool operator !=(SourceContext left, SourceContext right) => !left.Equals(right);
         public static bool operator ==(SourceContext left, SourceContext right) => left.Equals(right);
 
+        public SourceContext To(IContainsContext other) => this.To(other.Context);
+
         public SourceContext To(SourceContext other)
         {
             if (this.Start > other.Start)
