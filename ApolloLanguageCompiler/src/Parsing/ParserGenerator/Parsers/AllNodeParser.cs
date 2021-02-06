@@ -24,13 +24,14 @@ namespace ApolloLanguageCompiler.Parsing
             TokenWalker LocalWalker = new TokenWalker(walker);
             TokenWalker.StateWalker localWalk = LocalWalker.State;
 
-            List<Node> parseHistory = new List<Node>();
+            Node nodeBackup = node;
+            List<Node> parsedNodes = new List<Node>();
+
             foreach (NodeParser parser in this.Parsers)
             {
-
                 try
                 {
-                    parser.ParseNode(ref node, out localWalk, LocalWalker, resultHistory);
+                    parser.ParseNode(ref nodeBackup, out localWalk, LocalWalker, resultHistory);
                 }
                 catch (Failure)
                 {
@@ -39,15 +40,17 @@ namespace ApolloLanguageCompiler.Parsing
                 }
                 catch (Success)
                 {
-                    parseHistory.Add(node);
+                    parsedNodes.Add(node);
                     localWalk(LocalWalker);
                     continue;
                 }
             }
 
-            //node = new ManyNode(parsedNodes, walker.To(LocalWalker));
+            node = nodeBackup;
             walk = localWalk;
-            resultHistory.AddResult(new SuccessfulParsingResult(walker.To(walk), this));
+            var context = walker.To(walk);
+            node = new ContextNode(node, context);
+            resultHistory.AddResult(new SuccessfulParsingResult(context, this));
             throw Succeded;
         }
 

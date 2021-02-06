@@ -160,22 +160,29 @@ namespace ApolloLanguageCompiler.Parsing
             ;
 
             public static readonly NodeParser Negation =
-                    Any(
-                        All(
-                            Keep(SyntaxKeyword.Minus, SyntaxKeyword.Negate),
-                            MakeUnary(
-                                NodeTypes.Negation,
-                                Reference(() => Negation)
-                            )
-                        ),
-                        Reference(() => FunctionCall)
-                    )
-                    .Name("Negation")
-                ;
+                Any(
+                    All(
+                        Keep(SyntaxKeyword.Minus, SyntaxKeyword.Negate),
+                        MakeUnary(
+                            NodeTypes.Negation,
+                            Reference(() => Negation)
+                        )
+                    ),
+                    Reference(() => FunctionCall)
+                )
+                .Name("Negation")
+            ;
+
 
             public static readonly NodeParser Access =
-                BinaryOperator(NodeTypes.Access, Reference(() => PrimaryExpression), SyntaxKeyword.Colon),
-                FunctionCall =
+                BinaryOperator(
+                    NodeTypes.Access,
+                    Reference(() => PrimaryExpression),
+                    SyntaxKeyword.Colon
+                    ).Name("Access")
+                ;
+
+            public static readonly NodeParser FunctionCall =
                     All(
                         Reference(() => Access),
                         While(
@@ -187,11 +194,11 @@ namespace ApolloLanguageCompiler.Parsing
                                         Reference(() => FunctionParameter)
                                     ),
                                     Eat(SyntaxKeyword.CloseParenthesis)
-                                )
+                                ).Name("Function call with paranthesis")
                             )
-                        )
+                        ).Name("Continuous function calls")
                     )
-                    .Name("Access")
+                    .Name("FunctionCall")
                 ;
             public static readonly NodeParser FunctionParameter =
                     Any(

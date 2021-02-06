@@ -167,6 +167,6 @@ namespace ApolloLanguageCompiler.Parsing
             return this.ToString();
         }
 
-        public override string ToString() => $"{this.GetType().Name} '{this.name}' ";
+        public override string ToString() => $"{this.GetType().Name} '{this.name ?? "Nameless"}' ";
     }
 }

@@ -38,7 +38,7 @@ namespace ApolloLanguageCompiler.Parsing
             {
                 var walked = walker.To(LocalWalker);
                 localWalk(LocalWalker);
-                node = new DiscardedTokenNode(token, walked);
+                //node = new DiscardedTokenNode(token, walked);
                 walk = localWalk;
                 resultHistory.AddResult(new SuccessfulParsingResult(walker.To(localWalk), this));
                 throw Succeded;
