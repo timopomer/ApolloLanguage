@@ -11,7 +11,7 @@ using static ApolloLanguageCompiler.Parsing.UnaryNodeParser;
 using static ApolloLanguageCompiler.Parsing.ManyNodeParser;
 using static ApolloLanguageCompiler.Parsing.BinaryNodeParser;
 using static ApolloLanguageCompiler.Parsing.AnyNodeParser;
-using static ApolloLanguageCompiler.Parsing.AllNodeParser;
+using static ApolloLanguageCompiler.Parsing.ContinuousNodeParser;
 using static ApolloLanguageCompiler.Parsing.WhileNodeParser;
 using static ApolloLanguageCompiler.Parsing.BinaryOperatorParser;
 using static ApolloLanguageCompiler.Parsing.ForeverNodeParser;
@@ -27,7 +27,7 @@ namespace ApolloLanguageCompiler.Parsing
             public static readonly NodeParser Expression = Parsers.Expression.Head();
 
             public static readonly NodeParser CodeBlock =
-                All(
+                Continuous(
                     Eat(SyntaxKeyword.OpenCurlyBracket),
                     While(
                         Any(
@@ -48,7 +48,7 @@ namespace ApolloLanguageCompiler.Parsing
             ;
 
             public static readonly NodeParser Modifier =
-                All(
+                Continuous(
                     While(Modifiers.Visibility),
                     Reference(() => Modifiers.Instance)
                 ).Name("Modifier")
@@ -76,7 +76,7 @@ namespace ApolloLanguageCompiler.Parsing
                 public static class Function
                 {
                     public static readonly NodeParser Deceleration =
-                        All(
+                        Continuous(
                             Reference(() => Modifier),
                             Reference(() => Parsers.Expression.Identifier),
                             Eat(SyntaxKeyword.OpenParenthesis),
@@ -87,7 +87,7 @@ namespace ApolloLanguageCompiler.Parsing
                     ;
 
                     public static readonly NodeParser Parameter =
-                        All(
+                        Continuous(
                             Reference(() => Type),
                             Reference(() => Node.Expression),
                             Eat(SyntaxKeyword.Comma)
@@ -97,13 +97,13 @@ namespace ApolloLanguageCompiler.Parsing
 
                 public static readonly NodeParser Return =
                     Any(
-                        All(Eat(SyntaxKeyword.Return), Eat(SyntaxKeyword.SemiColon)),
-                        All(Eat(SyntaxKeyword.Return), Node.Expression, Eat(SyntaxKeyword.SemiColon))
+                        Continuous(Eat(SyntaxKeyword.Return), Eat(SyntaxKeyword.SemiColon)),
+                        Continuous(Eat(SyntaxKeyword.Return), Node.Expression, Eat(SyntaxKeyword.SemiColon))
                     ).Name("Return")
                  ;
 
                 public static readonly NodeParser Expression =
-                    All(
+                    Continuous(
                         Reference(() => Node.Expression),
                         Eat(SyntaxKeyword.SemiColon)
                     ).Name("Expression")
@@ -111,7 +111,7 @@ namespace ApolloLanguageCompiler.Parsing
             }
 
             public static readonly NodeParser Class =
-                All(
+                Continuous(
                     Reference(() => Modifier),
                     Eat(SyntaxKeyword.Class),
                     Reference(() => Type),
@@ -161,7 +161,7 @@ namespace ApolloLanguageCompiler.Parsing
 
             public static readonly NodeParser Negation =
                 Any(
-                    All(
+                    Continuous(
                         Keep(SyntaxKeyword.Minus, SyntaxKeyword.Negate),
                         MakeUnary(
                             NodeTypes.Negation,
@@ -183,12 +183,12 @@ namespace ApolloLanguageCompiler.Parsing
                 ;
 
             public static readonly NodeParser FunctionCall =
-                    All(
+                    Continuous(
                         Reference(() => Access),
                         While(
                             MakeUnary(
                                 NodeTypes.FunctionCall,
-                                All(
+                                Continuous(
                                     Eat(SyntaxKeyword.OpenParenthesis),
                                     MakeMany(
                                         Reference(() => FunctionParameter)
@@ -202,7 +202,7 @@ namespace ApolloLanguageCompiler.Parsing
                 ;
             public static readonly NodeParser FunctionParameter =
                     Any(
-                        All(
+                        Continuous(
                             Reference(Head),
                             Eat(SyntaxKeyword.Comma)
                         ),
@@ -234,7 +234,7 @@ namespace ApolloLanguageCompiler.Parsing
                     .Name("Identifier")
                 ;
             public static readonly NodeParser Paranthesized =
-                    All(
+                    Continuous(
                         Eat(SyntaxKeyword.OpenParenthesis),
                         Reference(Head),
                         Eat(SyntaxKeyword.CloseParenthesis)

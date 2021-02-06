@@ -12,7 +12,7 @@ using static ApolloLanguageCompiler.Parsing.TokenNodeKeeper;
 using static ApolloLanguageCompiler.Parsing.UnaryNodeParser;
 using static ApolloLanguageCompiler.Parsing.BinaryNodeParser;
 using static ApolloLanguageCompiler.Parsing.AnyNodeParser;
-using static ApolloLanguageCompiler.Parsing.AllNodeParser;
+using static ApolloLanguageCompiler.Parsing.ContinuousNodeParser;
 using static ApolloLanguageCompiler.Parsing.WhileNodeParser;
 
 namespace ApolloLanguageCompiler.Parsing
@@ -20,7 +20,7 @@ namespace ApolloLanguageCompiler.Parsing
     public static class BinaryOperatorParser
     {
         public static NodeParser BinaryOperator(NodeTypes type, ReferenceNodeParser lowerPrecedence, params SyntaxKeyword[] operators) =>
-            All(
+            Continuous(
                 lowerPrecedence,
                 While(
                     MakeBinary(

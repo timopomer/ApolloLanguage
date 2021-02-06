@@ -13,7 +13,7 @@ using static ApolloLanguageCompiler.Parsing.UnaryNodeParser;
 using static ApolloLanguageCompiler.Parsing.ManyNodeParser;
 using static ApolloLanguageCompiler.Parsing.BinaryNodeParser;
 using static ApolloLanguageCompiler.Parsing.AnyNodeParser;
-using static ApolloLanguageCompiler.Parsing.AllNodeParser;
+using static ApolloLanguageCompiler.Parsing.ContinuousNodeParser;
 using static ApolloLanguageCompiler.Parsing.WhileNodeParser;
 using static ApolloLanguageCompiler.Parsing.BinaryOperatorParser;
 using static ApolloLanguageCompiler.Parsing.ForeverNodeParser;
@@ -59,7 +59,7 @@ namespace ApolloLanguageCompiler.Tests
 
             NodeParser OpenParser = Keep(SyntaxKeyword.OpenSquareBracket).Name("OpenSquareBracket");
             NodeParser CloseParser = Keep(SyntaxKeyword.CloseSquareBracket).Name("CloseSquareBracket");
-            NodeParser AllParser = All(OpenParser, CloseParser).Name("OpenCloseParser");
+            NodeParser AllParser = Continuous(OpenParser, CloseParser).Name("OpenCloseParser");
             Node expression = null;
 
             AllParser.Parse(ref expression, Walker, out ParseResultHistory resultHistory);
@@ -78,7 +78,7 @@ namespace ApolloLanguageCompiler.Tests
             NodeParser AnyParser = Any(GreaterParser, LesserParser).Name("Lesser or Greater");
 
             NodeParser CloseParser = Keep(SyntaxKeyword.CloseSquareBracket).Name("CloseSquareBracket");
-            NodeParser AllParser = All(OpenParser, AnyParser, CloseParser).Name("OpenCloseParser");
+            NodeParser AllParser = Continuous(OpenParser, AnyParser, CloseParser).Name("OpenCloseParser");
             Node expression = null;
 
             AllParser.Parse(ref expression, Walker, out ParseResultHistory resultHistory);
