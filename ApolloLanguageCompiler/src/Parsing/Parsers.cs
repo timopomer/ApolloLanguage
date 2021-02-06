@@ -78,7 +78,7 @@ namespace ApolloLanguageCompiler.Parsing
                     public static readonly NodeParser Deceleration =
                         All(
                             Reference(() => Modifier),
-                            Reference(() => Type),
+                            Reference(() => Parsers.Expression.Identifier),
                             Eat(SyntaxKeyword.OpenParenthesis),
                             While(Reference(() => Statements.Function.Parameter)),
                             Eat(SyntaxKeyword.CloseParenthesis),

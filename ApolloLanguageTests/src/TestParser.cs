@@ -45,9 +45,10 @@ namespace ApolloLanguageCompiler.Tests
         }
 
         [Test()]
-        public void ClassTest() => TestParsing(@"hidden instance class Program
-{
-}");
+        public void ClassTest() => TestParsing(
+            @"hidden instance class Program
+            {
+            }");
 
 
         [Test()]
@@ -65,6 +66,7 @@ namespace ApolloLanguageCompiler.Tests
         {
         Console.WriteLine(Parsers.Node.Statements.Function.Deceleration.ToString());
         }
+
         [Test()]
         public void FunctionWithParameterTest() => TestParsing(@"
             hidden instance class Program
@@ -93,7 +95,7 @@ namespace ApolloLanguageCompiler.Tests
                 }
             }");
 
-        [Test()]
+        [Test]
         public void GenericsTest() => TestParsing(@"
             hidden instance class Program
             {
