@@ -39,10 +39,11 @@ namespace ApolloLanguageCompiler.Parsing
                 catch (Success)
                 {
                     localWalk(LocalWalker);
+                    LocalWalker.SkipWhitespace();
                     continue;
                 }
             }
-            walk = localWalk;
+            walk = LocalWalker.State;
             resultHistory.AddResult(new SuccessfulParsingResult(walker.To(localWalk), this));
             throw Succeded;
         }
