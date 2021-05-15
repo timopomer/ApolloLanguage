@@ -16,6 +16,7 @@ using static ApolloLanguageCompiler.Parsing.WhileNodeParser;
 using static ApolloLanguageCompiler.Parsing.BinaryOperatorParser;
 using static ApolloLanguageCompiler.Parsing.ForeverNodeParser;
 using static ApolloLanguageCompiler.Parsing.AllNodeParser;
+using static ApolloLanguageCompiler.Parsing.MaybeNodeParser;
 
 namespace ApolloLanguageCompiler.Parsing
 {
@@ -91,7 +92,7 @@ namespace ApolloLanguageCompiler.Parsing
                         All(
                             Reference(() => Type),
                             Reference(() => Node.Expression),
-                            Eat(SyntaxKeyword.Comma)
+                            Maybe(Eat(SyntaxKeyword.Comma))
                         ).Name("Function Parameter")
                     ;
                 }
