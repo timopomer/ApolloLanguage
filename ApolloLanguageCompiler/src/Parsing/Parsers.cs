@@ -36,7 +36,9 @@ namespace ApolloLanguageCompiler.Parsing
                             Reference(() => CodeBlock),
                             Reference(() => Statements.Function.Deceleration),
                             Reference(() => Statements.Expression),
-                            Reference(() => Statements.Return)
+                            Reference(() => Statements.Return),
+                            Reference(() => Statements.VariableDecleration),
+                            Reference(() => Statements.VariableDeclerationAndAssignment)
                         )
                     ),
                     Eat(SyntaxKeyword.CloseCurlyBracket)
@@ -81,6 +83,7 @@ namespace ApolloLanguageCompiler.Parsing
                         All(
                             Reference(() => Modifier),
                             Reference(() => Parsers.Expression.Identifier),
+                            Maybe(Reference(() => Statements.Expression)),
                             Eat(SyntaxKeyword.OpenParenthesis),
                             While(Reference(() => Statements.Function.Parameter)),
                             Eat(SyntaxKeyword.CloseParenthesis),
@@ -97,6 +100,23 @@ namespace ApolloLanguageCompiler.Parsing
                     ;
                 }
 
+                public static readonly NodeParser VariableDecleration =
+                    Continuous(
+                        Reference(() => Node.Expression),
+                        Reference(() => Parsers.Expression.Identifier),
+                        Eat(SyntaxKeyword.SemiColon)
+                    ).Name("VariableDecleration")
+                ;
+
+                public static readonly NodeParser VariableDeclerationAndAssignment =
+                Continuous(
+                    Reference(() => Node.Expression),
+                    Reference(() => Parsers.Expression.Identifier),
+                    Eat(SyntaxKeyword.Assignment),
+                    Reference(() => Node.Expression),
+                    Eat(SyntaxKeyword.SemiColon)
+                ).Name("VariableDecleration")
+            ;
                 public static readonly NodeParser Return =
                     Any(
                         Continuous(Eat(SyntaxKeyword.Return), Eat(SyntaxKeyword.SemiColon)),

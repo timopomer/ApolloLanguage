@@ -118,7 +118,7 @@ namespace ApolloLanguageCompiler.Tests
         public void VariableDeclarationTest() => TestParsing(@"
             hidden instance class Program
             {   
-                exposed instance number GetNumber()
+                exposed instance GetNumber()
                 {
                     number a = 3;
                     a = a + 4;
@@ -214,12 +214,48 @@ namespace ApolloLanguageCompiler.Tests
         public void PrimitiveTypeTest() => TestParsing(@"
             exposed instance class Program
             {
-               main()
+               exposed instance main()
                {
                number b = 6;
                str s = ""abc"";
                letter c = 'a';
                boolean b = true;
+               }
+            }");
+
+        [Test()]
+        public void FunctionWithoutReturnTypeTest() => TestParsing(@"
+            exposed instance class Program
+            {
+               exposed instance main()
+               {
+               }
+            }");
+
+        [Test()]
+        public void FunctionWithReturnTypeTest() => TestParsing(@"
+            exposed instance class Program
+            {
+               exposed instance number main()
+               {
+               }
+            }");
+
+        [Test()]
+        public void FunctionWithoutModifiersTypeTest() => TestParsing(@"
+            exposed instance class Program
+            {
+               number main()
+               {
+               }
+            }");
+
+        [Test()]
+        public void FunctionWithoutModifiersAndReturnTypeTest() => TestParsing(@"
+            exposed instance class Program
+            {
+               main()
+               {
                }
             }");
     }
