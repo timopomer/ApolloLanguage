@@ -81,9 +81,16 @@ namespace ApolloLanguageCompiler.Parsing
                 {
                     public static readonly NodeParser Deceleration =
                         All(
-                            Reference(() => Modifier),
-                            Reference(() => Parsers.Expression.Identifier),
-                            Maybe(Reference(() => Statements.Expression)),
+                            Maybe(Reference(() => Modifier)),
+                            Any(
+                                All(
+                                    Reference(() => Node.Expression),
+                                    Reference(() => Parsers.Expression.Identifier)
+                                ).Name("Function with return type and name"),
+
+                                Reference(() => Parsers.Expression.Identifier)
+                                .Name("Function with only name")
+                            ).Name("Function decleration sub options"),
                             Eat(SyntaxKeyword.OpenParenthesis),
                             While(Reference(() => Statements.Function.Parameter)),
                             Eat(SyntaxKeyword.CloseParenthesis),
