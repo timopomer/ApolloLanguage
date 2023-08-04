@@ -30,19 +30,21 @@ namespace ApolloLanguageCompiler.Parsing
 
             public static readonly NodeParser CodeBlock =
                 All(
+                    NodeTypes.CodeBlock,
                     Eat(SyntaxKeyword.OpenCurlyBracket),
                     While(
                         Any(
                             Reference(() => CodeBlock),
                             Reference(() => Statements.Function.Deceleration),
                             Reference(() => Statements.Expression),
-                            Reference(() => Statements.Return),
+                            Reference(() => Statements.ReturnWithExpression),
+                            Reference(() => Statements.ReturnWithOutExpression),
                             Reference(() => Statements.VariableDecleration),
                             Reference(() => Statements.VariableDeclerationAndAssignment)
                         )
                     ),
                     Eat(SyntaxKeyword.CloseCurlyBracket)
-                ).Name("CodeBlock")
+                )
             ;
 
 
@@ -53,6 +55,7 @@ namespace ApolloLanguageCompiler.Parsing
 
             public static readonly NodeParser Modifier =
                 All(
+                    NodeTypes.Modifier,
                     While(Modifiers.Visibility),
                     Reference(() => Modifiers.Instance)
                 ).Name("Modifier")
@@ -62,16 +65,18 @@ namespace ApolloLanguageCompiler.Parsing
             {
                 public static readonly NodeParser Instance =
                     Any(
+                        NodeTypes.InstanceModifier,
                         Keep(SyntaxKeyword.Instance),
                         Keep(SyntaxKeyword.Extension)
-                    ).Name("Instance")
+                    )
                 ;
 
                 public static readonly NodeParser Visibility =
                     Any(
+                        NodeTypes.VisibillityModifier,
                         Keep(SyntaxKeyword.Exposed),
                         Keep(SyntaxKeyword.Hidden)
-                    ).Name("Visibility")
+                    )
                 ;
             }
 
@@ -81,6 +86,7 @@ namespace ApolloLanguageCompiler.Parsing
                 {
                     public static readonly NodeParser Deceleration =
                         All(
+                            NodeTypes.Function,
                             Maybe(Reference(() => Modifier)),
                             Any(
                                 All(
@@ -95,61 +101,77 @@ namespace ApolloLanguageCompiler.Parsing
                             While(Reference(() => Statements.Function.Parameter)),
                             Eat(SyntaxKeyword.CloseParenthesis),
                             Reference(() => CodeBlock)
-                        ).Name("Function Deceleration")
+                        )
                     ;
 
                     public static readonly NodeParser Parameter =
                         All(
+                            NodeTypes.FunctionParameter,
                             Reference(() => Type),
                             Reference(() => Node.Expression),
                             Maybe(Eat(SyntaxKeyword.Comma))
-                        ).Name("Function Parameter")
+                        )
                     ;
                 }
 
                 public static readonly NodeParser VariableDecleration =
                     Continuous(
+                        NodeTypes.VariableDecleration,
                         Reference(() => Node.Expression),
                         Reference(() => Parsers.Expression.Identifier),
                         Eat(SyntaxKeyword.SemiColon)
-                    ).Name("VariableDecleration")
+                    )
                 ;
 
                 public static readonly NodeParser VariableDeclerationAndAssignment =
                 Continuous(
+                    NodeTypes.VariableDeclerationAndAssignment,
                     Reference(() => Node.Expression),
                     Reference(() => Parsers.Expression.Identifier),
                     Eat(SyntaxKeyword.Assignment),
                     Reference(() => Node.Expression),
                     Eat(SyntaxKeyword.SemiColon)
-                ).Name("VariableDecleration")
-            ;
-                public static readonly NodeParser Return =
-                    Any(
-                        Continuous(Eat(SyntaxKeyword.Return), Eat(SyntaxKeyword.SemiColon)),
-                        Continuous(Eat(SyntaxKeyword.Return), Node.Expression, Eat(SyntaxKeyword.SemiColon))
-                    ).Name("Return")
-                 ;
+                )
+                ;
+
+                public static readonly NodeParser ReturnWithOutExpression =
+                    Continuous(
+                        NodeTypes.ReturnWithOutExpression,
+                        Eat(SyntaxKeyword.Return), Eat(SyntaxKeyword.SemiColon)
+                    )
+                ;
+
+                public static readonly NodeParser ReturnWithExpression =
+                    Continuous(
+                        NodeTypes.ReturnWithExpression,
+                        Eat(SyntaxKeyword.Return), Node.Expression, Eat(SyntaxKeyword.SemiColon)
+                    )
+                ;
 
                 public static readonly NodeParser Expression =
                     Continuous(
+                        NodeTypes.Expression,
                         Reference(() => Node.Expression),
                         Eat(SyntaxKeyword.SemiColon)
-                    ).Name("Expression")
+                    )
                  ;
             }
 
             public static readonly NodeParser Class =
                 All(
+                    NodeTypes.Class,
                     Reference(() => Modifier),
                     Eat(SyntaxKeyword.Class),
                     Reference(() => Type),
                     Reference(() => CodeBlock)
-                ).Name("Class")
+                )
                 ;
 
             public static readonly NodeParser Program =
-                Forever(Class)
+                Forever(
+                    NodeTypes.Program,
+                    Class
+                    )
                 .Name("Program")
             ;
         }
@@ -212,7 +234,7 @@ namespace ApolloLanguageCompiler.Parsing
                 ;
 
             public static readonly NodeParser FunctionCall =
-                    Continuous(
+                    Continuous(NodeTypes.FunctionCall,
                         Reference(() => Access),
                         While(
                             MakeUnary(
@@ -227,7 +249,6 @@ namespace ApolloLanguageCompiler.Parsing
                             )
                         ).Name("Continuous function calls")
                     )
-                    .Name("FunctionCall")
                 ;
             public static readonly NodeParser FunctionParameter =
                     Any(

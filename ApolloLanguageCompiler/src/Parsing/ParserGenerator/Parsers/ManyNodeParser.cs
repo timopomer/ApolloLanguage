@@ -8,18 +8,19 @@ using ApolloLanguageCompiler.Source;
 
 namespace ApolloLanguageCompiler.Parsing
 {
-    public class ManyNodeParser : NodeParser, IContainsChildren
+    public class ManyNodeParser : TypedNodeParser, IContainsChildren
     {
         protected readonly NodeParser Parser;
         public IEnumerable<NodeParser> Children => new [] {this.Parser};
 
         private readonly bool allowEmpty;
 
-        public ManyNodeParser(NodeParser parser, bool allowEmpty=true)
+        public ManyNodeParser(NodeParser parser, bool allowEmpty=true, NodeTypes type = NodeTypes.Unknown) : base(type)
         {
             this.Parser = parser;
             this.allowEmpty = allowEmpty;
         }
+
 
         public override void ParseNode(ref Node node, out TokenWalker.StateWalker walk, TokenWalker walker, ParseResultHistory resultHistory)
         {
@@ -60,7 +61,7 @@ namespace ApolloLanguageCompiler.Parsing
                 throw Failed;
             }
 
-            node = new ManyNode(parsedNodes, walker.To(LocalWalker));
+            node = new ManyNode(this.type, parsedNodes, walker.To(LocalWalker));
             walk = localWalk;
             resultHistory.AddResult(new SuccessfulParsingResult(walker.To(localWalk), this));
             throw Succeded;

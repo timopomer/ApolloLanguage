@@ -36,8 +36,7 @@ namespace ApolloLanguageCompiler.Tests
             {
                 failed = true;
             }
-
-
+            Console.WriteLine(node);
             Console.WriteLine(resultHistory.ParseHistory(source));
             Assert.IsNotNull(node);
             Assert.IsTrue(walker.IsLast());
@@ -50,6 +49,15 @@ namespace ApolloLanguageCompiler.Tests
             {
             }");
 
+        [Test()]
+        public void MultipleClassTest() => TestParsing(
+            @"hidden instance class Program1
+            {
+            }
+
+            hidden instance class Program2
+            {
+            }");
 
         [Test()]
         public void FunctionTest() => TestParsing(@"

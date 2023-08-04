@@ -9,12 +9,9 @@ namespace ApolloLanguageCompiler.Parsing
 {
     public class ContextNode : Node
     {
-        public readonly Node Contained;
-        public ContextNode(Node contained, SourceContext context) : base(context)
+        public ContextNode(SourceContext context, NodeTypes type) : base(context, type)
         {
-            this.Contained = contained;
         }
-        public override string ToString() => this.Contained.ToString();
-
+        public override string ToString() => $"({this.Type})";
     }
 }

@@ -9,12 +9,12 @@ using static ApolloLanguageCompiler.Parsing.NodeParsingOutcome;
 
 namespace ApolloLanguageCompiler.Parsing
 {
-    public class ForeverNodeParser : NodeParser, IContainsChildren
+    public class ForeverNodeParser : TypedNodeParser, IContainsChildren
     {
         protected readonly NodeParser Parser;
         public IEnumerable<NodeParser> Children => new [] {this.Parser};
 
-        public ForeverNodeParser(NodeParser parser)
+        public ForeverNodeParser(NodeParser parser, NodeTypes type) : base(type)
         {
             this.Parser = parser;
         }
@@ -25,11 +25,15 @@ namespace ApolloLanguageCompiler.Parsing
             TokenWalker.StateWalker localWalk = LocalWalker.State;
             Debug.WriteLine(Parsers.Node.Program.ToStringRecursively(highlighted: this, enableHighlighting: false));
 
+            List<Node> parsedNodes = new List<Node>();
+
             while (!LocalWalker.IsLast())
             {
+                Node parsedNode = null;
+
                 try
                 {
-                    this.Parser.ParseNode(ref node, out localWalk, LocalWalker, resultHistory);
+                    this.Parser.ParseNode(ref parsedNode, out localWalk, LocalWalker, resultHistory);
                 }
                 catch (Failure)
                 {
@@ -38,16 +42,23 @@ namespace ApolloLanguageCompiler.Parsing
                 }
                 catch (Success)
                 {
+                    if (parsedNode != null)
+                        parsedNodes.Add(parsedNode);
+
                     localWalk(LocalWalker);
                     LocalWalker.SkipWhitespace();
                     continue;
                 }
             }
             walk = LocalWalker.State;
-            resultHistory.AddResult(new SuccessfulParsingResult(walker.To(localWalk), this));
+            var context = walker.To(walk);
+            node = new ManyNode(this.type, parsedNodes, context);
+            resultHistory.AddResult(new SuccessfulParsingResult(context, this));
+
             throw Succeded;
         }
 
-        public static ForeverNodeParser Forever(NodeParser parser) => new ForeverNodeParser(parser);
+        public static ForeverNodeParser Forever(NodeParser parser) => new ForeverNodeParser(parser, NodeTypes.Unknown);
+        public static ForeverNodeParser Forever(NodeTypes type, NodeParser parser) => new ForeverNodeParser(parser, type);
     }
 }

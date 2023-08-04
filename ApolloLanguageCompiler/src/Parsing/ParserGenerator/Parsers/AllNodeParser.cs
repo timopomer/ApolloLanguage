@@ -9,12 +9,12 @@ using static ApolloLanguageCompiler.Parsing.NodeParsingOutcome;
 
 namespace ApolloLanguageCompiler.Parsing
 {
-    public class AllNodeParser : NodeParser, IContainsChildren
+    public class AllNodeParser : TypedNodeParser, IContainsChildren
     {
         protected readonly NodeParser[] Parsers;
         public IEnumerable<NodeParser> Children => this.Parsers;
 
-        public AllNodeParser(NodeParser[] parsers)
+        public AllNodeParser(NodeParser[] parsers, NodeTypes type) : base(type)
         {
             this.Parsers = parsers;
         }
@@ -50,11 +50,12 @@ namespace ApolloLanguageCompiler.Parsing
 
             walk = localWalk;
             var context = walker.To(walk);
-            node = new ManyNode(parsedNodes, context);
+            node = new ManyNode(this.type, parsedNodes, context);
             resultHistory.AddResult(new SuccessfulParsingResult(context, this));
             throw Succeded;
         }
 
-        public static AllNodeParser All(params NodeParser[] parsers) => new AllNodeParser(parsers);
+        public static AllNodeParser All(params NodeParser[] parsers) => new AllNodeParser(parsers, NodeTypes.Unknown);
+        public static AllNodeParser All(NodeTypes type, params NodeParser[] parsers) => new AllNodeParser(parsers, type);
     }
 }

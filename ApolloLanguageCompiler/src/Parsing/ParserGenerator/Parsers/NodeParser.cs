@@ -37,6 +37,8 @@ namespace ApolloLanguageCompiler.Parsing
         }
         public abstract void ParseNode(ref Node node, out TokenWalker.StateWalker walk, TokenWalker walker, ParseResultHistory resultHistory);
 
+        protected string ParserName => this.name;
+
         public NodeParser Name(string name)
         {
             this.name = name;
@@ -167,6 +169,6 @@ namespace ApolloLanguageCompiler.Parsing
             return this.ToString();
         }
 
-        public override string ToString() => $"{this.GetType().Name} '{this.name ?? "Nameless"}' ";
+        public override string ToString() => $"{this.GetType().Name} '{this.ParserName ?? "Nameless"}' ";
     }
 }

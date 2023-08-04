@@ -11,11 +11,11 @@ namespace ApolloLanguageCompiler.Parsing
     {
         public readonly List<Node> Nodes;
 
-        public ManyNode(List<Node> nodes, SourceContext context) : base(context)
+        public ManyNode(NodeTypes type, List<Node> nodes, SourceContext context) : base(context, type)
         {
             this.Nodes = nodes;
         }
 
-        public override string ToString() => $"Many[{string.Join(",", this.Nodes.Select(n => n.ToString()))}]";
+        public override string ToString() => $"Many[{this.OptionalTypeArrow}{string.Join(",", this.Nodes.Select(n => n.ToString()))}]";
     }
 }

@@ -1,3 +1,4 @@
+using ApolloLanguageCompiler.Source;
 using ApolloLanguageCompiler.Tokenization;
 using System;
 using System.Collections.Generic;
@@ -8,12 +9,12 @@ using static ApolloLanguageCompiler.Parsing.NodeParsingOutcome;
 
 namespace ApolloLanguageCompiler.Parsing
 {
-    public class AnyNodeParser : NodeParser, IContainsChildren
+    public class AnyNodeParser : TypedNodeParser, IContainsChildren
     {
         protected readonly NodeParser[] Parsers;
         public IEnumerable<NodeParser> Children => this.Parsers;
 
-        public AnyNodeParser(NodeParser[] parsers)
+        public AnyNodeParser(NodeParser[] parsers, NodeTypes type) : base(type)
         {
             this.Parsers = parsers;
         }
@@ -37,6 +38,9 @@ namespace ApolloLanguageCompiler.Parsing
                 {
                     localWalk(LocalWalker);
                     walk = localWalk;
+                    SourceContext context = walker.To(walk);
+
+                    node = new ContextContainerNode(node, context, this.type);
                     resultHistory.AddResult(new SuccessfulParsingResult(walker.To(localWalk), this));
                     throw;
                 }
@@ -45,6 +49,7 @@ namespace ApolloLanguageCompiler.Parsing
             throw Failed;
         }
 
-        public static AnyNodeParser Any(params NodeParser[] parsers) => new AnyNodeParser(parsers);
+        public static AnyNodeParser Any(params NodeParser[] parsers) => new AnyNodeParser(parsers, NodeTypes.Unknown);
+        public static AnyNodeParser Any(NodeTypes type, params NodeParser[] parsers) => new AnyNodeParser(parsers, type);
     }
 }

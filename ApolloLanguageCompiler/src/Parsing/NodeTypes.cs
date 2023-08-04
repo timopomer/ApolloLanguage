@@ -24,7 +24,10 @@ namespace ApolloLanguageCompiler.Parsing
         PrimitiveType,
         Primary,
         FunctionParameter,
-
+        ReturnWithExpression,
+        ReturnWithOutExpression,
+        VariableDeclerationAndAssignment,
+        VariableDecleration,
 
         Program,
         Class,
@@ -35,6 +38,6 @@ namespace ApolloLanguageCompiler.Parsing
         Type,
         Expression,
         CodeBlock,
-        ReturnElement,
+        Unknown
     }
 }

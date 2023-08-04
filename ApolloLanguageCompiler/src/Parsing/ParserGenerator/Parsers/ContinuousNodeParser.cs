@@ -9,12 +9,12 @@ using static ApolloLanguageCompiler.Parsing.NodeParsingOutcome;
 
 namespace ApolloLanguageCompiler.Parsing
 {
-    public class ContinuousNodeParser : NodeParser, IContainsChildren
+    public class ContinuousNodeParser : TypedNodeParser, IContainsChildren
     {
         protected readonly NodeParser[] Parsers;
         public IEnumerable<NodeParser> Children => this.Parsers;
 
-        public ContinuousNodeParser(NodeParser[] parsers)
+        public ContinuousNodeParser(NodeParser[] parsers, NodeTypes type) : base(type)
         {
             this.Parsers = parsers;
         }
@@ -40,7 +40,7 @@ namespace ApolloLanguageCompiler.Parsing
                 }
                 catch (Success)
                 {
-                    parsedNodes.Add(node);
+                    parsedNodes.Add(nodeBackup);
                     localWalk(LocalWalker);
                     continue;
                 }
@@ -48,12 +48,17 @@ namespace ApolloLanguageCompiler.Parsing
 
             node = nodeBackup;
             walk = localWalk;
-            var context = walker.To(walk);
-            node = new ContextNode(node, context);
+            SourceContext context = walker.To(walk);
+            if (node == null)
+                node = new ContextNode(context, this.type);
+            else
+                node = new ContextContainerNode(node, context, this.type);
+
             resultHistory.AddResult(new SuccessfulParsingResult(context, this));
             throw Succeded;
         }
 
-        public static ContinuousNodeParser Continuous(params NodeParser[] parsers) => new ContinuousNodeParser(parsers);
+        public static ContinuousNodeParser Continuous(NodeTypes type, params NodeParser[] parsers) => new ContinuousNodeParser(parsers, type);
+        public static ContinuousNodeParser Continuous(params NodeParser[] parsers) => new ContinuousNodeParser(parsers, NodeTypes.Unknown);
     }
 }
