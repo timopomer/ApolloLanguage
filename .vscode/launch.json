@@ -10,10 +10,27 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/ApolloLanguageCLI/bin/Debug/netcoreapp3.1/ApolloLanguageCLI.dll",
+            "program": "${workspaceFolder}/ApolloLanguageCLI/bin/Debug/net8.0/ApolloLanguageCLI.dll",
             "args": [],
             "cwd": "${workspaceFolder}/ApolloLanguageCLI",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
+            "name": "Run Tests (NUnit)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-tests",
+            "program": "dotnet",
+            "args": [
+                "test",
+                "${workspaceFolder}/ApolloLanguageTests/ApolloLanguageTests.csproj",
+                "--no-build",
+                "--verbosity",
+                "normal"
+            ],
+            "cwd": "${workspaceFolder}",
             "console": "internalConsole",
             "stopAtEntry": false
         },
